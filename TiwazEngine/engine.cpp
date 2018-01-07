@@ -52,7 +52,7 @@ void Tiwaz::Engine::Init()
 
 	deltatime_timer->Start();
 
-	for (size_t i = 0; i < 1000; ++i)
+	for (size_t i = 0; i < 10000; ++i)
 	{
 		int a = 2;
 		Global::FACTORY->ConstructObject("MeshComponent", a, 1);
