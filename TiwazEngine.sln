@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazEngine", "TiwazEngine\TiwazEngine.vcxproj", "{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazApp", "TiwazApp\TiwazApp.vcxproj", "{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53} = {8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Debug|x64.ActiveCfg = Debug|x64
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Debug|x64.Build.0 = Debug|x64
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Debug|x86.ActiveCfg = Debug|Win32
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Debug|x86.Build.0 = Debug|Win32
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Release|x64.ActiveCfg = Release|x64
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Release|x64.Build.0 = Release|x64
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Release|x86.ActiveCfg = Release|Win32
+		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}.Release|x86.Build.0 = Release|Win32
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Debug|x64.ActiveCfg = Debug|x64
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Debug|x64.Build.0 = Debug|x64
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Debug|x86.ActiveCfg = Debug|Win32
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Debug|x86.Build.0 = Debug|Win32
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x64.ActiveCfg = Release|x64
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x64.Build.0 = Release|x64
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x86.ActiveCfg = Release|Win32
+		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA80706A-C509-42DE-B444-7B2743D6DB05}
+	EndGlobalSection
+EndGlobal
