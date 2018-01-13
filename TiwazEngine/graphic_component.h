@@ -17,9 +17,9 @@ namespace Tiwaz::Component
 	class MeshComponent : public GraphicComponent
 	{
 	public:
-		MeshComponent(int a, int b)
+		MeshComponent()
 		{
-			std::cout << a + b << std::endl;
+
 		}
 
 		~MeshComponent()

@@ -12,5 +12,4 @@
 namespace Tiwaz::Lua
 {
 	void test();
-
 }

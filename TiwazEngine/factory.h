@@ -70,10 +70,9 @@ namespace Tiwaz::Factory
 			type_name = raw_type_name.substr(diff_pose);
 		}
 
-		template<typename...TArgs> auto ConstructObject(const std::string & type_name, TArgs...args)
+		template<typename T, typename...TArgs> auto ConstructObject(const std::string & type_name, T* holder, TArgs...args)
 		{
 
-			
 		}
 
 	private:

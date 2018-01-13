@@ -47,19 +47,19 @@ void Tiwaz::Engine::Init()
 
 	Tiwaz::Lua::test();
 
-	Global::FACTORY->RegisterType<Component::MeshComponent, int, int>();
+	Global::FACTORY->RegisterType<Component::MeshComponent>();
 	Global::FACTORY->RegisterType<Component::ModelComponent>();
 
-	deltatime_timer->Start();
+	//deltatime_timer->Start();
+
+	Component::MeshComponent* meshes[1000];
 
 	for (size_t i = 0; i < 1000; ++i)
 	{
-		int a = 2;
-		Global::FACTORY->ConstructObject("MeshComponent", a, 1);
-		Global::FACTORY->ConstructObject("ModelComponent");
+		Global::FACTORY->ConstructObject("MeshComponent", meshes[i]);
 	}
 
-	std::cout << deltatime_timer->DeltaTime() << std::endl;
+	//std::cout << deltatime_timer->DeltaTime() << std::endl;
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");
