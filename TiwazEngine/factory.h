@@ -6,6 +6,8 @@
 #include <string>
 #include <tuple>
 #include <map>
+#include <sstream>
+#include <ostream>
 
 #include "engine_object.h"
 #include "object_system.h"
@@ -40,67 +42,12 @@ namespace Tiwaz::Factory
 		return func(std::get<I>(std::forward<TTuple>(tuple))...);
 	}
 
-	class BaseArgsHolder
-	{
-	public:
-		template<typename...TArgs> inline constexpr auto GetArgsHolder() { return static_cast<ArgsHolder<TArgs...>*>(this); }
-	};
-
-	template<typename...TArgs> class ArgsHolder : public BaseArgsHolder
-	{
-	public:
-		template<typename...TArgs> void SetParameters(const TArgs&...args)
-		{
-			m_parameters = std::make_tuple(args...);
-		}
-
-		inline const std::tuple<TArgs...> Parameters() { return m_parameters; }
-
-	protected:
-		std::tuple<TArgs...> m_parameters;
-	};
-
-	class BaseSpecFactory
-	{
-	public:
-	};
-
-	template<typename T, typename...TArgs> class SpecFactory : public BaseSpecFactory
-	{
-	public:
-		T* Call()
-		{
-			return CallWithTupleArgs(ConstructObjectFunction<T, TArgs...>, m_Args->Parameters(), std::index_sequence_for<TArgs...>());
-		}
-
-		void SetArgHolder(ArgsHolder<TArgs...>* arg_holder)
-		{
-			m_Args = arg_holder;
-		}
-
-	protected:
-		ArgsHolder<TArgs...>* m_Args;
-	};
-
 	class Factory
 	{
 	public:
 		~Factory()
 		{
-			for (auto pair : m_name_basespecfactory_map)
-			{
-				delete pair.second;
-				pair.second = nullptr;
-			}
 
-			for (auto pair : m_name_baseholder_map)
-			{
-				delete pair.second;
-				pair.second = nullptr;
-			}
-
-			m_name_basespecfactory_map.clear();
-			m_name_baseholder_map.clear();
 		}
 
 		template<typename T, typename...TArgs> void RegisterType()
@@ -121,23 +68,16 @@ namespace Tiwaz::Factory
 			}
 
 			type_name = raw_type_name.substr(diff_pose);
-
-			SpecFactory<T, TArgs...>* m1 = new SpecFactory<T, TArgs...>();
-			ArgsHolder<TArgs...>* m2 = new ArgsHolder<TArgs...>();
-			m1->SetArgHolder(m2);
-		
-			m_name_basespecfactory_map.insert(std::make_pair(type_name, m1));
-			m_name_baseholder_map.insert(std::make_pair(type_name, m2));
 		}
 
 		template<typename...TArgs> auto ConstructObject(const std::string & type_name, TArgs...args)
 		{
 
+			
 		}
 
 	private:
-		std::map<std::string, BaseSpecFactory*> m_name_basespecfactory_map;
-		std::map<std::string, BaseArgsHolder*>m_name_baseholder_map;
+
 	};
 }
 
