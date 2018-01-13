@@ -8,6 +8,7 @@
 #include <map>
 #include <sstream>
 #include <ostream>
+#include <any>
 
 #include "engine_object.h"
 #include "object_system.h"
@@ -42,12 +43,44 @@ namespace Tiwaz::Factory
 		return func(std::get<I>(std::forward<TTuple>(tuple))...);
 	}
 
+	template<typename...TArgs> class BasicArgsSpecFactory : public BasicSpecFactory
+	{
+	public:
+		virtual void SetParameters(const TArgs&...args) = 0;
+	};
+
+	class BasicSpecFactory
+	{
+	public:
+		virtual std::any Call() = 0;
+
+		template<typename...TArgs> inline const auto GetArgsSpec() { return dynamic_cast<BasicArgsSpecFactory<TArgs...>*>(this); };
+	};
+
+	template<typename T, typename...TArgs> class SpecFactory : public BasicArgsSpecFactory<TArgs...>
+	{
+	public:
+		void SetParameters(const TArgs&...args) override
+		{
+			para = std::make_tuple(args...);
+		}
+
+		std::any Call() override
+		{
+			return CallWithTupleArgs(ConstructObjectFunction<T, TArgs...>, para, std::index_sequence_for<TArgs...>());
+		}
+
+	protected:
+		std::tuple<TArgs...> para;
+
+	};
+
 	class Factory
 	{
 	public:
 		~Factory()
 		{
-
+			m_name_base_map.clear();
 		}
 
 		template<typename T, typename...TArgs> void RegisterType()
@@ -68,15 +101,20 @@ namespace Tiwaz::Factory
 			}
 
 			type_name = raw_type_name.substr(diff_pose);
+
+			m_name_base_map.insert(std::make_pair(type_name, new SpecFactory<T, TArgs...>));
 		}
 
 		template<typename T, typename...TArgs> auto ConstructObject(const std::string & type_name, T* holder, TArgs...args)
 		{
+			auto temp_fac = m_name_base_map[type_name]->GetArgsSpec<TArgs...>();
+			temp_fac->SetParameters(args...);
 
+			return std::any_cast<T*>(m_name_base_map[type_name]->Call());
 		}
 
 	private:
-
+		std::map<std::string, BasicSpecFactory*> m_name_base_map;
 	};
 }
 
