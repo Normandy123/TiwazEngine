@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Include\LUA;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Lib\lib64-msvc-14.1;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\x64\Release;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Include\LUA;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Include\LUA;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\x64\Debug;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngine\TiwazEngine\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Include\LUA;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Debug;C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
