@@ -43,21 +43,21 @@ namespace Tiwaz::Factory
 		return func(std::get<I>(std::forward<TTuple>(tuple))...);
 	}
 
-	template<typename...TArgs> class BasicArgsSpecFactory : public BasicSpecFactory
+	template<typename...TArgs> class ArgsSpecFactory : public BaseSpecFactory
 	{
 	public:
 		virtual void SetParameters(const TArgs&...args) = 0;
 	};
 
-	class BasicSpecFactory
+	class BaseSpecFactory
 	{
 	public:
 		virtual std::any Call() = 0;
 
-		template<typename...TArgs> inline const auto GetArgsSpec() { return dynamic_cast<BasicArgsSpecFactory<TArgs...>*>(this); };
+		template<typename...TArgs> inline const auto GetArgsSpec() { return dynamic_cast<ArgsSpecFactory<TArgs...>*>(this); };
 	};
 
-	template<typename T, typename...TArgs> class SpecFactory : public BasicArgsSpecFactory<TArgs...>
+	template<typename T, typename...TArgs> class SpecFactory : public ArgsSpecFactory<TArgs...>
 	{
 	public:
 		void SetParameters(const TArgs&...args) override
@@ -107,14 +107,14 @@ namespace Tiwaz::Factory
 
 		template<typename T, typename...TArgs> auto ConstructObject(const std::string & type_name, T* holder, TArgs...args)
 		{
-			auto temp_fac = m_name_base_map[type_name]->GetArgsSpec<TArgs...>();
+			ArgsSpecFactory<TArgs...>* temp_fac = m_name_base_map[type_name]->GetArgsSpec<TArgs...>();
 			temp_fac->SetParameters(args...);
 
 			return std::any_cast<T*>(m_name_base_map[type_name]->Call());
 		}
 
 	private:
-		std::map<std::string, BasicSpecFactory*> m_name_base_map;
+		std::map<std::string, BaseSpecFactory*> m_name_base_map;
 	};
 }
 
