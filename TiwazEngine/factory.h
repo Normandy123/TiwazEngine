@@ -1,13 +1,9 @@
 #pragma once
 
-#include <functional>
 #include <type_traits>
-#include <map>
 #include <string>
 #include <tuple>
 #include <map>
-#include <sstream>
-#include <ostream>
 #include <any>
 
 #include "engine_object.h"
