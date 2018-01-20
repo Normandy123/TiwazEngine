@@ -18,5 +18,4 @@ BOOST_PYTHON_MODULE(TiwazPython)
 		;
 
 	def("AddObject", Tiwaz::AddObject);
-	def("RemoveObject", Tiwaz::RemoveObject);
 }
