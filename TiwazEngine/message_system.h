@@ -113,6 +113,9 @@ namespace Tiwaz::MessageSystem
 			ss_file_name << "logs/log" << ss_current_time.str() << ".tml";
 			std::string file_name = ss_file_name.str();
 
+			//no multiplattform only windows
+			std::system("mkdir logs");
+
 			std::ofstream out_log_file;
 			out_log_file.open(file_name.c_str());
 
