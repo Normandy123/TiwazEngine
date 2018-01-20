@@ -13,7 +13,7 @@
 #include "graphic_component.h"
 #include "render_scene.h"
 #include "lua_interface.h"
-#include "factory.h"
+//#include "factory.h"
 
 #define TIWAZ_API __declspec(dllexport)
 
@@ -36,6 +36,8 @@ namespace Tiwaz
 
 	TIWAZ_API int RunEngine();
 	TIWAZ_API int ExitEngine();
+	TIWAZ_API const uint64_t AddObject(EngineObject* object);
+	TIWAZ_API void RemoveObject(uint64_t ID);
 }
 
 namespace Tiwaz::Global

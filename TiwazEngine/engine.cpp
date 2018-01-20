@@ -19,7 +19,7 @@ int Tiwaz::Engine::Run()
 
 		Global::DELTA_TIME = deltatime_timer->DeltaTime();
 
-		std::cout << Global::DELTA_TIME << std::endl;
+		//std::cout << Global::DELTA_TIME << std::endl;
 	}
 
 	Exit();
@@ -35,7 +35,6 @@ void Tiwaz::Engine::Init()
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTMANAGER = new EventSystem::EventsManager;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
-	Global::FACTORY = new Factory::Factory;
 
 	Global::RENDER_WINDOW = new Window::Window;
 
@@ -45,21 +44,7 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
-	Tiwaz::Lua::test();
-
-	Global::FACTORY->RegisterType<Component::MeshComponent>();
-	Global::FACTORY->RegisterType<Component::ModelComponent>();
-
-	//deltatime_timer->Start();
-
-	Component::MeshComponent* meshes[1000];
-
-	for (size_t i = 0; i < 1000; ++i)
-	{
-		Global::FACTORY->ConstructObject("MeshComponent", meshes[i]);
-	}
-
-	//std::cout << deltatime_timer->DeltaTime() << std::endl;
+	//Tiwaz::Lua::test();
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");
@@ -90,9 +75,6 @@ void Tiwaz::Engine::Exit()
 {
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_EXIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_EXIT");
-
-	delete Global::FACTORY;
-	Global::FACTORY = nullptr;
 
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;
@@ -134,4 +116,14 @@ int Tiwaz::ExitEngine()
 	Global::ENGINE = nullptr;
 
 	return 0;
+}
+
+const uint64_t Tiwaz::AddObject(EngineObject* object)
+{
+	return Global::OBJECTMANAGER->AddObject(object);
+}
+
+void Tiwaz::RemoveObject(uint64_t ID)
+{
+	Global::OBJECTMANAGER->RemoveObject(ID);
 }

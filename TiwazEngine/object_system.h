@@ -6,10 +6,11 @@
 #include <deque>
 #include <map>
 #include <type_traits>
+#include <memory>
 
 #include "engine_object.h"
-#include "counter.h"
 #include "message_system.h"
+#include "counter.h"
 
 namespace Tiwaz::ObjectSystem
 {
@@ -18,7 +19,7 @@ namespace Tiwaz::ObjectSystem
 	public:
 		ObjectManager()
 		{
-			m_ID_counter = Counter::Counter(1, 1, 1);
+			
 		}
 
 		~ObjectManager()
@@ -129,7 +130,7 @@ namespace Tiwaz::ObjectSystem
 	private:
 		std::map<uint64_t, EngineObject*> m_objects;
 
-		Counter::Counter m_ID_counter;
+		Counter::Counter m_ID_counter = Counter::Counter(1, 1, 1);
 		std::deque<uint64_t> m_free_IDs;
 	};
 }
