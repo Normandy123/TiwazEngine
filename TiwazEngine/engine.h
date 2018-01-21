@@ -39,6 +39,7 @@ namespace Tiwaz
 	TIWAZ_API int RunEngine();
 	TIWAZ_API int ExitEngine();
 	TIWAZ_API const uint64_t AddObject(EngineObject* object);
+	TIWAZ_API auto CreateObject();
 }
 
 namespace Tiwaz::Global

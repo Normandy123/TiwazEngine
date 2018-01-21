@@ -10,7 +10,7 @@ BOOST_PYTHON_MODULE(TiwazPython)
 	def("ExitEngine", Tiwaz::ExitEngine);
 	
 
-	class_<Tiwaz::EngineObject>("EngineObject")
+	class_<Tiwaz::EngineObject, boost::noncopyable>("EngineObject")
 		.def("Init", &Tiwaz::EngineObject::Init)
 		.def("Update", &Tiwaz::EngineObject::Update)
 		.def("Exit", &Tiwaz::EngineObject::Exit)

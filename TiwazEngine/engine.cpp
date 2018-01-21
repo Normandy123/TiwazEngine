@@ -35,6 +35,7 @@ void Tiwaz::Engine::Init()
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTMANAGER = new EventSystem::EventsManager;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
+	Global::LUA_INTERFACE = new Lua::LuaInterface;
 
 	Global::RENDER_WINDOW = new Window::Window;
 
@@ -47,11 +48,14 @@ void Tiwaz::Engine::Init()
 	Py_Initialize();
 	boost::python::object py_main_module = boost::python::import("__main__");
 	boost::python::object py_main_namespace = py_main_module.attr("__dict__");
-	boost::python::exec("import TiwazPython", py_main_namespace);
-	boost::python::exec("x = TiwazPython.EngineObject()", py_main_namespace);
-	boost::python::exec("TiwazPython.AddObject(x)", py_main_namespace);
-	boost::python::exec("print(x.object_ID)", py_main_namespace);
-	//Tiwaz::Lua::test();
+	boost::python::exec("from TiwazPython import *", py_main_namespace);
+
+	boost::python::object result = boost::python::eval("EngineObject()", py_main_namespace);
+	EngineObject* obj = boost::python::extract<EngineObject*>(result);
+
+	Global::OBJECTMANAGER->AddObject(obj);
+
+	//Global::LUA_INTERFACE->RunScript("");
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");
@@ -83,7 +87,11 @@ void Tiwaz::Engine::Exit()
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_EXIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_EXIT");
 
+	PyGC_Collect();
 	Py_Finalize();
+
+	delete Global::LUA_INTERFACE;
+	Global::LUA_INTERFACE = nullptr;
 
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;

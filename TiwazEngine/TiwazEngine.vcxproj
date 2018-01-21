@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h" />
+    <ClInclude Include="component_holder.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="engine_object.h" />

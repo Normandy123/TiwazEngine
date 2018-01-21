@@ -149,5 +149,8 @@
     <ClInclude Include="factory.h">
       <Filter>Header Files\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="component_holder.h">
+      <Filter>Header Files\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

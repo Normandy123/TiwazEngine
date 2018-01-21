@@ -2,6 +2,7 @@
 
 #include "engine_object.h"
 #include "event_system.h"
+#include "component_holder.h"
 
 namespace Tiwaz::Component
 {

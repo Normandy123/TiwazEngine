@@ -26,7 +26,7 @@ namespace Tiwaz::ObjectSystem
 		{
 			for (auto object_pair : m_objects)
 			{
-				delete object_pair.second;
+				//delete object_pair.second;
 				object_pair.second = nullptr;
 			}
 

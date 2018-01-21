@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 {
 	Tiwaz::RunEngine();
 
-	int result = Tiwaz::ExitEngine();
+	const int result = Tiwaz::ExitEngine();
 
 	return result;
 }
@@ -23,7 +23,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 {
 	Tiwaz::RunEngine();
 
-	int result = Tiwaz::ExitEngine();
+	const int result = Tiwaz::ExitEngine();
 
 	return result;
 }
