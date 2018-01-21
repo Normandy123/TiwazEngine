@@ -8,14 +8,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazApp", "TiwazApp\TiwazApp.vcxproj", "{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53} = {8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}
+		{5102937A-4795-422F-B0AD-CE9DB60E9135} = {5102937A-4795-422F-B0AD-CE9DB60E9135}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazPython", "TiwazPython\TiwazPython.vcxproj", "{5102937A-4795-422F-B0AD-CE9DB60E9135}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53} = {8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}
 	EndProjectSection
-EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TiwazPythonApp", "TiwazPythonApp\TiwazPythonApp.pyproj", "{040988BE-C09D-4C35-BB7A-D2CE09501DC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,12 +56,6 @@ Global
 		{5102937A-4795-422F-B0AD-CE9DB60E9135}.Release|x64.Build.0 = Release|x64
 		{5102937A-4795-422F-B0AD-CE9DB60E9135}.Release|x86.ActiveCfg = Release|Win32
 		{5102937A-4795-422F-B0AD-CE9DB60E9135}.Release|x86.Build.0 = Release|Win32
-		{040988BE-C09D-4C35-BB7A-D2CE09501DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{040988BE-C09D-4C35-BB7A-D2CE09501DC9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{040988BE-C09D-4C35-BB7A-D2CE09501DC9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{040988BE-C09D-4C35-BB7A-D2CE09501DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{040988BE-C09D-4C35-BB7A-D2CE09501DC9}.Release|x64.ActiveCfg = Release|Any CPU
-		{040988BE-C09D-4C35-BB7A-D2CE09501DC9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

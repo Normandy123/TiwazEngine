@@ -15,6 +15,7 @@
 #include "lua_interface.h"
 //#include "factory.h"
 #include <boost/python.hpp>
+#define BOOST_PYTHON_STATIC_LIB
 
 #define TIWAZ_API __declspec(dllexport)
 
@@ -37,7 +38,7 @@ namespace Tiwaz
 
 	TIWAZ_API int RunEngine();
 	TIWAZ_API int ExitEngine();
-	TIWAZ_API const uint64_t AddObject(PyObject* object);
+	TIWAZ_API const uint64_t AddObject(EngineObject* object);
 }
 
 namespace Tiwaz::Global

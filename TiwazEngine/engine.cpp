@@ -47,7 +47,10 @@ void Tiwaz::Engine::Init()
 	Py_Initialize();
 	boost::python::object py_main_module = boost::python::import("__main__");
 	boost::python::object py_main_namespace = py_main_module.attr("__dict__");
-	boost::python::exec_file("test.py", py_main_namespace, py_main_namespace);
+	boost::python::exec("import TiwazPython", py_main_namespace);
+	boost::python::exec("x = TiwazPython.EngineObject()", py_main_namespace);
+	boost::python::exec("TiwazPython.AddObject(x)", py_main_namespace);
+	boost::python::exec("print(x.object_ID)", py_main_namespace);
 	//Tiwaz::Lua::test();
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
@@ -79,6 +82,8 @@ void Tiwaz::Engine::Exit()
 {
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_EXIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_EXIT");
+
+	Py_Finalize();
 
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;
@@ -122,9 +127,7 @@ int Tiwaz::ExitEngine()
 	return 0;
 }
 
-const uint64_t Tiwaz::AddObject(PyObject* object)
+const uint64_t Tiwaz::AddObject(EngineObject* object)
 {
-	//boost::python::incref(object);
-
-	return Global::OBJECTMANAGER->AddObject(boost::python::extract<EngineObject*>(object));
+	return Global::OBJECTMANAGER->AddObject(object);
 }

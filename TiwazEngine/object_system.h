@@ -105,6 +105,7 @@ namespace Tiwaz::ObjectSystem
 			{
 				m_free_IDs.emplace_back(ID);
 				delete m_objects[ID];
+				m_objects[ID] = nullptr;
 				m_objects.erase(ID);
 			}
 			else
