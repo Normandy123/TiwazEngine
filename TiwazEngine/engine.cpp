@@ -19,7 +19,7 @@ int Tiwaz::Engine::Run()
 
 		Global::DELTA_TIME = deltatime_timer->DeltaTime();
 
-		//std::cout << Global::DELTA_TIME << std::endl;
+		std::cout << Global::DELTA_TIME << std::endl;
 	}
 
 	Exit();

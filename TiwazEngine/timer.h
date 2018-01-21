@@ -14,7 +14,7 @@ namespace Tiwaz::Timer
 		void Reset();
 
 		const double DeltaTime();
-		inline const double LastDeltaTime() { return m_last_delta_time; }
+		inline constexpr const double LastDeltaTime() { return m_last_delta_time; }
 
 	private:
 		std::chrono::high_resolution_clock::time_point t1;
