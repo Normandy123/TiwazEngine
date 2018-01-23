@@ -13,7 +13,7 @@
 #include "graphic_component.h"
 #include "render_scene.h"
 #include "lua_interface.h"
-//#include "factory.h"
+#include "factory.h"
 #include <boost/python.hpp>
 #define BOOST_PYTHON_STATIC_LIB
 

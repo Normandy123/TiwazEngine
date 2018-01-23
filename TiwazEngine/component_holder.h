@@ -5,11 +5,6 @@ namespace Tiwaz
 	template<typename T> class Component_Holder
 	{
 	public:
-		Component_Holder()
-		{
-
-		}
-
 		~Component_Holder()
 		{
 			if (object != nullptr)

@@ -10,7 +10,7 @@ namespace Tiwaz::Component
 	{
 	public:
 		Component()
-		{
+		{	
 			Global::EVENTMANAGER->AddHandle("COMPONENT_INIT", this, &Component::Init);
 			Global::EVENTMANAGER->AddHandle("COMPONENT_UPDATE", this, &Component::Update);
 			Global::EVENTMANAGER->AddHandle("COMPONENT_EXIT", this, &Component::Exit);

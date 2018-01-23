@@ -19,7 +19,7 @@ int Tiwaz::Engine::Run()
 
 		Global::DELTA_TIME = deltatime_timer->DeltaTime();
 
-		std::cout << Global::DELTA_TIME << std::endl;
+		//std::cout << Global::DELTA_TIME << std::endl;
 	}
 
 	Exit();
@@ -36,6 +36,7 @@ void Tiwaz::Engine::Init()
 	Global::EVENTMANAGER = new EventSystem::EventsManager;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
 	Global::LUA_INTERFACE = new Lua::LuaInterface;
+	//Global::FACTORY = new Factory::Factory;
 
 	Global::RENDER_WINDOW = new Window::Window;
 
@@ -52,10 +53,6 @@ void Tiwaz::Engine::Init()
 
 	boost::python::object result = boost::python::eval("EngineObject()", py_main_namespace);
 	EngineObject* obj = boost::python::extract<EngineObject*>(result);
-
-	Global::OBJECTMANAGER->AddObject(obj);
-
-	//Global::LUA_INTERFACE->RunScript("");
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");
@@ -92,6 +89,9 @@ void Tiwaz::Engine::Exit()
 
 	delete Global::LUA_INTERFACE;
 	Global::LUA_INTERFACE = nullptr;
+
+	//delete Global::FACTORY;
+	//Global::FACTORY = nullptr;
 
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;

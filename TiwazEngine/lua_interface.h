@@ -1,38 +1,14 @@
 #pragma once
 
 #include <string>
-#include <type_traits>
 
 #define SOL_CHECK_ARGUMENTS 1
 #include <LUA/sol.hpp>
 
-#include "engine_object.h"
-#include "component.h"
-#include "graphic_component.h"
 #include "message_system.h"
 
 namespace Tiwaz::Lua
 {
-	template<typename TObject> const std::string TypeIDToStringName()
-	{
-		const std::string raw_type_name = typeid(TObject).name();
-		std::string type_name; size_t find_pos, diff_pose;
-
-		if (std::is_base_of<EngineObject, T>::value)
-		{
-			find_pos = raw_type_name.find("Tiwaz::");
-			diff_pose = find_pos + 7;
-		}
-
-		if (std::is_base_of<Component::Component, T>::value)
-		{
-			find_pos = raw_type_name.find("Tiwaz::Component::");
-			diff_pose = find_pos + 18;
-		}
-
-		return raw_type_name.substr(diff_pose);
-	};
-
 	class LuaInterface
 	{
 	public:
@@ -50,7 +26,7 @@ namespace Tiwaz::Lua
 		{
 			lua_state.new_usertype<T>
 			(
-				TypeIDToStringName<T>(), sol::constructors<T()>(),
+				lua_name, sol::constructors<T>()
 			);
 		}
 
@@ -75,7 +51,7 @@ namespace Tiwaz::Lua
 			return lua_state[lua_variable_name];
 		}
 
-		constexpr sol::state * AccessLuaState()
+		sol::state* AccessLuaState()
 		{
 			return &lua_state;
 		}
