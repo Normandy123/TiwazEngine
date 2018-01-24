@@ -52,7 +52,7 @@ namespace Tiwaz::ObjectSystem
 				}
 
 				EngineObject* temp_object = new TObject(std::forward<TArgs>(args)...);
-				temp_object->set_object_ID(new_ID);
+				temp_object->SetObjectID(new_ID);
 				m_objects.insert(std::make_pair(new_ID, temp_object));
 
 				temp_object = nullptr;
@@ -84,7 +84,7 @@ namespace Tiwaz::ObjectSystem
 					m_free_IDs.pop_front();
 				}
 
-				object->set_object_ID(new_ID);
+				object->SetObjectID(new_ID);
 				m_objects.insert(std::make_pair(new_ID, object));
 
 				object = nullptr;

@@ -4,9 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>2661fb37-0c97-4764-8076-a8a0cf5e0885</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>TiwazCython.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <StartupFile>test_script.py</StartupFile>
+    <SearchPath>..\TiwazEngine;..\x64\Release;..\x64\Debug;..\TiwazCython</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>TiwazCython</Name>
@@ -21,12 +20,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TiwazCython.py" />
+    <Compile Include="setup.py" />
+    <Compile Include="test_script.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="engine.pyx">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="tiwaz_cython.cp36-win_amd64.pyd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
