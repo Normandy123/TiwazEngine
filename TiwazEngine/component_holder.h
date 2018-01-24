@@ -2,10 +2,10 @@
 
 namespace Tiwaz
 {
-	template<typename T> class Component_Holder
+	template<typename T> class ComponentHolder
 	{
 	public:
-		~Component_Holder()
+		~ComponentHolder()
 		{
 			if (object != nullptr)
 			{

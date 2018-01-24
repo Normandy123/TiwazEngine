@@ -49,10 +49,7 @@ void Tiwaz::Engine::Init()
 	Py_Initialize();
 	boost::python::object py_main_module = boost::python::import("__main__");
 	boost::python::object py_main_namespace = py_main_module.attr("__dict__");
-	boost::python::exec("from TiwazPython import *", py_main_namespace);
-
-	boost::python::object result = boost::python::eval("EngineObject()", py_main_namespace);
-	EngineObject* obj = boost::python::extract<EngineObject*>(result);
+	//boost::python::exec("from TiwazPython import *", py_main_namespace);
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");

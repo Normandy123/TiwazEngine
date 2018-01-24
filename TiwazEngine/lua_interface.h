@@ -51,7 +51,7 @@ namespace Tiwaz::Lua
 			return lua_state[lua_variable_name];
 		}
 
-		sol::state* AccessLuaState()
+		constexpr sol::state* AccessLuaState()
 		{
 			return &lua_state;
 		}

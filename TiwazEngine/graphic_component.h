@@ -41,6 +41,6 @@ namespace Tiwaz::Component
 	class ModelComponent : public GraphicComponent
 	{
 	private:
-		Component_Holder<MeshComponent>* m_mesh;
+		ComponentHolder<MeshComponent>* m_mesh;
 	};
 }

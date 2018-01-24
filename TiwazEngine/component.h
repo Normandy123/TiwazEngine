@@ -23,8 +23,8 @@ namespace Tiwaz::Component
 			Global::EVENTMANAGER->RemoveHandle("COMPONENT_EXIT", this);
 		}
 
-		void Init() {}
-		void Update() {}
-		void Exit() {}
+		virtual void Init() {}
+		virtual void Update() {}
+		virtual void Exit() {}
 	};
 }
