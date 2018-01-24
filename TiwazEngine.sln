@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazApp", "TiwazApp\TiwazA
 		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53} = {8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}
 	EndProjectSection
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TiwazCython", "TiwazCython\TiwazCython.pyproj", "{2661FB37-0C97-4764-8076-A8A0CF5E0885}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,12 @@ Global
 		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x64.Build.0 = Release|x64
 		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x86.ActiveCfg = Release|Win32
 		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x86.Build.0 = Release|Win32
+		{2661FB37-0C97-4764-8076-A8A0CF5E0885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2661FB37-0C97-4764-8076-A8A0CF5E0885}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2661FB37-0C97-4764-8076-A8A0CF5E0885}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2661FB37-0C97-4764-8076-A8A0CF5E0885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2661FB37-0C97-4764-8076-A8A0CF5E0885}.Release|x64.ActiveCfg = Release|Any CPU
+		{2661FB37-0C97-4764-8076-A8A0CF5E0885}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
