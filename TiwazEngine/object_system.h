@@ -104,7 +104,7 @@ namespace Tiwaz::ObjectSystem
 			if (m_objects.find(ID) != m_objects.cend() || (!m_objects.empty()))
 			{
 				m_free_IDs.emplace_back(ID);
-				delete m_objects[ID];
+				//delete m_objects[ID];
 				m_objects[ID] = nullptr;
 				m_objects.erase(ID);
 			}
