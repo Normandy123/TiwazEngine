@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Factory">
       <UniqueIdentifier>{5e63750d-16ff-41bb-8464-3281adfb0b50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Python">
+      <UniqueIdentifier>{a7077215-42b5-4c41-aad0-bc1e01d88531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Python">
+      <UniqueIdentifier>{64ab3df1-09d8-445a-a2cb-ce08be25190a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="component.cpp">
@@ -98,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="factory.cpp">
       <Filter>Source Files\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="python_functions.cpp">
+      <Filter>Source Files\Python</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="component_holder.h">
       <Filter>Header Files\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="python_functions.h">
+      <Filter>Header Files\Python</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

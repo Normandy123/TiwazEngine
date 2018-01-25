@@ -12,12 +12,13 @@
 #include "entity.h"
 #include "graphic_component.h"
 #include "render_scene.h"
-#include "lua_interface.h"
+//#include "lua_interface.h"
 #include "factory.h"
+
+//#define TIWAZ_API __declspec(dllexport)
+
 #include <boost/python.hpp>
 #define BOOST_PYTHON_STATIC_LIB
-
-#define TIWAZ_API __declspec(dllexport)
 
 namespace Tiwaz
 {
@@ -36,10 +37,8 @@ namespace Tiwaz
 		Timer::Timer* deltatime_timer = new Timer::Timer();
 	};
 
-	TIWAZ_API int RunEngine();
-	TIWAZ_API int ExitEngine();
-	TIWAZ_API const uint64_t AddObject(EngineObject* object);
-	TIWAZ_API auto CreateObject();
+	extern int RunEngine();
+	extern int ExitEngine();
 }
 
 namespace Tiwaz::Global

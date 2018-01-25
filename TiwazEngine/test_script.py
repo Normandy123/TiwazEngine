@@ -1,5 +1,3 @@
-from tiwaz_cython import *
+import tiwaz_cython
 
-y = PyObjectManager()
-
-create_objects(10000, y)
+tiwaz_cython.create_objects(10000)

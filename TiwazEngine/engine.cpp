@@ -35,7 +35,7 @@ void Tiwaz::Engine::Init()
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTMANAGER = new EventSystem::EventsManager;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
-	Global::LUA_INTERFACE = new Lua::LuaInterface;
+	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
 
 	Global::RENDER_WINDOW = new Window::Window;
@@ -84,8 +84,8 @@ void Tiwaz::Engine::Exit()
 	PyGC_Collect();
 	Py_Finalize();
 
-	delete Global::LUA_INTERFACE;
-	Global::LUA_INTERFACE = nullptr;
+	//delete Global::LUA_INTERFACE;
+	//Global::LUA_INTERFACE = nullptr;
 
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
@@ -130,9 +130,4 @@ int Tiwaz::ExitEngine()
 	Global::ENGINE = nullptr;
 
 	return 0;
-}
-
-const uint64_t Tiwaz::AddObject(EngineObject* object)
-{
-	return Global::OBJECTMANAGER->AddObject(object);
 }
