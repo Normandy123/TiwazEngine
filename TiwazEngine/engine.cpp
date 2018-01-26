@@ -46,10 +46,12 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
+	/*
 	Py_Initialize();
 	boost::python::object py_main_module = boost::python::import("__main__");
 	boost::python::object py_main_namespace = py_main_module.attr("__dict__");
-	//boost::python::exec("from TiwazPython import *", py_main_namespace);
+	boost::python::exec("from TiwazPython import *", py_main_namespace);
+	*/
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");
@@ -81,8 +83,8 @@ void Tiwaz::Engine::Exit()
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_EXIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_EXIT");
 
-	PyGC_Collect();
-	Py_Finalize();
+	//PyGC_Collect();
+	//Py_Finalize();
 
 	//delete Global::LUA_INTERFACE;
 	//Global::LUA_INTERFACE = nullptr;

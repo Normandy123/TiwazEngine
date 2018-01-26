@@ -17,8 +17,8 @@
 
 //#define TIWAZ_API __declspec(dllexport)
 
-#include <boost/python.hpp>
-#define BOOST_PYTHON_STATIC_LIB
+//#include <boost/python.hpp>
+//#define BOOST_PYTHON_STATIC_LIB
 
 namespace Tiwaz
 {

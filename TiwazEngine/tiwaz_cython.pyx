@@ -1,5 +1,5 @@
 # distutils: language = c++
-# distutils: extra_compile_args = /std:c++17
+# distutils: extra_compile_args = /std:c++latest
 # distutils: include_dirs = [Include]
 # distutils: library_dirs = [Lib, C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release]
 # distutils: libraries = [TiwazEngine, glew32, glew32s, opengl32, gdi32, user32]
@@ -28,21 +28,23 @@ cdef class PyEngineObject:
 	def set_object_ID(self, const unsigned long long & ID):
 		self.c_engineobject.SetObjectID(ID)
 	def object_ID(self):
-		return self.c_engineobject.object_ID()	
-	
-"""
+		return self.c_engineobject.object_ID()		
+
 cdef extern from "engine.h" namespace "Tiwaz":
-	cdef int RunEngine()
+	int RunEngine()
+	int ExitEngine()
 	
-cdef extern from "engine.h" namespace "Tiwaz":
-	cdef int ExitEngine()
-"""
+def run_engine():
+	return RunEngine()
+
+def int exit_engine():
+	return ExitEngine()
 	
 cdef extern from "python_functions.h" namespace "Tiwaz::Python":
-	cdef const unsigned long long AddObject(EngineObject* obj)	
+	const unsigned long long AddObject(EngineObject* obj)	
 	
-cpdef void create_objects(unsigned int count):
-	cdef unsigned int i = 0
+cpdef void create_objects(size_t count):
+	cdef size_t i = 0
 	cdef EngineObject* temp	
 	for i in range(count):	
 		temp = new EngineObject()
