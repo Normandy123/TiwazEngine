@@ -19,8 +19,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="data\lua\map_init.lua" />
-    <None Include="data\lua\entities\test_entity.lua" />
-  </ItemGroup>
 </Project>
