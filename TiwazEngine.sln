@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazEngine", "TiwazEngine\TiwazEngine.vcxproj", "{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}"
 EndProject
@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiwazApp", "TiwazApp\TiwazA
 	ProjectSection(ProjectDependencies) = postProject
 		{8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53} = {8FB18537-A4F8-4689-8E2E-DF9C8E2D9D53}
 	EndProjectSection
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TiwazPython", "TiwazPython\TiwazPython.pyproj", "{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,12 @@ Global
 		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x64.Build.0 = Release|x64
 		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x86.ActiveCfg = Release|Win32
 		{BDF04468-6A9D-4AA0-93B5-34A80CD58B0D}.Release|x86.Build.0 = Release|Win32
+		{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}.Release|x64.ActiveCfg = Release|Any CPU
+		{94A93796-FCD7-4F04-B7DF-E30A982BE3CF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
