@@ -1,8 +1,5 @@
 # distutils: language = c++
 # distutils: extra_compile_args = [/std:c++latest, /Ox]
-# distutils: include_dirs = [Include]
-# distutils: library_dirs = [Lib, C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release]
-# distutils: libraries = [TiwazEngine, glew32, glew32s, opengl32, gdi32, user32]
 
 cdef extern from "engine_object.h" namespace "Tiwaz":
 	cdef cppclass EngineObject:
