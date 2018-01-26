@@ -131,6 +131,10 @@
       <SubSystem>
       </SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>cd C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release
+cython_build.bat</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="component.cpp" />

@@ -10,7 +10,7 @@
     <OutputPath>.</OutputPath>
     <Name>TiwazPython</Name>
     <RootNamespace>TiwazPython</RootNamespace>
-    <IsWindowsApplication>False</IsWindowsApplication>
+    <IsWindowsApplication>True</IsWindowsApplication>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <EnableNativeCodeDebugging>True</EnableNativeCodeDebugging>
