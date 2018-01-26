@@ -9,7 +9,8 @@
             "python_functions.h"
         ],
         "extra_compile_args": [
-            "/std:c++latest"
+            "/std:c++latest",
+            "/Ox"
         ],
         "include_dirs": [
             "Include"
@@ -2213,7 +2214,7 @@ static int __pyx_pymod_exec_tiwaz_cython(PyObject *__pyx_pyinit_module)
 
   /* "tiwaz_cython.pyx":1
  * # distutils: language = c++             # <<<<<<<<<<<<<<
- * # distutils: extra_compile_args = /std:c++latest
+ * # distutils: extra_compile_args = [/std:c++latest, /Ox]
  * # distutils: include_dirs = [Include]
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)

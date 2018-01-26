@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>2661fb37-0c97-4764-8076-a8a0cf5e0885</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>test_script.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>..\x64\Release;..\x64\Debug;..\TiwazEngine</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -19,11 +20,6 @@
     <DebugSymbols>true</DebugSymbols>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="test_script.py">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <Content Include="tiwaz_cython.cp36-win_amd64.pyd" />
   </ItemGroup>

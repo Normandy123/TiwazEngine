@@ -1,5 +1,5 @@
 # distutils: language = c++
-# distutils: extra_compile_args = /std:c++latest
+# distutils: extra_compile_args = [/std:c++latest, /Ox]
 # distutils: include_dirs = [Include]
 # distutils: library_dirs = [Lib, C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release]
 # distutils: libraries = [TiwazEngine, glew32, glew32s, opengl32, gdi32, user32]
@@ -34,10 +34,10 @@ cdef extern from "engine.h" namespace "Tiwaz":
 	int RunEngine()
 	int ExitEngine()
 	
-def run_engine():
+cpdef int run_engine():
 	return RunEngine()
 
-def int exit_engine():
+cpdef int exit_engine():
 	return ExitEngine()
 	
 cdef extern from "python_functions.h" namespace "Tiwaz::Python":
