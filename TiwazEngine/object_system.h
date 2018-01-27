@@ -128,6 +128,11 @@ namespace Tiwaz::ObjectSystem
 			return nullptr;
 		}
 
+		const std::map<uint64_t, EngineObject*> Objects()
+		{
+			return m_objects;
+		}
+
 	private:
 		std::map<uint64_t, EngineObject*> m_objects;
 

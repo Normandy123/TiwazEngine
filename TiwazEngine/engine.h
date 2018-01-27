@@ -12,10 +12,11 @@
 #include "entity.h"
 #include "graphic_component.h"
 #include "render_scene.h"
-//#include "lua_interface.h"
 #include "factory.h"
 
 //#define TIWAZ_API __declspec(dllexport)
+
+//#include "lua_interface.h"
 
 //#include <boost/python.hpp>
 //#define BOOST_PYTHON_STATIC_LIB

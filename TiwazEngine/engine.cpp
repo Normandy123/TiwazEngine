@@ -8,6 +8,10 @@ Tiwaz::Engine::~Engine()
 
 int Tiwaz::Engine::Run()
 {
+	std::mutex run_loop_mutex;
+
+	std::lock_guard<std::mutex> run_loop_lock(run_loop_mutex);
+
 	Init();
 
 	while (!Global::SHOULD_EXIT)
@@ -92,6 +96,8 @@ void Tiwaz::Engine::Exit()
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
 
+	Global::RENDER_WINDOW->TiwazDestroyWindow();
+
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;
 
@@ -100,8 +106,6 @@ void Tiwaz::Engine::Exit()
 
 	delete Global::EVENTMANAGER;
 	Global::EVENTMANAGER = nullptr;
-
-	Global::RENDER_WINDOW->TiwazDestroyWindow();
 
 	delete Global::RENDER_WINDOW;
 	Global::RENDER_WINDOW = nullptr;
