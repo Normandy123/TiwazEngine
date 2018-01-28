@@ -46,7 +46,7 @@ cdef extern from "python_functions.h" namespace "Tiwaz::Python":
 	cdef const unsigned long long AddObject(EngineObject* obj)
 	cdef const vector[EngineObject*] Objects()
 	
-cpdef void create_objects(size_t count):
+cpdef create_objects(size_t count):
 	cdef size_t i = 0
 	cdef EngineObject* temp	
 	for i in range(count):	

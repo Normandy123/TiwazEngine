@@ -938,11 +938,6 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
 /* SetupReduce.proto */
 static int __Pyx_setup_reduce(PyObject* type_obj);
 
@@ -1058,7 +1053,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'tiwaz_cython' */
 static PyTypeObject *__pyx_ptype_12tiwaz_cython_PyEngineObject = 0;
-static void __pyx_f_12tiwaz_cython_create_objects(size_t, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_12tiwaz_cython_create_objects(size_t, int __pyx_skip_dispatch); /*proto*/
 #define __Pyx_MODULE_NAME "tiwaz_cython"
 extern int __pyx_module_is_main_tiwaz_cython;
 int __pyx_module_is_main_tiwaz_cython = 0;
@@ -1728,15 +1723,16 @@ static PyObject *__pyx_pf_12tiwaz_cython_2exit_engine(CYTHON_UNUSED PyObject *__
 /* "tiwaz_cython.pyx":49
  * 	cdef const vector[EngineObject*] Objects()
  * 
- * cpdef void create_objects(size_t count):             # <<<<<<<<<<<<<<
+ * cpdef create_objects(size_t count):             # <<<<<<<<<<<<<<
  * 	cdef size_t i = 0
  * 	cdef EngineObject* temp
  */
 
 static PyObject *__pyx_pw_12tiwaz_cython_5create_objects(PyObject *__pyx_self, PyObject *__pyx_arg_count); /*proto*/
-static void __pyx_f_12tiwaz_cython_create_objects(size_t __pyx_v_count, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_f_12tiwaz_cython_create_objects(size_t __pyx_v_count, CYTHON_UNUSED int __pyx_skip_dispatch) {
   CYTHON_UNUSED size_t __pyx_v_i;
   Tiwaz::EngineObject *__pyx_v_temp;
+  PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   size_t __pyx_t_1;
   size_t __pyx_t_2;
@@ -1745,7 +1741,7 @@ static void __pyx_f_12tiwaz_cython_create_objects(size_t __pyx_v_count, CYTHON_U
 
   /* "tiwaz_cython.pyx":50
  * 
- * cpdef void create_objects(size_t count):
+ * cpdef create_objects(size_t count):
  * 	cdef size_t i = 0             # <<<<<<<<<<<<<<
  * 	cdef EngineObject* temp
  * 	for i in range(count):
@@ -1788,17 +1784,21 @@ static void __pyx_f_12tiwaz_cython_create_objects(size_t __pyx_v_count, CYTHON_U
   /* "tiwaz_cython.pyx":49
  * 	cdef const vector[EngineObject*] Objects()
  * 
- * cpdef void create_objects(size_t count):             # <<<<<<<<<<<<<<
+ * cpdef create_objects(size_t count):             # <<<<<<<<<<<<<<
  * 	cdef size_t i = 0
  * 	cdef EngineObject* temp
  */
 
   /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("tiwaz_cython.create_objects", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_AddTraceback("tiwaz_cython.create_objects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
   __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
+  return __pyx_r;
 }
 
 /* Python wrapper */
@@ -1830,7 +1830,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_4create_objects(CYTHON_UNUSED PyObject 
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("create_objects", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_f_12tiwaz_cython_create_objects(__pyx_v_count, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 49, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12tiwaz_cython_create_objects(__pyx_v_count, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2575,48 +2575,6 @@ bad:
     return;
 }
 #endif
-
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
-}
 
 /* SetupReduce */
 static int __Pyx_setup_reduce_is_named(PyObject* meth, PyObject* name) {
