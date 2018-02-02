@@ -18,9 +18,6 @@
 
 //#include "lua_interface.h"
 
-//#include <boost/python.hpp>
-//#define BOOST_PYTHON_STATIC_LIB
-
 namespace Tiwaz
 {
 	class Engine

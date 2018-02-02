@@ -4,6 +4,7 @@
 # distutils: library_dirs = [C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\TiwazEngine\Lib, C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release]
 # distutils: libraries = [TiwazEngine, glew32, opengl32, gdi32, user32]
 
+from libc.stdint cimport uint64_t
 from libcpp.vector cimport vector
 
 cdef extern from "engine_object.h" namespace "Tiwaz":
@@ -12,8 +13,8 @@ cdef extern from "engine_object.h" namespace "Tiwaz":
 		void Init()
 		void Update()
 		void Exit()
-		void SetObjectID(const unsigned long long & ID)
-		const unsigned long long object_ID()
+		void SetObjectID(const uint64_t & ID)
+		const uint64_t object_ID()
 
 cdef class PyEngineObject:
 	cdef EngineObject* c_engineobject
@@ -27,7 +28,7 @@ cdef class PyEngineObject:
 		self.c_engineobject.Update()
 	def exit(self):
 		self.c_engineobject.Exit()
-	def set_object_ID(self, const unsigned long long & ID):
+	def set_object_ID(self, const uint64_t & ID):
 		self.c_engineobject.SetObjectID(ID)
 	def object_ID(self):
 		return self.c_engineobject.object_ID()		
@@ -41,14 +42,3 @@ def run_engine():
 
 def exit_engine():
 	return ExitEngine()
-		
-cdef extern from "python_functions.h" namespace "Tiwaz::Python":
-	cdef const unsigned long long AddObject(EngineObject* obj)
-	cdef const vector[EngineObject*] Objects()
-	
-cpdef void create_objects(size_t count):
-	cdef size_t i = 0
-	cdef EngineObject* temp	
-	for i in range(count):	
-		temp = new EngineObject()
-		AddObject(temp)

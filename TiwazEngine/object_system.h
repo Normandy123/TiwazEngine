@@ -69,7 +69,7 @@ namespace Tiwaz::ObjectSystem
 
 		const uint64_t AddObject(EngineObject* object)
 		{
-			if (object != nullptr)
+			if (object != nullptr && (m_objects.find(object->object_ID()) == m_objects.cend()))
 			{
 				uint64_t new_ID = 0;
 
