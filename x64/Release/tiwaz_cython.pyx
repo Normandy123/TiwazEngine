@@ -12,9 +12,18 @@ cdef extern from "engine.h" namespace "Tiwaz":
 	int ExitEngine()
 	
 def run_engine():
-	return RunEngine()
+	cdef int result = RunEngine()
+
+	global global_OBJECTMANAGER
+	
+	global_OBJECTMANAGER  = PyObjectManager()
+	return result
 
 def exit_engine():
+	global global_OBJECTMANAGER
+
+	del global_OBJECTMANAGER
+
 	return ExitEngine()
 
 cdef extern from "object_system.h" namespace "Tiwaz::ObjectSystem":
@@ -54,7 +63,7 @@ cdef class PyObjectManager:
 				self.c_object_manager.RemoveObject(ID)
 				del obj
 				break
-		
+				
 cdef class PyEngineObject:
 	cdef EngineObject* c_engineobject
 	def __cinit__(self):

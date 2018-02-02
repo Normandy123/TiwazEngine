@@ -791,7 +791,7 @@ static const char *__pyx_f[] = {
 struct __pyx_obj_12tiwaz_cython_PyObjectManager;
 struct __pyx_obj_12tiwaz_cython_PyEngineObject;
 
-/* "tiwaz_cython.pyx":38
+/* "tiwaz_cython.pyx":47
  * 		const uint64_t object_ID()
  * 
  * cdef class PyObjectManager:             # <<<<<<<<<<<<<<
@@ -804,7 +804,7 @@ struct __pyx_obj_12tiwaz_cython_PyObjectManager {
 };
 
 
-/* "tiwaz_cython.pyx":58
+/* "tiwaz_cython.pyx":67
  * 				break
  * 
  * cdef class PyEngineObject:             # <<<<<<<<<<<<<<
@@ -900,6 +900,31 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject
 /* GetBuiltinName.proto */
 static PyObject *__Pyx_GetBuiltinName(PyObject *name);
 
+/* PyObjectCall.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
+#else
+#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
+#endif
+
+/* PyObjectSetAttrStr.proto */
+#if CYTHON_USE_TYPE_SLOTS
+#define __Pyx_PyObject_DelAttrStr(o,n) __Pyx_PyObject_SetAttrStr(o,n,NULL)
+static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr_name, PyObject* value) {
+    PyTypeObject* tp = Py_TYPE(obj);
+    if (likely(tp->tp_setattro))
+        return tp->tp_setattro(obj, attr_name, value);
+#if PY_MAJOR_VERSION < 3
+    if (likely(tp->tp_setattr))
+        return tp->tp_setattr(obj, PyString_AS_STRING(attr_name), value);
+#endif
+    return PyObject_SetAttr(obj, attr_name, value);
+}
+#else
+#define __Pyx_PyObject_DelAttrStr(o,n)   PyObject_DelAttr(o,n)
+#define __Pyx_PyObject_SetAttrStr(o,n,v) PyObject_SetAttr(o,n,v)
+#endif
+
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -946,13 +971,6 @@ static PyObject *__Pyx_PyFunction_FastCallDict(PyObject *func, PyObject **args, 
 #else
 #define __Pyx_PyFunction_FastCallDict(func, args, nargs, kwargs) _PyFunction_FastCallDict(func, args, nargs, kwargs)
 #endif
-#endif
-
-/* PyObjectCall.proto */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
-#else
-#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
 #endif
 
 /* PyObjectCallMethO.proto */
@@ -1143,6 +1161,7 @@ static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_append[] = "append";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_remove[] = "remove";
+static const char __pyx_k_result[] = "result";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_TypeError[] = "TypeError";
@@ -1156,12 +1175,14 @@ static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_tiwaz_cython_pyx[] = "tiwaz_cython.pyx";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_global_OBJECTMANAGER[] = "global_OBJECTMANAGER";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
 static PyObject *__pyx_n_s_TypeError;
 static PyObject *__pyx_n_s_append;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_exit_engine;
 static PyObject *__pyx_n_s_getstate;
+static PyObject *__pyx_n_s_global_OBJECTMANAGER;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
@@ -1171,6 +1192,7 @@ static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
 static PyObject *__pyx_n_s_remove;
+static PyObject *__pyx_n_s_result;
 static PyObject *__pyx_n_s_run_engine;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
@@ -1200,14 +1222,15 @@ static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
-static PyObject *__pyx_codeobj__5;
+static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_codeobj__6;
+static PyObject *__pyx_codeobj__7;
 
 /* "tiwaz_cython.pyx":14
  * 	int ExitEngine()
  * 
  * def run_engine():             # <<<<<<<<<<<<<<
- * 	return RunEngine()
+ * 	cdef int result = RunEngine()
  * 
  */
 
@@ -1226,6 +1249,7 @@ static PyObject *__pyx_pw_12tiwaz_cython_1run_engine(PyObject *__pyx_self, CYTHO
 }
 
 static PyObject *__pyx_pf_12tiwaz_cython_run_engine(CYTHON_UNUSED PyObject *__pyx_self) {
+  int __pyx_v_result;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1234,12 +1258,33 @@ static PyObject *__pyx_pf_12tiwaz_cython_run_engine(CYTHON_UNUSED PyObject *__py
   /* "tiwaz_cython.pyx":15
  * 
  * def run_engine():
- * 	return RunEngine()             # <<<<<<<<<<<<<<
+ * 	cdef int result = RunEngine()             # <<<<<<<<<<<<<<
+ * 
+ * 	global global_OBJECTMANAGER
+ */
+  __pyx_v_result = Tiwaz::RunEngine();
+
+  /* "tiwaz_cython.pyx":19
+ * 	global global_OBJECTMANAGER
+ * 
+ * 	global_OBJECTMANAGER  = PyObjectManager()             # <<<<<<<<<<<<<<
+ * 	return result
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_12tiwaz_cython_PyObjectManager), __pyx_empty_tuple, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_global_OBJECTMANAGER, __pyx_t_1) < 0) __PYX_ERR(1, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "tiwaz_cython.pyx":20
+ * 
+ * 	global_OBJECTMANAGER  = PyObjectManager()
+ * 	return result             # <<<<<<<<<<<<<<
  * 
  * def exit_engine():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(Tiwaz::RunEngine()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_result); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1249,7 +1294,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_run_engine(CYTHON_UNUSED PyObject *__py
  * 	int ExitEngine()
  * 
  * def run_engine():             # <<<<<<<<<<<<<<
- * 	return RunEngine()
+ * 	cdef int result = RunEngine()
  * 
  */
 
@@ -1264,11 +1309,11 @@ static PyObject *__pyx_pf_12tiwaz_cython_run_engine(CYTHON_UNUSED PyObject *__py
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":17
- * 	return RunEngine()
+/* "tiwaz_cython.pyx":22
+ * 	return result
  * 
  * def exit_engine():             # <<<<<<<<<<<<<<
- * 	return ExitEngine()
+ * 	global global_OBJECTMANAGER
  * 
  */
 
@@ -1292,25 +1337,34 @@ static PyObject *__pyx_pf_12tiwaz_cython_2exit_engine(CYTHON_UNUSED PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("exit_engine", 0);
 
-  /* "tiwaz_cython.pyx":18
+  /* "tiwaz_cython.pyx":25
+ * 	global global_OBJECTMANAGER
  * 
- * def exit_engine():
+ * 	del global_OBJECTMANAGER             # <<<<<<<<<<<<<<
+ * 
+ * 	return ExitEngine()
+ */
+  if (__Pyx_PyObject_DelAttrStr(__pyx_m, __pyx_n_s_global_OBJECTMANAGER) < 0) __PYX_ERR(1, 25, __pyx_L1_error)
+
+  /* "tiwaz_cython.pyx":27
+ * 	del global_OBJECTMANAGER
+ * 
  * 	return ExitEngine()             # <<<<<<<<<<<<<<
  * 
  * cdef extern from "object_system.h" namespace "Tiwaz::ObjectSystem":
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(Tiwaz::ExitEngine()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(Tiwaz::ExitEngine()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "tiwaz_cython.pyx":17
- * 	return RunEngine()
+  /* "tiwaz_cython.pyx":22
+ * 	return result
  * 
  * def exit_engine():             # <<<<<<<<<<<<<<
- * 	return ExitEngine()
+ * 	global global_OBJECTMANAGER
  * 
  */
 
@@ -1325,7 +1379,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_2exit_engine(CYTHON_UNUSED PyObject *__
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":43
+/* "tiwaz_cython.pyx":52
  * 	py_objects = []
  * 
  * 	def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -1354,7 +1408,7 @@ static int __pyx_pf_12tiwaz_cython_15PyObjectManager___cinit__(struct __pyx_obj_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "tiwaz_cython.pyx":44
+  /* "tiwaz_cython.pyx":53
  * 
  * 	def __cinit__(self):
  * 		self.c_object_manager = OBJECTMANAGER             # <<<<<<<<<<<<<<
@@ -1363,7 +1417,7 @@ static int __pyx_pf_12tiwaz_cython_15PyObjectManager___cinit__(struct __pyx_obj_
  */
   __pyx_v_self->c_object_manager = Tiwaz::Global::OBJECTMANAGER;
 
-  /* "tiwaz_cython.pyx":43
+  /* "tiwaz_cython.pyx":52
  * 	py_objects = []
  * 
  * 	def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -1377,7 +1431,7 @@ static int __pyx_pf_12tiwaz_cython_15PyObjectManager___cinit__(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":45
+/* "tiwaz_cython.pyx":54
  * 	def __cinit__(self):
  * 		self.c_object_manager = OBJECTMANAGER
  * 	def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1400,7 +1454,7 @@ static void __pyx_pf_12tiwaz_cython_15PyObjectManager_2__dealloc__(struct __pyx_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "tiwaz_cython.pyx":46
+  /* "tiwaz_cython.pyx":55
  * 		self.c_object_manager = OBJECTMANAGER
  * 	def __dealloc__(self):
  * 		self.c_object_manager = NULL             # <<<<<<<<<<<<<<
@@ -1409,7 +1463,7 @@ static void __pyx_pf_12tiwaz_cython_15PyObjectManager_2__dealloc__(struct __pyx_
  */
   __pyx_v_self->c_object_manager = NULL;
 
-  /* "tiwaz_cython.pyx":45
+  /* "tiwaz_cython.pyx":54
  * 	def __cinit__(self):
  * 		self.c_object_manager = OBJECTMANAGER
  * 	def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1421,7 +1475,7 @@ static void __pyx_pf_12tiwaz_cython_15PyObjectManager_2__dealloc__(struct __pyx_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "tiwaz_cython.pyx":47
+/* "tiwaz_cython.pyx":56
  * 	def __dealloc__(self):
  * 		self.c_object_manager = NULL
  * 	def add_object(self, obj : PyEngineObject):             # <<<<<<<<<<<<<<
@@ -1435,7 +1489,7 @@ static PyObject *__pyx_pw_12tiwaz_cython_15PyObjectManager_5add_object(PyObject 
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("add_object (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_obj), __pyx_ptype_12tiwaz_cython_PyEngineObject, 1, "obj", 0))) __PYX_ERR(1, 47, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_obj), __pyx_ptype_12tiwaz_cython_PyEngineObject, 1, "obj", 0))) __PYX_ERR(1, 56, __pyx_L1_error)
   __pyx_r = __pyx_pf_12tiwaz_cython_15PyObjectManager_4add_object(((struct __pyx_obj_12tiwaz_cython_PyObjectManager *)__pyx_v_self), ((struct __pyx_obj_12tiwaz_cython_PyEngineObject *)__pyx_v_obj));
 
   /* function exit code */
@@ -1454,19 +1508,19 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_4add_object(struct __
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("add_object", 0);
 
-  /* "tiwaz_cython.pyx":48
+  /* "tiwaz_cython.pyx":57
  * 		self.c_object_manager = NULL
  * 	def add_object(self, obj : PyEngineObject):
  * 		self.py_objects.append(obj)             # <<<<<<<<<<<<<<
  * 		self.c_object_manager.AddObject(obj.c_engineobject)
  * 	def remove_object(self, const uint64_t & ID):
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_py_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_py_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_t_1, ((PyObject *)__pyx_v_obj)); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(1, 48, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_t_1, ((PyObject *)__pyx_v_obj)); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tiwaz_cython.pyx":49
+  /* "tiwaz_cython.pyx":58
  * 	def add_object(self, obj : PyEngineObject):
  * 		self.py_objects.append(obj)
  * 		self.c_object_manager.AddObject(obj.c_engineobject)             # <<<<<<<<<<<<<<
@@ -1475,7 +1529,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_4add_object(struct __
  */
   __pyx_v_self->c_object_manager->AddObject(__pyx_v_obj->c_engineobject);
 
-  /* "tiwaz_cython.pyx":47
+  /* "tiwaz_cython.pyx":56
  * 	def __dealloc__(self):
  * 		self.c_object_manager = NULL
  * 	def add_object(self, obj : PyEngineObject):             # <<<<<<<<<<<<<<
@@ -1496,7 +1550,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_4add_object(struct __
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":50
+/* "tiwaz_cython.pyx":59
  * 		self.py_objects.append(obj)
  * 		self.c_object_manager.AddObject(obj.c_engineobject)
  * 	def remove_object(self, const uint64_t & ID):             # <<<<<<<<<<<<<<
@@ -1512,7 +1566,7 @@ static PyObject *__pyx_pw_12tiwaz_cython_15PyObjectManager_7remove_object(PyObje
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("remove_object (wrapper)", 0);
   assert(__pyx_arg_ID); {
-    __pyx_v_ID = __Pyx_PyInt_As_uint64_t(__pyx_arg_ID); if (unlikely((__pyx_v_ID == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(1, 50, __pyx_L3_error)
+    __pyx_v_ID = __Pyx_PyInt_As_uint64_t(__pyx_arg_ID); if (unlikely((__pyx_v_ID == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(1, 59, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -1541,22 +1595,22 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("remove_object", 0);
 
-  /* "tiwaz_cython.pyx":51
+  /* "tiwaz_cython.pyx":60
  * 		self.c_object_manager.AddObject(obj.c_engineobject)
  * 	def remove_object(self, const uint64_t & ID):
  * 		for obj in self.py_objects:             # <<<<<<<<<<<<<<
  * 			if obj.object_ID() == ID:
  * 				self.py_objects.remove(obj)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_py_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 51, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_py_objects); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
     __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 51, __pyx_L1_error)
+    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 51, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 60, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -1564,17 +1618,17 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(1, 51, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(1, 60, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 51, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(1, 51, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(1, 60, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 51, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -1584,7 +1638,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 51, __pyx_L1_error)
+          else __PYX_ERR(1, 60, __pyx_L1_error)
         }
         break;
       }
@@ -1593,14 +1647,14 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
     __Pyx_XDECREF_SET(__pyx_v_obj, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "tiwaz_cython.pyx":52
+    /* "tiwaz_cython.pyx":61
  * 	def remove_object(self, const uint64_t & ID):
  * 		for obj in self.py_objects:
  * 			if obj.object_ID() == ID:             # <<<<<<<<<<<<<<
  * 				self.py_objects.remove(obj)
  * 				self.c_object_manager.RemoveObject(ID)
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_object_ID); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 52, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_object_ID); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -1613,32 +1667,32 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
       }
     }
     if (__pyx_t_6) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 61, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
-      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 61, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyInt_From_uint64_t(__pyx_v_ID); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 52, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_uint64_t(__pyx_v_ID); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = PyObject_RichCompare(__pyx_t_1, __pyx_t_5, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 52, __pyx_L1_error)
+    __pyx_t_6 = PyObject_RichCompare(__pyx_t_1, __pyx_t_5, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 61, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(1, 52, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(1, 61, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     if (__pyx_t_7) {
 
-      /* "tiwaz_cython.pyx":53
+      /* "tiwaz_cython.pyx":62
  * 		for obj in self.py_objects:
  * 			if obj.object_ID() == ID:
  * 				self.py_objects.remove(obj)             # <<<<<<<<<<<<<<
  * 				self.c_object_manager.RemoveObject(ID)
  * 				del obj
  */
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_py_objects); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 53, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_py_objects); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 62, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_remove); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 53, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_remove); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 62, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_5 = NULL;
@@ -1652,13 +1706,13 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_obj); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 53, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_obj); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 62, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_obj};
-          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 53, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 62, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
@@ -1666,19 +1720,19 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_obj};
-          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 53, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 62, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
         #endif
         {
-          __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 53, __pyx_L1_error)
+          __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 62, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_5); __pyx_t_5 = NULL;
           __Pyx_INCREF(__pyx_v_obj);
           __Pyx_GIVEREF(__pyx_v_obj);
           PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_v_obj);
-          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 53, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 62, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         }
@@ -1686,7 +1740,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "tiwaz_cython.pyx":54
+      /* "tiwaz_cython.pyx":63
  * 			if obj.object_ID() == ID:
  * 				self.py_objects.remove(obj)
  * 				self.c_object_manager.RemoveObject(ID)             # <<<<<<<<<<<<<<
@@ -1695,7 +1749,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
  */
       __pyx_v_self->c_object_manager->RemoveObject(__pyx_v_ID);
 
-      /* "tiwaz_cython.pyx":55
+      /* "tiwaz_cython.pyx":64
  * 				self.py_objects.remove(obj)
  * 				self.c_object_manager.RemoveObject(ID)
  * 				del obj             # <<<<<<<<<<<<<<
@@ -1705,7 +1759,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
       __Pyx_DECREF(__pyx_v_obj);
       __pyx_v_obj = NULL;
 
-      /* "tiwaz_cython.pyx":56
+      /* "tiwaz_cython.pyx":65
  * 				self.c_object_manager.RemoveObject(ID)
  * 				del obj
  * 				break             # <<<<<<<<<<<<<<
@@ -1714,7 +1768,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
  */
       goto __pyx_L4_break;
 
-      /* "tiwaz_cython.pyx":52
+      /* "tiwaz_cython.pyx":61
  * 	def remove_object(self, const uint64_t & ID):
  * 		for obj in self.py_objects:
  * 			if obj.object_ID() == ID:             # <<<<<<<<<<<<<<
@@ -1723,7 +1777,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
  */
     }
 
-    /* "tiwaz_cython.pyx":51
+    /* "tiwaz_cython.pyx":60
  * 		self.c_object_manager.AddObject(obj.c_engineobject)
  * 	def remove_object(self, const uint64_t & ID):
  * 		for obj in self.py_objects:             # <<<<<<<<<<<<<<
@@ -1734,7 +1788,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_6remove_object(struct
   __pyx_L4_break:;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "tiwaz_cython.pyx":50
+  /* "tiwaz_cython.pyx":59
  * 		self.py_objects.append(obj)
  * 		self.c_object_manager.AddObject(obj.c_engineobject)
  * 	def remove_object(self, const uint64_t & ID):             # <<<<<<<<<<<<<<
@@ -1867,7 +1921,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_15PyObjectManager_10__setstate_cython__
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":60
+/* "tiwaz_cython.pyx":69
  * cdef class PyEngineObject:
  * 	cdef EngineObject* c_engineobject
  * 	def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -1897,7 +1951,7 @@ static int __pyx_pf_12tiwaz_cython_14PyEngineObject___cinit__(struct __pyx_obj_1
   Tiwaz::EngineObject *__pyx_t_1;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "tiwaz_cython.pyx":61
+  /* "tiwaz_cython.pyx":70
  * 	cdef EngineObject* c_engineobject
  * 	def __cinit__(self):
  * 		self.c_engineobject = new EngineObject()             # <<<<<<<<<<<<<<
@@ -1908,11 +1962,11 @@ static int __pyx_pf_12tiwaz_cython_14PyEngineObject___cinit__(struct __pyx_obj_1
     __pyx_t_1 = new Tiwaz::EngineObject();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(1, 61, __pyx_L1_error)
+    __PYX_ERR(1, 70, __pyx_L1_error)
   }
   __pyx_v_self->c_engineobject = __pyx_t_1;
 
-  /* "tiwaz_cython.pyx":60
+  /* "tiwaz_cython.pyx":69
  * cdef class PyEngineObject:
  * 	cdef EngineObject* c_engineobject
  * 	def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -1931,7 +1985,7 @@ static int __pyx_pf_12tiwaz_cython_14PyEngineObject___cinit__(struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":62
+/* "tiwaz_cython.pyx":71
  * 	def __cinit__(self):
  * 		self.c_engineobject = new EngineObject()
  * 	def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1954,7 +2008,7 @@ static void __pyx_pf_12tiwaz_cython_14PyEngineObject_2__dealloc__(struct __pyx_o
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "tiwaz_cython.pyx":63
+  /* "tiwaz_cython.pyx":72
  * 		self.c_engineobject = new EngineObject()
  * 	def __dealloc__(self):
  * 		del self.c_engineobject             # <<<<<<<<<<<<<<
@@ -1963,7 +2017,7 @@ static void __pyx_pf_12tiwaz_cython_14PyEngineObject_2__dealloc__(struct __pyx_o
  */
   delete __pyx_v_self->c_engineobject;
 
-  /* "tiwaz_cython.pyx":62
+  /* "tiwaz_cython.pyx":71
  * 	def __cinit__(self):
  * 		self.c_engineobject = new EngineObject()
  * 	def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1975,7 +2029,7 @@ static void __pyx_pf_12tiwaz_cython_14PyEngineObject_2__dealloc__(struct __pyx_o
   __Pyx_RefNannyFinishContext();
 }
 
-/* "tiwaz_cython.pyx":64
+/* "tiwaz_cython.pyx":73
  * 	def __dealloc__(self):
  * 		del self.c_engineobject
  * 	def init(self):             # <<<<<<<<<<<<<<
@@ -2001,7 +2055,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_4init(struct __pyx_obj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("init", 0);
 
-  /* "tiwaz_cython.pyx":65
+  /* "tiwaz_cython.pyx":74
  * 		del self.c_engineobject
  * 	def init(self):
  * 		self.c_engineobject.Init()             # <<<<<<<<<<<<<<
@@ -2010,7 +2064,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_4init(struct __pyx_obj
  */
   __pyx_v_self->c_engineobject->Init();
 
-  /* "tiwaz_cython.pyx":64
+  /* "tiwaz_cython.pyx":73
  * 	def __dealloc__(self):
  * 		del self.c_engineobject
  * 	def init(self):             # <<<<<<<<<<<<<<
@@ -2025,7 +2079,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_4init(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":66
+/* "tiwaz_cython.pyx":75
  * 	def init(self):
  * 		self.c_engineobject.Init()
  * 	def update(self):             # <<<<<<<<<<<<<<
@@ -2051,7 +2105,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_6update(struct __pyx_o
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("update", 0);
 
-  /* "tiwaz_cython.pyx":67
+  /* "tiwaz_cython.pyx":76
  * 		self.c_engineobject.Init()
  * 	def update(self):
  * 		self.c_engineobject.Update()             # <<<<<<<<<<<<<<
@@ -2060,7 +2114,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_6update(struct __pyx_o
  */
   __pyx_v_self->c_engineobject->Update();
 
-  /* "tiwaz_cython.pyx":66
+  /* "tiwaz_cython.pyx":75
  * 	def init(self):
  * 		self.c_engineobject.Init()
  * 	def update(self):             # <<<<<<<<<<<<<<
@@ -2075,7 +2129,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_6update(struct __pyx_o
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":68
+/* "tiwaz_cython.pyx":77
  * 	def update(self):
  * 		self.c_engineobject.Update()
  * 	def exit(self):             # <<<<<<<<<<<<<<
@@ -2101,7 +2155,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_8exit(struct __pyx_obj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("exit", 0);
 
-  /* "tiwaz_cython.pyx":69
+  /* "tiwaz_cython.pyx":78
  * 		self.c_engineobject.Update()
  * 	def exit(self):
  * 		self.c_engineobject.Exit()             # <<<<<<<<<<<<<<
@@ -2110,7 +2164,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_8exit(struct __pyx_obj
  */
   __pyx_v_self->c_engineobject->Exit();
 
-  /* "tiwaz_cython.pyx":68
+  /* "tiwaz_cython.pyx":77
  * 	def update(self):
  * 		self.c_engineobject.Update()
  * 	def exit(self):             # <<<<<<<<<<<<<<
@@ -2125,7 +2179,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_8exit(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":70
+/* "tiwaz_cython.pyx":79
  * 	def exit(self):
  * 		self.c_engineobject.Exit()
  * 	def set_object_ID(self, const uint64_t & ID):             # <<<<<<<<<<<<<<
@@ -2141,7 +2195,7 @@ static PyObject *__pyx_pw_12tiwaz_cython_14PyEngineObject_11set_object_ID(PyObje
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_object_ID (wrapper)", 0);
   assert(__pyx_arg_ID); {
-    __pyx_v_ID = __Pyx_PyInt_As_uint64_t(__pyx_arg_ID); if (unlikely((__pyx_v_ID == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(1, 70, __pyx_L3_error)
+    __pyx_v_ID = __Pyx_PyInt_As_uint64_t(__pyx_arg_ID); if (unlikely((__pyx_v_ID == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(1, 79, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2161,7 +2215,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_10set_object_ID(struct
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_object_ID", 0);
 
-  /* "tiwaz_cython.pyx":71
+  /* "tiwaz_cython.pyx":80
  * 		self.c_engineobject.Exit()
  * 	def set_object_ID(self, const uint64_t & ID):
  * 		self.c_engineobject.SetObjectID(ID)             # <<<<<<<<<<<<<<
@@ -2170,7 +2224,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_10set_object_ID(struct
  */
   __pyx_v_self->c_engineobject->SetObjectID(__pyx_v_ID);
 
-  /* "tiwaz_cython.pyx":70
+  /* "tiwaz_cython.pyx":79
  * 	def exit(self):
  * 		self.c_engineobject.Exit()
  * 	def set_object_ID(self, const uint64_t & ID):             # <<<<<<<<<<<<<<
@@ -2185,7 +2239,7 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_10set_object_ID(struct
   return __pyx_r;
 }
 
-/* "tiwaz_cython.pyx":72
+/* "tiwaz_cython.pyx":81
  * 	def set_object_ID(self, const uint64_t & ID):
  * 		self.c_engineobject.SetObjectID(ID)
  * 	def object_ID(self):             # <<<<<<<<<<<<<<
@@ -2211,19 +2265,19 @@ static PyObject *__pyx_pf_12tiwaz_cython_14PyEngineObject_12object_ID(struct __p
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("object_ID", 0);
 
-  /* "tiwaz_cython.pyx":73
+  /* "tiwaz_cython.pyx":82
  * 		self.c_engineobject.SetObjectID(ID)
  * 	def object_ID(self):
  * 		return self.c_engineobject.object_ID()             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint64_t(__pyx_v_self->c_engineobject->object_ID()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 73, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint64_t(__pyx_v_self->c_engineobject->object_ID()); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "tiwaz_cython.pyx":72
+  /* "tiwaz_cython.pyx":81
  * 	def set_object_ID(self, const uint64_t & ID):
  * 		self.c_engineobject.SetObjectID(ID)
  * 	def object_ID(self):             # <<<<<<<<<<<<<<
@@ -2589,6 +2643,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_exit_engine, __pyx_k_exit_engine, sizeof(__pyx_k_exit_engine), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
+  {&__pyx_n_s_global_OBJECTMANAGER, __pyx_k_global_OBJECTMANAGER, sizeof(__pyx_k_global_OBJECTMANAGER), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
@@ -2598,6 +2653,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
   {&__pyx_n_s_remove, __pyx_k_remove, sizeof(__pyx_k_remove), 0, 0, 1, 1},
+  {&__pyx_n_s_result, __pyx_k_result, sizeof(__pyx_k_result), 0, 0, 1, 1},
   {&__pyx_n_s_run_engine, __pyx_k_run_engine, sizeof(__pyx_k_run_engine), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
@@ -2659,19 +2715,22 @@ static int __Pyx_InitCachedConstants(void) {
  * 	int ExitEngine()
  * 
  * def run_engine():             # <<<<<<<<<<<<<<
- * 	return RunEngine()
+ * 	cdef int result = RunEngine()
  * 
  */
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_tiwaz_cython_pyx, __pyx_n_s_run_engine, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 14, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_result); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(1, 14, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_tiwaz_cython_pyx, __pyx_n_s_run_engine, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(1, 14, __pyx_L1_error)
 
-  /* "tiwaz_cython.pyx":17
- * 	return RunEngine()
+  /* "tiwaz_cython.pyx":22
+ * 	return result
  * 
  * def exit_engine():             # <<<<<<<<<<<<<<
- * 	return ExitEngine()
+ * 	global global_OBJECTMANAGER
  * 
  */
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_tiwaz_cython_pyx, __pyx_n_s_exit_engine, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_tiwaz_cython_pyx, __pyx_n_s_exit_engine, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 22, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2823,15 +2882,15 @@ static int __pyx_pymod_exec_tiwaz_cython(PyObject *__pyx_pyinit_module)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_12tiwaz_cython_PyObjectManager) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_12tiwaz_cython_PyObjectManager) < 0) __PYX_ERR(1, 47, __pyx_L1_error)
   __pyx_type_12tiwaz_cython_PyObjectManager.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "PyObjectManager", (PyObject *)&__pyx_type_12tiwaz_cython_PyObjectManager) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_12tiwaz_cython_PyObjectManager) < 0) __PYX_ERR(1, 38, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "PyObjectManager", (PyObject *)&__pyx_type_12tiwaz_cython_PyObjectManager) < 0) __PYX_ERR(1, 47, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_12tiwaz_cython_PyObjectManager) < 0) __PYX_ERR(1, 47, __pyx_L1_error)
   __pyx_ptype_12tiwaz_cython_PyObjectManager = &__pyx_type_12tiwaz_cython_PyObjectManager;
-  if (PyType_Ready(&__pyx_type_12tiwaz_cython_PyEngineObject) < 0) __PYX_ERR(1, 58, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_12tiwaz_cython_PyEngineObject) < 0) __PYX_ERR(1, 67, __pyx_L1_error)
   __pyx_type_12tiwaz_cython_PyEngineObject.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "PyEngineObject", (PyObject *)&__pyx_type_12tiwaz_cython_PyEngineObject) < 0) __PYX_ERR(1, 58, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_12tiwaz_cython_PyEngineObject) < 0) __PYX_ERR(1, 58, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "PyEngineObject", (PyObject *)&__pyx_type_12tiwaz_cython_PyEngineObject) < 0) __PYX_ERR(1, 67, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_12tiwaz_cython_PyEngineObject) < 0) __PYX_ERR(1, 67, __pyx_L1_error)
   __pyx_ptype_12tiwaz_cython_PyEngineObject = &__pyx_type_12tiwaz_cython_PyEngineObject;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
@@ -2845,7 +2904,7 @@ static int __pyx_pymod_exec_tiwaz_cython(PyObject *__pyx_pyinit_module)
  * 	int ExitEngine()
  * 
  * def run_engine():             # <<<<<<<<<<<<<<
- * 	return RunEngine()
+ * 	cdef int result = RunEngine()
  * 
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12tiwaz_cython_1run_engine, NULL, __pyx_n_s_tiwaz_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 14, __pyx_L1_error)
@@ -2853,28 +2912,28 @@ static int __pyx_pymod_exec_tiwaz_cython(PyObject *__pyx_pyinit_module)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_run_engine, __pyx_t_1) < 0) __PYX_ERR(1, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tiwaz_cython.pyx":17
- * 	return RunEngine()
+  /* "tiwaz_cython.pyx":22
+ * 	return result
  * 
  * def exit_engine():             # <<<<<<<<<<<<<<
- * 	return ExitEngine()
+ * 	global global_OBJECTMANAGER
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12tiwaz_cython_3exit_engine, NULL, __pyx_n_s_tiwaz_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_12tiwaz_cython_3exit_engine, NULL, __pyx_n_s_tiwaz_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exit_engine, __pyx_t_1) < 0) __PYX_ERR(1, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exit_engine, __pyx_t_1) < 0) __PYX_ERR(1, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tiwaz_cython.pyx":41
+  /* "tiwaz_cython.pyx":50
  * 	cdef ObjectManager* c_object_manager
  * 
  * 	py_objects = []             # <<<<<<<<<<<<<<
  * 
  * 	def __cinit__(self):
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 41, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_12tiwaz_cython_PyObjectManager->tp_dict, __pyx_n_s_py_objects, __pyx_t_1) < 0) __PYX_ERR(1, 41, __pyx_L1_error)
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_12tiwaz_cython_PyObjectManager->tp_dict, __pyx_n_s_py_objects, __pyx_t_1) < 0) __PYX_ERR(1, 50, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   PyType_Modified(__pyx_ptype_12tiwaz_cython_PyObjectManager);
 
@@ -2943,6 +3002,26 @@ static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
     }
     return result;
 }
+
+/* PyObjectCall */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw) {
+    PyObject *result;
+    ternaryfunc call = func->ob_type->tp_call;
+    if (unlikely(!call))
+        return PyObject_Call(func, arg, kw);
+    if (unlikely(Py_EnterRecursiveCall((char*)" while calling a Python object")))
+        return NULL;
+    result = (*call)(func, arg, kw);
+    Py_LeaveRecursiveCall();
+    if (unlikely(!result) && unlikely(!PyErr_Occurred())) {
+        PyErr_SetString(
+            PyExc_SystemError,
+            "NULL result without error in PyObject_Call");
+    }
+    return result;
+}
+#endif
 
 /* RaiseArgTupleInvalid */
 static void __Pyx_RaiseArgtupleInvalid(
@@ -3172,26 +3251,6 @@ done:
     return result;
 }
 #endif
-#endif
-
-/* PyObjectCall */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw) {
-    PyObject *result;
-    ternaryfunc call = func->ob_type->tp_call;
-    if (unlikely(!call))
-        return PyObject_Call(func, arg, kw);
-    if (unlikely(Py_EnterRecursiveCall((char*)" while calling a Python object")))
-        return NULL;
-    result = (*call)(func, arg, kw);
-    Py_LeaveRecursiveCall();
-    if (unlikely(!result) && unlikely(!PyErr_Occurred())) {
-        PyErr_SetString(
-            PyExc_SystemError,
-            "NULL result without error in PyObject_Call");
-    }
-    return result;
-}
 #endif
 
 /* PyObjectCallMethO */
