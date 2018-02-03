@@ -23,11 +23,11 @@ void Tiwaz::Timer::Timer::Reset()
 
 const double Tiwaz::Timer::Timer::DeltaTime()
 {
-	const std::chrono::high_resolution_clock::duration temp_dt = std::chrono::high_resolution_clock::now() - t1;
+	temp_dt = std::chrono::high_resolution_clock::now() - t1;
 
-	const std::chrono::duration<double> duration_time = std::chrono::duration_cast<std::chrono::duration<double>>(temp_dt);
+	temp_duration_time = std::chrono::duration_cast<std::chrono::duration<double>>(temp_dt);
 
-	m_last_delta_time = duration_time.count();
+	m_last_delta_time = temp_duration_time.count();
 
 	return m_last_delta_time;
 }

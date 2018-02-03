@@ -18,6 +18,8 @@ namespace Tiwaz::Timer
 
 	private:
 		std::chrono::high_resolution_clock::time_point t1;
+		std::chrono::high_resolution_clock::duration temp_dt;
+		std::chrono::duration<double> temp_duration_time;
 		double m_last_delta_time = 0.0;
 	};
 }

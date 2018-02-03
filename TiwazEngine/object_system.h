@@ -87,8 +87,6 @@ namespace Tiwaz::ObjectSystem
 				object->SetObjectID(new_ID);
 				m_objects.insert(std::make_pair(new_ID, object));
 
-				object = nullptr;
-
 				return new_ID;
 			}
 			else
