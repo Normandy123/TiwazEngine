@@ -62,6 +62,7 @@ cdef extern from "graphic_component.h" namespace "Tiwaz::Component":
 		const vector[vec] Normals()
 		const vector[vec] UVs()
 
+"""
 cpdef c_vector_to_py_list(vector[vec] in_vec):
 	result = []
 
@@ -78,6 +79,7 @@ cpdef c_vector_to_py_list(vector[vec] in_vec):
 		result.append(value)
 		
 	return result
+"""
 		
 cdef class PyComponent(PyEngineObject):
 	cdef Component* c_component
@@ -95,12 +97,14 @@ cdef class PyMeshComponent(PyGraphicComponent):
 		self.c_mesh_component = new MeshComponent()
 	def __dealloc__(self):
 		del self.c_mesh_component
+	"""
 	def vertices(self):
 		return self.c_mesh_component.Vertices()
 	def normals(self):
 		return self.c_mesh_component.Normals()
 	def uvs(self):
 		return self.c_mesh_component.UVs()
+	"""
 
 cdef extern from "engine.h" namespace "Tiwaz":
 	int RunEngine()

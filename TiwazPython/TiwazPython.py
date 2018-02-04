@@ -2,7 +2,7 @@ import tiwaz_cython
 
 tiwaz_cython.run_engine()
 
-x = tiwaz_cython.PyEngineObject()
+x = tiwaz_cython.PyMeshComponent()
 
 del x
 
