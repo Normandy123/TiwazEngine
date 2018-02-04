@@ -12,7 +12,7 @@ namespace Tiwaz::Component
 {
 	typedef std::vector<float> vec;
 
-	template<typename T> vec GlmVecToVec(const T & glm_vec)
+	template<typename T> vec GlmVecToVec(T glm_vec)
 	{
 		const size_t len = glm_vec.length();
 		
@@ -23,9 +23,10 @@ namespace Tiwaz::Component
 			temp_vec[i] = glm_vec[i];
 		}
 
+		return temp_vec;
 	}
 
-	template<typename T> std::vector<vec> VecGlmVecToVecVec(const std::vector<T> vec_glm_vec)
+	template<typename T> std::vector<vec> VecGlmVecToVecVec(std::vector<T> vec_glm_vec)
 	{
 		const size_t len = vec_glm_vec.size();
 
@@ -38,20 +39,6 @@ namespace Tiwaz::Component
 
 		return temp_vec;
 	}
-	
-	/*
-	vec GlmVec3ToVec3(const glm::vec3 & glm_vec3)
-	{
-		vec temp_vec(3);
-
-		for (size_t i = 0; i < 3; i++)
-		{
-			temp_vec[i] = glm_vec3[i];
-		}
-
-		return temp_vec;
-	}
-	*/
 
 	class GraphicComponent : public Component
 	{
