@@ -14,7 +14,7 @@
 #include "render_scene.h"
 #include "factory.h"
 
-#define TIWAZ_API __declspec(dllexport)
+//#define TIWAZ_API __declspec(dllexport)
 
 //#include "lua_interface.h"
 
