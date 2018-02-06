@@ -133,15 +133,14 @@
       </SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>cd C:\Users\Oli\Documents\Visual Studio 2017\Projects\TiwazEngineDev\x64\Release
-cython_build.bat</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="component.cpp" />
     <ClCompile Include="counter.cpp" />
     <ClCompile Include="engine.cpp" />
-    <ClCompile Include="engine_object.cpp" />
     <ClCompile Include="engine_vars.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="event_system.cpp" />
@@ -158,10 +157,8 @@ cython_build.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h" />
-    <ClInclude Include="component_holder.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="engine.h" />
-    <ClInclude Include="engine_object.h" />
     <ClInclude Include="engine_vars.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="event_system.h" />

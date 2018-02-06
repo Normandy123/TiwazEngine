@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "engine_object.h"
+#include "object_system.h"
 #include "event_system.h"
 
 namespace Tiwaz::Entity

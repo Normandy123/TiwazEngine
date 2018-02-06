@@ -50,7 +50,7 @@ namespace Tiwaz::Graphic
 			}
 		}
 
-		inline const std::vector<Component::GraphicComponent*>* Components() { return &m_components; }
+		const std::vector<Component::GraphicComponent*>* Components() { return &m_components; }
 
 	private:
 		std::vector<Component::GraphicComponent*> m_components;

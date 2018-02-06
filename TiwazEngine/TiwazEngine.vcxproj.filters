@@ -69,9 +69,6 @@
     <ClCompile Include="engine.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="engine_object.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="engine_vars.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -140,9 +137,6 @@
     <ClInclude Include="engine_vars.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="engine_object.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="entity.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
@@ -157,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="factory.h">
       <Filter>Header Files\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="component_holder.h">
-      <Filter>Header Files\Component</Filter>
     </ClInclude>
     <ClInclude Include="python_functions.h">
       <Filter>Header Files\Python</Filter>

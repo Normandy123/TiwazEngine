@@ -22,7 +22,7 @@ namespace Tiwaz::Graphic::Shader
 		void AttachShader(const GLuint & program_ID);
 		void DetachShader(const GLuint & program_ID);
 
-		inline const GLuint ShaderID() { return m_shader_ID; }
+		const GLuint ShaderID() { return m_shader_ID; }
 
 	private:
 		GLenum m_shader_type;
@@ -44,7 +44,7 @@ namespace Tiwaz::Graphic::Shader
 
 		const GLuint UniformLocation(const std::string& uniform_name);
 
-		inline const GLuint ProgramID() { return m_program_ID; }
+		const GLuint ProgramID() { return m_program_ID; }
 
 	protected:
 		void CompileProgram(const std::array<std::string, 6>& file_paths);

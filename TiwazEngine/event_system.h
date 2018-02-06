@@ -48,7 +48,7 @@ namespace Tiwaz::EventSystem
 			m_container_function = nullptr;
 		}
 
-		inline const void* ObjectPointer() { return m_object; }
+		const void* ObjectPointer() { return m_object; }
 
 	private:
 		std::function<void()> m_container_function;

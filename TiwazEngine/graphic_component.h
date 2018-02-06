@@ -60,9 +60,9 @@ namespace Tiwaz::Component
 			m_uvs.clear();
 		}
 
-		inline const std::vector<vec> Vertices() { return VecGlmVecToVecVec(m_vertices); }
-		inline const std::vector<vec> Normals() { return VecGlmVecToVecVec(m_normals); }
-		inline const std::vector<vec> UVs() { return VecGlmVecToVecVec(m_uvs); }
+		const std::vector<vec> Vertices() { return VecGlmVecToVecVec(m_vertices); }
+		const std::vector<vec> Normals() { return VecGlmVecToVecVec(m_normals); }
+		const std::vector<vec> UVs() { return VecGlmVecToVecVec(m_uvs); }
 	private:
 		std::vector<glm::vec3> m_vertices = std::vector<glm::vec3>();
 		std::vector<glm::vec3> m_normals = std::vector<glm::vec3>();
