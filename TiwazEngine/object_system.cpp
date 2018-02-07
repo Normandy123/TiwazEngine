@@ -87,7 +87,6 @@ namespace Tiwaz::ObjectSystem
 			obj->Exit();
 			obj->SetObjectID(0);
 			m_free_IDs.emplace_back(ID);
-			delete obj;
 
 			m_objects[ID] = nullptr;
 			m_objects.erase(ID);

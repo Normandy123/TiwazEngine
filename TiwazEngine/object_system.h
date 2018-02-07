@@ -134,6 +134,9 @@ namespace Tiwaz
 
 			Global::OBJECTMANAGER->RemoveObject(object->object_ID());
 
+			delete object;
+			object = nullptr;
+
 			return true;
 		}
 
