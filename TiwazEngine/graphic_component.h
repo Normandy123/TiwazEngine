@@ -32,7 +32,7 @@ namespace Tiwaz::Component
 		}
 		else
 		{
-			Message(MessageSystem::TIWAZ_WARNING, "Component", "Can only glm::vec to float vector!");
+			Message(MessageSystem::TIWAZ_WARNING, "Component", "Can only convert glm::vec to float vector!");
 			vec temp = { 0, 0, 0 };
 
 			return temp;
@@ -58,12 +58,12 @@ namespace Tiwaz::Component
 	public:
 		GraphicComponent()
 		{
-			Global::RENDER_SCENE->AddComponent(this);
+
 		}
 
 		~GraphicComponent()
 		{
-
+			
 		}
 	};
 
@@ -83,9 +83,9 @@ namespace Tiwaz::Component
 			m_uvs.clear();
 		}
 
-		const std::vector<vec> Vertices() { return VecGlmVecToVecVec(m_vertices); }
-		const std::vector<vec> Normals() { return VecGlmVecToVecVec(m_normals); }
-		const std::vector<vec> UVs() { return VecGlmVecToVecVec(m_uvs); }
+		const std::vector<glm::vec3> Vertices() { return m_vertices; }
+		const std::vector<glm::vec3> Normals() { return m_normals; }
+		const std::vector<glm::vec2> UVs() { return m_uvs; }
 	private:
 		std::vector<glm::vec3> m_vertices;
 		std::vector<glm::vec3> m_normals;
@@ -94,6 +94,7 @@ namespace Tiwaz::Component
 
 	class ModelComponent : public GraphicComponent
 	{
-
+	public:
+		ComponentContainer<MeshComponent> m_mesh;
 	};
 }

@@ -10,6 +10,7 @@
 
 #include "message_system.h"
 #include "counter.h"
+#include "render_scene.h"
 
 namespace Tiwaz::ObjectSystem
 {
@@ -48,40 +49,6 @@ namespace Tiwaz::ObjectSystem
 		ObjectManager();
 		~ObjectManager();
 
-		template<typename TObject, typename...TArgs>
-		const uint64_t CreateAndAddObject(TArgs&&...args)
-		{
-			if (std::is_base_of<EngineObject, TObject>::value)
-			{
-				uint64_t new_ID = 0;
-
-				if (m_free_IDs.empty())
-				{
-					new_ID = m_ID_counter.Value();
-					++m_ID_counter;
-				}
-				else
-				{
-					new_ID = m_free_IDs.front();
-					m_free_IDs.pop_front();
-				}
-
-				EngineObject* temp_object = new TObject(std::forward<TArgs>(args)...);
-				temp_object->SetObjectID(new_ID);
-				m_objects.insert(std::make_pair(new_ID, temp_object));
-
-				temp_object = nullptr;
-
-				return new_ID;
-			}
-			else
-			{
-				Message(MessageSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not generate and add object, which are not derived from EngineObject");
-			}
-
-			return 0;
-		}
-
 		const uint64_t AddObject(EngineObject* object);
 
 		void RemoveObject(const uint64_t & ID);
@@ -101,4 +68,75 @@ namespace Tiwaz::ObjectSystem
 namespace Tiwaz::Global
 {
 	extern ObjectSystem::ObjectManager* OBJECTMANAGER;
+}
+
+namespace Tiwaz
+{
+	template<typename T, typename...TArgs> T CreateObjectS(TArgs...args)
+	{
+		if (std::is_base_of<EngineObject, T>::value)
+		{
+			auto obj = new T(args...);
+			Global::OBJECTMANAGER->AddObject(obj);
+
+			if (std::is_base_of<Component::GraphicComponent, T>::value)
+			{
+				Global::RENDER_SCENE->AddComponent(obj);
+			}
+
+			return *obj;
+		}
+	}
+
+	template<typename T, typename...TArgs> T* CreateObject(TArgs...args)
+	{
+		if (std::is_base_of<EngineObject, T>::value)
+		{
+			auto obj = new T(args...);
+			Global::OBJECTMANAGER->AddObject(obj);
+
+			if (std::is_base_of<Component::GraphicComponent, T>::value)
+			{
+				Global::RENDER_SCENE->AddComponent(obj);
+			}
+
+			return obj;
+		}
+
+		return nullptr;
+	}
+
+	template<typename T> const bool RemoveObjectS(T* object)
+	{
+		if (std::is_base_of<EngineObject, T>::value)
+		{
+			if (std::is_base_of<Component::GraphicComponent, T>::value)
+			{
+				Global::RENDER_SCENE->RemoveComponent(object);
+			}
+
+			Global::OBJECTMANAGER->RemoveObject(object->object_ID());
+
+			return true;
+		}
+
+		return false;
+	}
+
+	template<typename T> const bool RemoveObject(T* object)
+	{
+		if (std::is_base_of<EngineObject, T>::value)
+		{
+			if (std::is_base_of<Component::GraphicComponent, T>::value)
+			{
+				Global::RENDER_SCENE->RemoveComponent(object);
+			}
+
+			Global::OBJECTMANAGER->RemoveObject(object->object_ID());
+
+			return true;
+		}
+
+		return false;
+	}
 }

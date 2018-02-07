@@ -24,7 +24,7 @@ namespace Tiwaz::EventSystem
 		{
 			if (std::is_function<TFunction>::value)
 			{
-				auto lam = [=]() -> void { std::invoke(func, args...); };
+				auto lam = [=]() { std::invoke(func, args...); };
 
 				m_container_function = lam;
 			}
@@ -34,7 +34,7 @@ namespace Tiwaz::EventSystem
 		{
 			if (std::is_member_function_pointer<TFunction>::value && std::is_pointer<TObject>::value && (object != nullptr))
 			{
-				auto lam = [=]() -> void { std::invoke(func, object, args...); };
+				auto lam = [=]() { std::invoke(func, object, args...); };
 
 				m_container_function = lam;
 				m_object = object;
@@ -124,7 +124,7 @@ namespace Tiwaz::EventSystem
 
 		void LaunchEvent(const std::string & event_name)
 		{
-			if ((m_eventhandler_map.find(event_name) != m_eventhandler_map.cend()) && (!m_eventhandler_map.empty()))
+			if (m_eventhandler_map.find(event_name) != m_eventhandler_map.cend())
 			{
 				for (auto handler_pair : m_eventhandler_map[event_name])
 				{

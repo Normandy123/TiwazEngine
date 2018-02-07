@@ -22,4 +22,27 @@ namespace Tiwaz::Component
 			Global::EVENTMANAGER->RemoveHandle("COMPONENT_EXIT", this);
 		}
 	};
+
+	template<typename T> class ComponentContainer
+	{
+	public:
+		template<typename...TArgs> ComponentContainer(TArgs...args)
+		{
+			m_component = CreateObject<T>(args...);
+		}
+
+		~ComponentContainer()
+		{
+			RemoveObject(m_component);
+			m_component = nullptr;
+		}
+
+		T* ptr ()
+		{
+			return m_component;
+		}
+
+	private:
+		T * m_component;
+	};
 }
