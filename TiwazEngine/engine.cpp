@@ -51,6 +51,19 @@ void Tiwaz::Engine::Init()
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
 	Component::MeshComponent* p_mesh = new Component::MeshComponent();
+	auto t = p_mesh->Vertices();
+	for (size_t i = 0; i < t.size(); i++)
+	{
+		std::cout << "x: " << t[i][0] << " y: " << t[i][1] << " z: " << t[i][2] << std::endl;
+	}
+
+	auto t2 = Global::RENDER_SCENE->Components();
+	for (size_t i = 0; i < t2->size(); i++)
+	{
+		std::cout << (*t2)[i] << std::endl;
+	}
+
+	std::cout << p_mesh << std::endl;
 
 	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
 	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");

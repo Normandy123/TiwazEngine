@@ -23,20 +23,5 @@ namespace Tiwaz::Entity
 			Global::EVENTMANAGER->RemoveHandle("ENTITY_UPDATE", this);
 			Global::EVENTMANAGER->RemoveHandle("ENTITY_EXIT", this);
 		}
-
-		void Init() override
-		{
-
-		}
-		
-		void Update() override
-		{
-
-		}
-
-		void Exit() override
-		{
-
-		}
 	};
 }

@@ -21,9 +21,5 @@ namespace Tiwaz::Component
 			Global::EVENTMANAGER->RemoveHandle("COMPONENT_UPDATE", this);
 			Global::EVENTMANAGER->RemoveHandle("COMPONENT_EXIT", this);
 		}
-
-		virtual void Init() {}
-		virtual void Update() {}
-		virtual void Exit() {}
 	};
 }
