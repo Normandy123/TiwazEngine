@@ -50,9 +50,9 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
-	for (size_t i = 0; i < 100000; ++i)
+	for (size_t i = 0; i < 10000; ++i)
 	{
-		Global::OBJECTMANAGER->CreateAndAddObject<Component::MeshComponent>();
+		EngineObject* temp_obj = new Component::MeshComponent();
 	}
 
 	/*

@@ -81,6 +81,7 @@ namespace Tiwaz::ObjectSystem
 
 			return 0;
 		}
+
 		const uint64_t AddObject(EngineObject* object);
 
 		void RemoveObject(const uint64_t & ID);

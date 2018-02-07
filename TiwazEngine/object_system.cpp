@@ -37,29 +37,45 @@ namespace Tiwaz::ObjectSystem
 
 	const uint64_t ObjectManager::AddObject(EngineObject* object)
 	{
-		if (object != nullptr && (m_objects.find(object->object_ID()) == m_objects.cend()))
+		if (object != nullptr)
 		{
-			uint64_t new_ID = 0;
+			bool exist = false;
 
-			if (m_free_IDs.empty())
+			/*
+			for (auto obj : m_objects)
 			{
-				new_ID = m_ID_counter.Value();
-				++m_ID_counter;
+				if (obj.second == object)
+				{
+					exist = true;
+					break;
+				}
+			}
+			*/
+
+			if (!exist)
+			{
+				uint64_t new_ID = 0;
+
+				if (m_free_IDs.empty())
+				{
+					new_ID = m_ID_counter.Value();
+					++m_ID_counter;
+				}
+				else
+				{
+					new_ID = m_free_IDs.front();
+					m_free_IDs.pop_front();
+				}
+
+				object->SetObjectID(new_ID);
+				m_objects.insert(std::make_pair(new_ID, object));
+
+				return new_ID;
 			}
 			else
 			{
-				new_ID = m_free_IDs.front();
-				m_free_IDs.pop_front();
+				Message(MessageSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not add object, pointer is nullptr");
 			}
-
-			object->SetObjectID(new_ID);
-			m_objects.insert(std::make_pair(new_ID, object));
-
-			return new_ID;
-		}
-		else
-		{
-			Message(MessageSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not add object, pointer is nullptr");
 		}
 
 		return 0;
