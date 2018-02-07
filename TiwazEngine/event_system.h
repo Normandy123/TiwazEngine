@@ -115,10 +115,12 @@ namespace Tiwaz::EventSystem
 
 		void LaunchEvent(const std::string & event_name)
 		{
-			if((m_eventhandler_map.find(event_name) != m_eventhandler_map.cend()) || (!m_eventhandler_map.empty()))
-			for (auto handler_pair : m_eventhandler_map[event_name])
+			if ((m_eventhandler_map.find(event_name) != m_eventhandler_map.cend()) && (!m_eventhandler_map.empty()))
 			{
-				handler_pair.second->CallFunction();
+				for (auto handler_pair : m_eventhandler_map[event_name])
+				{
+					handler_pair.second->CallFunction();
+				}
 			}
 		}
 	private:
