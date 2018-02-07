@@ -24,7 +24,9 @@ namespace Tiwaz::EventSystem
 		{
 			if (std::is_function<TFunction>::value)
 			{
-				m_container_function = std::bind(func, args...);
+				auto lam = [=]() -> void { std::invoke(func, args...); };
+
+				m_container_function = lam;
 			}
 		}
 
@@ -32,7 +34,9 @@ namespace Tiwaz::EventSystem
 		{
 			if (std::is_member_function_pointer<TFunction>::value && std::is_pointer<TObject>::value && (object != nullptr))
 			{
-				m_container_function = std::bind(func, object, args...);
+				auto lam = [=]() -> void { std::invoke(func, object, args...); };
+
+				m_container_function = lam;
 				m_object = object;
 			}
 		}
@@ -110,6 +114,11 @@ namespace Tiwaz::EventSystem
 				delete m_eventhandler_map[event_name][object];
 				m_eventhandler_map[event_name][object] = nullptr;
 				m_eventhandler_map[event_name].erase(object);
+
+				if (m_eventhandler_map[event_name].empty())
+				{
+					m_eventhandler_map.erase(event_name);
+				}
 			}
 		}
 
