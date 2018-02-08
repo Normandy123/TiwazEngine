@@ -105,6 +105,9 @@
     <ClCompile Include="python_functions.cpp">
       <Filter>Source Files\Python</Filter>
     </ClCompile>
+    <ClCompile Include="commands.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="python_functions.h">
       <Filter>Header Files\Python</Filter>
+    </ClInclude>
+    <ClInclude Include="commands.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

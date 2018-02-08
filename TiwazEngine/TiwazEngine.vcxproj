@@ -138,6 +138,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="commands.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="counter.cpp" />
     <ClCompile Include="engine.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commands.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="engine.h" />

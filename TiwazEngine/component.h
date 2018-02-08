@@ -1,6 +1,6 @@
 #pragma once
 
-#include "object_system.h"
+#include "commands.h"
 #include "event_system.h"
 
 namespace Tiwaz::Component

@@ -1,5 +1,7 @@
 #include "object_system.h"
 
+#include "message_system.h"
+
 namespace Tiwaz
 {
 	EngineObject::EngineObject()
