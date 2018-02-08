@@ -52,7 +52,7 @@ namespace Tiwaz::ObjectSystem
 			}
 			*/
 
-		if (object != nullptr)
+		if (object->object_ID() == 0 && object != nullptr)
 		{
 			uint64_t new_ID = 0;
 		

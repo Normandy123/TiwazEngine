@@ -21,7 +21,7 @@ namespace Tiwaz::Graphic
 
 		void RemoveComponent(const Component::GraphicComponent* component);
 
-		const std::vector<Component::GraphicComponent*>* Components() { return &m_components; }
+		const std::vector<Component::GraphicComponent*>* Components() { return std::addressof(m_components); }
 
 	private:
 		std::vector<Component::GraphicComponent*> m_components;
