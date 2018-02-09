@@ -23,7 +23,7 @@ int Tiwaz::Engine::Run()
 
 		Global::DELTA_TIME = deltatime_timer->DeltaTime();
 
-		//std::cout << Global::DELTA_TIME << std::endl;
+		std::cout << Global::DELTA_TIME << std::endl;
 	}
 
 	Exit();
@@ -52,9 +52,9 @@ void Tiwaz::Engine::Init()
 
 	Loader::Load_Model("data/models/cones2.dae");
 
-	for (size_t i = 0; i < 10000; ++i)
+	for (size_t i = 0; i < 100000; ++i)
 	{
-		EngineObject* temp_obj = new Component::ModelComponent();
+		EngineObject* temp_obj = CreateObject<Component::ModelComponent>();
 	}
 
 	/*
@@ -137,7 +137,7 @@ void Tiwaz::Engine::Exit()
 Tiwaz::Engine* Tiwaz::Global::ENGINE;
 std::thread* Tiwaz::Global::ENGINE_THREAD;
 
-int Tiwaz::RunEngine()
+const int Tiwaz::RunEngine()
 {
 	Global::ENGINE = new Engine;
 	Global::ENGINE_THREAD = new std::thread(&Engine::Run, Global::ENGINE);
@@ -145,7 +145,7 @@ int Tiwaz::RunEngine()
 	return 0;
 }
 
-int Tiwaz::ExitEngine()
+const int Tiwaz::ExitEngine()
 {
 	Global::ENGINE_THREAD->join();
 

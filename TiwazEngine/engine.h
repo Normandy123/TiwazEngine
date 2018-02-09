@@ -36,8 +36,8 @@ namespace Tiwaz
 		Timer::Timer* deltatime_timer = new Timer::Timer();
 	};
 
-	extern int RunEngine();
-	extern int ExitEngine();
+	extern const int RunEngine();
+	extern const int ExitEngine();
 }
 
 namespace Tiwaz::Global
