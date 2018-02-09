@@ -9,6 +9,7 @@
 
 #include "component.h"
 #include "message_system.h"
+#include "graphic_types.h"
 
 namespace Tiwaz::Component
 {
@@ -52,7 +53,7 @@ namespace Tiwaz::Component
 		return temp_vec;
 	}
 
-	class GraphicComponent : public Component
+	class GraphicComponent : public ComponentBase
 	{
 	public:
 		GraphicComponent()
@@ -69,34 +70,41 @@ namespace Tiwaz::Component
 	class MeshComponent : public GraphicComponent
 	{
 	public:
-		MeshComponent()
+		void Exit()
 		{
-
+			if (m_mesh != nullptr)
+			{
+				delete m_mesh;
+				m_mesh = nullptr;
+			}
 		}
 
-		~MeshComponent()
-		{
-			m_positions.clear();
-			m_normals.clear();
-			m_uvs.clear();
-		}
+		void SetMeshData(Graphic::Mesh* mesh) { m_mesh = mesh; }
 
-		const std::vector<glm::vec3> Vertices() { return m_positions; }
-		const std::vector<glm::vec3> Normals() { return m_normals; }
-		const std::vector<glm::vec2> UVs() { return m_uvs; }
+		const std::vector<glm::vec3> Vertices() { return m_mesh->m_positions; }
+		const std::vector<glm::vec3> Normals() { return m_mesh->m_normals; }
+		const std::vector<glm::vec2> UVs() { return m_mesh->m_uvs; }
 
-		const std::vector<unsigned int> Indices() { return m_indices; }
+		const std::vector<unsigned int> Indices() { return m_mesh->m_indices; }
 	private:
-		std::vector<glm::vec3> m_positions;
-		std::vector<glm::vec3> m_normals;
-		std::vector<glm::vec2> m_uvs;
-
-		std::vector<unsigned int> m_indices;
+		Graphic::Mesh* m_mesh;
 	};
 
 	class ModelComponent : public GraphicComponent
 	{
 	public:
-		std::vector<ComponentContainer<MeshComponent>*> m_meshes;
+		void Exit()
+		{
+			if (!m_meshes.empty())
+			{
+				for (auto mesh_comp : m_meshes)
+				{
+					delete mesh_comp;
+					mesh_comp = nullptr;
+				}
+			}
+		}
+
+		std::vector<Component<MeshComponent>*> m_meshes;
 	};
 }

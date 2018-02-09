@@ -21,7 +21,7 @@ namespace Tiwaz::Factory
 			diff_pose = find_pos + 7;
 		}
 
-		if (std::is_base_of<Component::Component, TObject>::value)
+		if (std::is_base_of<Component::ComponentBase, TObject>::value)
 		{
 			find_pos = raw_type_name.find("Tiwaz::Component::");
 			diff_pose = find_pos + 18;

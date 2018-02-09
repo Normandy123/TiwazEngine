@@ -50,10 +50,22 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
-	for (size_t i = 0; i < 100; ++i)
+	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
 		Loader::LoadModel("data/models/cones2.dae", temp_obj);
+
+		for (auto temp_mesh_comp : temp_obj->m_meshes)
+		{
+			std::cout << "NEW MESH" << std::endl;
+
+			auto t = temp_mesh_comp->ptr()->Vertices();
+
+			for (size_t i = 0; i < t.size(); i++)
+			{
+				std::cout << "x: " << t[i][0] << " y: " << t[i][1] << " z: " << t[i][2] << std::endl;
+			}		
+		}
 	}
 
 	/*

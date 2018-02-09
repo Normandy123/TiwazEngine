@@ -5,17 +5,17 @@
 
 namespace Tiwaz::Component
 {
-	class Component : public EngineObject
+	class ComponentBase : public EngineObject
 	{
 	public:
-		Component()
+		ComponentBase()
 		{	
-			Global::EVENTMANAGER->AddHandle("COMPONENT_INIT", this, &Component::Init);
-			Global::EVENTMANAGER->AddHandle("COMPONENT_UPDATE", this, &Component::Update);
-			Global::EVENTMANAGER->AddHandle("COMPONENT_EXIT", this, &Component::Exit);
+			Global::EVENTMANAGER->AddHandle("COMPONENT_INIT", this, &ComponentBase::Init);
+			Global::EVENTMANAGER->AddHandle("COMPONENT_UPDATE", this, &ComponentBase::Update);
+			Global::EVENTMANAGER->AddHandle("COMPONENT_EXIT", this, &ComponentBase::Exit);
 		}
 
-		virtual ~Component()
+		virtual ~ComponentBase()
 		{
 			Global::EVENTMANAGER->RemoveHandle("COMPONENT_INIT", this);
 			Global::EVENTMANAGER->RemoveHandle("COMPONENT_UPDATE", this);
@@ -23,15 +23,15 @@ namespace Tiwaz::Component
 		}
 	};
 
-	template<typename T> class ComponentContainer
+	template<typename T> class Component
 	{
 	public:
-		template<typename...TArgs> ComponentContainer(TArgs...args)
+		template<typename...TArgs> Component(TArgs...args)
 		{
 			m_component = CreateObject<T>(args...);
 		}
 
-		~ComponentContainer()
+		~Component()
 		{
 			RemoveObject(m_component);
 			m_component = nullptr;
