@@ -50,6 +50,8 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
+	Loader::Load_Model("data/models/cones2.dae");
+
 	for (size_t i = 0; i < 10000; ++i)
 	{
 		EngineObject* temp_obj = new Component::ModelComponent();

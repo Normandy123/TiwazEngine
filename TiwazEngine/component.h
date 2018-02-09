@@ -43,6 +43,6 @@ namespace Tiwaz::Component
 		}
 
 	private:
-		T * m_component;
+		T* m_component;
 	};
 }

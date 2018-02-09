@@ -13,6 +13,7 @@
 #include "graphic_component.h"
 #include "render_scene.h"
 #include "factory.h"
+#include "resources_loaders.h"
 
 //#define TIWAZ_API __declspec(dllexport)
 

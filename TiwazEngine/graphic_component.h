@@ -71,8 +71,7 @@ namespace Tiwaz::Component
 	public:
 		MeshComponent()
 		{
-			m_vertices.emplace_back(2, 2, 2);
-			m_vertices.emplace_back(2, 3, 1);
+
 		}
 
 		~MeshComponent()
@@ -94,6 +93,6 @@ namespace Tiwaz::Component
 	class ModelComponent : public GraphicComponent
 	{
 	public:
-		ComponentContainer<MeshComponent> m_mesh;
+		std::vector<ComponentContainer<MeshComponent>*> m_meshes;
 	};
 }

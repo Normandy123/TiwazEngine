@@ -29,7 +29,7 @@ namespace Tiwaz
 		virtual void Update() {}
 		virtual void Exit() {}	
 
-		constexpr const uint64_t object_ID() { return m_ID; }
+		const uint64_t object_ID() { return m_ID; }
 
 	protected:
 		uint64_t m_ID = 0;
@@ -45,6 +45,13 @@ namespace Tiwaz::ObjectSystem
 	{
 	public:
 		ObjectManager();
+
+		ObjectManager(const ObjectManager & other)	= delete;
+		ObjectManager(ObjectManager && other)		= delete;
+
+		ObjectManager& operator=(const ObjectManager & other)	= delete;
+		ObjectManager& operator=(ObjectManager && other)		= delete;
+
 		~ObjectManager();
 
 		const uint64_t AddObject(EngineObject* object);
@@ -53,7 +60,7 @@ namespace Tiwaz::ObjectSystem
 
 		EngineObject* AccessObjectByID(const uint64_t & ID);
 
-		const std::map<uint64_t, EngineObject*> Objects() { return m_objects; }
+		const std::map<uint64_t, EngineObject*> Objects_Map() { return m_objects; }
 
 	private:
 		std::map<uint64_t, EngineObject*> m_objects;
