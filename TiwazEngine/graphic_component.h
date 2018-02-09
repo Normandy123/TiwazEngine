@@ -76,18 +76,22 @@ namespace Tiwaz::Component
 
 		~MeshComponent()
 		{
-			m_vertices.clear();
+			m_positions.clear();
 			m_normals.clear();
 			m_uvs.clear();
 		}
 
-		const std::vector<glm::vec3> Vertices() { return m_vertices; }
+		const std::vector<glm::vec3> Vertices() { return m_positions; }
 		const std::vector<glm::vec3> Normals() { return m_normals; }
 		const std::vector<glm::vec2> UVs() { return m_uvs; }
+
+		const std::vector<unsigned int> Indices() { return m_indices; }
 	private:
-		std::vector<glm::vec3> m_vertices;
+		std::vector<glm::vec3> m_positions;
 		std::vector<glm::vec3> m_normals;
 		std::vector<glm::vec2> m_uvs;
+
+		std::vector<unsigned int> m_indices;
 	};
 
 	class ModelComponent : public GraphicComponent
