@@ -53,7 +53,7 @@ void Tiwaz::Engine::Init()
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
-		Loader::LoadModel("data/models/cones2.dae", temp_obj);
+		temp_obj->SetModelData(Loader::LoadModel("data/models/cones2.dae"));
 	}
 
 	/*

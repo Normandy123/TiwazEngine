@@ -106,6 +106,21 @@ namespace Tiwaz::Component
 			}
 		}
 
+		void SetModelData(Graphic::Model* model_data)
+		{
+			Component<MeshComponent>* temp_mesh_comp;
+
+			for (Graphic::Mesh* temp_mesh_data : model_data->m_meshes)
+			{
+				temp_mesh_comp = new Component<MeshComponent>();
+				temp_mesh_comp->ptr()->SetMeshData(temp_mesh_data);
+
+				m_meshes.push_back(temp_mesh_comp);
+
+				temp_mesh_comp = nullptr;
+			}
+		}
+
 		std::vector<Component<MeshComponent>*> MeshComponents() { return m_meshes; }
 
 	private:

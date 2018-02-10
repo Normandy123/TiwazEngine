@@ -11,6 +11,11 @@
 #include <assimp/mesh.h>
 #include <assimp/postprocess.h>
 
+namespace Tiwaz::Graphic
+{
+	struct Model;
+}
+
 namespace Tiwaz::Component
 {
 	class ModelComponent;
@@ -19,5 +24,5 @@ namespace Tiwaz::Component
 
 namespace Tiwaz::Loader
 {
-	extern void LoadModel(const std::string & file_path, Component::ModelComponent* model_component);
+	extern Graphic::Model* LoadModel(const std::string & file_path);
 }

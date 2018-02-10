@@ -37,7 +37,7 @@ namespace Tiwaz::Component
 			m_component = nullptr;
 		}
 
-		T* ptr ()
+		T* ptr()
 		{
 			return m_component;
 		}
