@@ -90,6 +90,7 @@ namespace Tiwaz::Component
 		Graphic::Mesh* m_mesh;
 	};
 
+
 	class ModelComponent : public GraphicComponent
 	{
 	public:
@@ -105,6 +106,9 @@ namespace Tiwaz::Component
 			}
 		}
 
+		std::vector<Component<MeshComponent>*> MeshComponents() { return m_meshes; }
+
+	private:
 		std::vector<Component<MeshComponent>*> m_meshes;
 	};
 }

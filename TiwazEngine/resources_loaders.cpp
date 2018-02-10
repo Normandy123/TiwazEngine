@@ -86,17 +86,21 @@ namespace Tiwaz::Loader
 
 		ProcessMeshNode(temp_graphic_model, root_node, ai_scene);
 
+
+		std::vector<Component::Component<Component::MeshComponent>*> model_comp_mesh_comps = model_component->MeshComponents();
 		Component::Component<Component::MeshComponent>* temp_mesh_comp;
 
-		for (auto temp_mesh_data : temp_graphic_model->m_meshes)
+		for (Graphic::Mesh* temp_mesh_data : temp_graphic_model->m_meshes)
 		{
 			temp_mesh_comp = new Component::Component<Component::MeshComponent>();
 			temp_mesh_comp->ptr()->SetMeshData(temp_mesh_data);
 
-			model_component->m_meshes.push_back(temp_mesh_comp);
+			model_comp_mesh_comps.push_back(temp_mesh_comp);
 
 			temp_mesh_comp = nullptr;
 		}	
+
+		model_comp_mesh_comps.clear();
 
 		delete temp_graphic_model;
 		temp_graphic_model = nullptr;
