@@ -141,3 +141,78 @@ namespace Tiwaz::Global
 {
 	extern EventSystem::EventsManager* EVENTMANAGER;
 }
+
+namespace Tiwaz::EventSystem2
+{
+	class Event
+	{
+	public:
+		virtual ~Event() {};
+	};
+
+	class ComponentInitEvent : public Event
+	{
+
+	};
+
+	class HandlerFunctionBase
+	{
+	public:
+		virtual ~HandlerFunctionBase() {};
+
+		void Execute(const Event* event) { Call(event); }
+
+	private:
+		virtual void Call(const Event* event) = 0;
+	};
+
+	template<typename T, typename TEvent>
+	class MemberFunctionHandler : public HandlerFunctionBase
+	{
+	public:
+		typedef void(T::*MemberFunction)(TEvent*);
+
+		MemberFunctionHandler(T* instance, MemberFunction mem_fn) : m_instance(instance), m_function(mem_fn) {};
+
+		void Call(const Event* event)
+		{
+			(m_instance->*m_function)(static_cast<TEvent*>(event));
+		}
+
+	private:
+		T* m_instance;
+		MemberFunction m_function;
+	};
+
+	class EventHandler
+	{
+	public:
+		~EventHandler()
+		{
+			for (auto pair : m_handlers)
+			{
+				delete pair.second;
+				pair.second = nullptr;
+			}
+		}
+
+		void HandleEvent(const Event* event)
+		{
+			MapHandlers::iterator it = m_handlers.find(typeid(*event).raw_name());
+
+			if (it != m_handlers.cend())
+			{
+				it->second->Execute(event);
+			}
+		}
+
+		template<typename T, typename TEvent> void RegisterEventFunc(T* obj, void(T::*mem_fn)(TEvent*))
+		{
+			m_handlers[typeid(TEvent).raw_name()] = new MemberFunctionHandler<T, TEvent>(obj, mem_fn);
+		}
+
+	private:
+		typedef std::map<const char*, HandlerFunctionBase*> MapHandlers;
+		MapHandlers m_handlers;
+	};
+}

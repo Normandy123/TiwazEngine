@@ -1,3 +1,6 @@
 #include "event_system.h"
 
-Tiwaz::EventSystem::EventsManager* Tiwaz::Global::EVENTMANAGER;
+namespace Tiwaz::Global
+{
+	EventSystem::EventsManager* EVENTMANAGER;
+}
