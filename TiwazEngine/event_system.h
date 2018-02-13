@@ -8,6 +8,7 @@
 #include <thread>
 
 #include "object_system.h"
+#include "events.h"
 
 namespace Tiwaz::EventSystem
 {
@@ -144,26 +145,18 @@ namespace Tiwaz::Global
 
 namespace Tiwaz::EventSystem2
 {
-	class Event
-	{
-	public:
-		virtual ~Event() {};
-	};
-
-	class ComponentInitEvent : public Event
-	{
-
-	};
-
 	class HandlerFunctionBase
 	{
 	public:
 		virtual ~HandlerFunctionBase() {};
 
-		void Execute(const Event* event) { Call(event); }
+		void Execute(const EventSystem::Event* event) 
+		{ 
+			Call(event); 
+		}
 
 	private:
-		virtual void Call(const Event* event) = 0;
+		virtual void Call(const EventSystem::Event* event) = 0;
 	};
 
 	template<typename T, typename TEvent>
@@ -174,7 +167,7 @@ namespace Tiwaz::EventSystem2
 
 		MemberFunctionHandler(T* instance, MemberFunction mem_fn) : m_instance(instance), m_function(mem_fn) {};
 
-		void Call(const Event* event)
+		void Call(const EventSystem::Event* event)
 		{
 			(m_instance->*m_function)(static_cast<TEvent*>(event));
 		}
@@ -194,9 +187,11 @@ namespace Tiwaz::EventSystem2
 				delete pair.second;
 				pair.second = nullptr;
 			}
+
+			m_handlers.clear();
 		}
 
-		void HandleEvent(const Event* event)
+		void HandleEvent(const EventSystem::Event* event)
 		{
 			MapHandlers::iterator it = m_handlers.find(typeid(*event).raw_name());
 
@@ -206,9 +201,38 @@ namespace Tiwaz::EventSystem2
 			}
 		}
 
-		template<typename T, typename TEvent> void RegisterEventFunc(T* obj, void(T::*mem_fn)(TEvent*))
+		template<typename T, typename TEvent> void RegisterEventFunction(T* obj, void(T::*mem_fn)(TEvent*))
 		{
-			m_handlers[typeid(TEvent).raw_name()] = new MemberFunctionHandler<T, TEvent>(obj, mem_fn);
+			const char* type_name = typeid(TEvent).raw_name();
+
+			MapHandlers::iterator it = m_handlers.find(type_name);
+
+			if (obj != nullptr)
+			{
+				if (it == m_handlers.cend() || m_handlers.empty())
+				{
+					m_handlers.insert(std::make_pair(type_name, new MemberFunctionHandler<T, TEvent>(obj, mem_fn)));
+				}
+			}
+
+			type_name = nullptr;
+		}
+
+		template<typename TEvent> void UnregisterEventFunction()
+		{
+			const char* type_name = typeid(TEvent).raw_name();
+
+			MapHandlers::iterator it = m_handlers.find(type_name);
+
+			if (it != m_handlers.cend())
+			{
+				delete it->second;
+				it->second = nullptr;
+
+				m_handlers.erase(it);
+			}
+
+			type_name = nullptr;
 		}
 
 	private:

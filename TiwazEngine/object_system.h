@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "counter.h"
+#include "events.h"
 
 namespace Tiwaz::ObjectSystem
 {

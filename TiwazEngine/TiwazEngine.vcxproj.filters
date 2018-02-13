@@ -179,5 +179,8 @@
     <ClInclude Include="graphic_types.h">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="events.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

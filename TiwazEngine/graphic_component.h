@@ -94,6 +94,11 @@ namespace Tiwaz::Component
 	class ModelComponent : public GraphicComponent
 	{
 	public:
+		void Init(const EventSystem::ComponentInitEvent* event)
+		{
+			std::cout << event->text << std::endl;
+		}
+
 		void Exit()
 		{
 			if (!m_meshes.empty())
@@ -104,6 +109,8 @@ namespace Tiwaz::Component
 					mesh_comp = nullptr;
 				}
 			}
+
+			m_meshes.clear();
 		}
 
 		void SetModelData(Graphic::Model* model_data)

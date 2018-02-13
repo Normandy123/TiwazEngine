@@ -23,7 +23,7 @@ int Tiwaz::Engine::Run()
 
 		Global::DELTA_TIME = deltatime_timer->DeltaTime();
 
-		std::cout << Global::DELTA_TIME << std::endl;
+		//std::cout << Global::DELTA_TIME << std::endl;
 	}
 
 	Exit();
@@ -50,11 +50,25 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
+	EventSystem2::EventHandler evha1;
+
+	EventSystem::ComponentInitEvent* temp_event = new EventSystem::ComponentInitEvent;
+	temp_event->text = "Greetings";
+
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
+
+		evha1.RegisterEventFunction(temp_obj, &Component::ModelComponent::Init);
+		evha1.HandleEvent(temp_event);
+
 		temp_obj->SetModelData(Loader::LoadModel("data/models/cones2.dae"));
+
+		evha1.UnregisterEventFunction<EventSystem::ComponentInitEvent>();
 	}
+
+	delete temp_event;
+	temp_event = nullptr;
 
 	/*
 	Component::ModelComponent* model = CreateObject<Component::ModelComponent>();
