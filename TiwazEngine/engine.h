@@ -24,7 +24,6 @@ namespace Tiwaz
 	class Engine
 	{
 	public:
-		~Engine();
 		int Run();
 
 	private:
@@ -33,7 +32,7 @@ namespace Tiwaz
 		void Render();
 		void Exit();
 
-		Timer::Timer* deltatime_timer = new Timer::Timer();
+		Timer::Timer deltatime_timer;
 	};
 
 	extern const int RunEngine();

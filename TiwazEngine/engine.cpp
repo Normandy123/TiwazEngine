@@ -1,11 +1,5 @@
 #include "engine.h"
 
-Tiwaz::Engine::~Engine()
-{
-	delete deltatime_timer;
-	deltatime_timer = nullptr;
-}
-
 int Tiwaz::Engine::Run()
 {
 	std::mutex run_loop_mutex;
@@ -16,12 +10,12 @@ int Tiwaz::Engine::Run()
 
 	while (!Global::SHOULD_EXIT)
 	{
-		deltatime_timer->Start();
+		deltatime_timer.Start();
 
 		Update();
 		Render();
 
-		Global::DELTA_TIME = deltatime_timer->DeltaTime();
+		Global::DELTA_TIME = deltatime_timer.DeltaTime();
 
 		//std::cout << Global::DELTA_TIME << std::endl;
 	}
