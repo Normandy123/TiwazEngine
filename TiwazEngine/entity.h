@@ -12,16 +12,20 @@ namespace Tiwaz::Entity
 	public:
 		Entity()
 		{
-			Global::EVENTMANAGER->AddHandle("ENTITY_INIT", this, &Entity::Init);
-			Global::EVENTMANAGER->AddHandle("ENTITY_UPDATE", this, &Entity::Update);
-			Global::EVENTMANAGER->AddHandle("ENTITY_EXIT", this, &Entity::Exit);
+			Global::EVENTHANDLER->RegisterEventFunction(this, &Entity::Init);
+			Global::EVENTHANDLER->RegisterEventFunction(this, &Entity::Update);
+			Global::EVENTHANDLER->RegisterEventFunction(this, &Entity::Exit);
 		}
 
 		~Entity()
 		{
-			Global::EVENTMANAGER->RemoveHandle("ENTITY_INIT", this);
-			Global::EVENTMANAGER->RemoveHandle("ENTITY_UPDATE", this);
-			Global::EVENTMANAGER->RemoveHandle("ENTITY_EXIT", this);
+			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::EntityInitEvent>(this);
+			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::EntityUpdateEvent>(this);
+			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::EntityExitEvent>(this);
 		}
+
+		virtual void Init(const EventSystem::EntityInitEvent* event) {}
+		virtual void Update(const EventSystem::EntityUpdateEvent* event) {}
+		virtual void Exit(const EventSystem::EntityExitEvent* event) {}
 	};
 }

@@ -37,7 +37,7 @@ void Tiwaz::Engine::Init()
 
 	Global::MESSAGE_BUFFER = new MessageSystem::MessageBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
-	Global::EVENTMANAGER = new EventSystem::EventsManager;
+	Global::EVENTHANDLER = new EventSystem::EventHandler;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
@@ -50,25 +50,12 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
-	EventSystem2::EventHandler evha1;
-
-	EventSystem::ComponentInitEvent* temp_event = new EventSystem::ComponentInitEvent;
-	temp_event->text = "Greetings";
-
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
 
-		evha1.RegisterEventFunction(temp_obj, &Component::ModelComponent::Init);
-		evha1.HandleEvent(temp_event);
-
 		temp_obj->SetModelData(Loader::LoadModel("data/models/cones2.dae"));
-
-		evha1.UnregisterEventFunction<EventSystem::ComponentInitEvent>();
 	}
-
-	delete temp_event;
-	temp_event = nullptr;
 
 	/*
 	Component::ModelComponent* model = CreateObject<Component::ModelComponent>();
@@ -93,16 +80,22 @@ void Tiwaz::Engine::Init()
 	RemoveObject(model);
 	*/
 
-	Global::EVENTMANAGER->LaunchEvent("ENTITY_INIT");
-	Global::EVENTMANAGER->LaunchEvent("COMPONENT_INIT");
+	EventSystem::EntityInitEvent entinit;
+	EventSystem::ComponentInitEvent compinit;
+
+	Global::EVENTHANDLER->HandleEvent(&entinit);
+	Global::EVENTHANDLER->HandleEvent(&compinit);
 }
 
 void Tiwaz::Engine::Update()
 {
 	Global::RENDER_WINDOW->TiwazUpdate();
 
-	Global::EVENTMANAGER->LaunchEvent("ENTITY_UPDATE");
-	Global::EVENTMANAGER->LaunchEvent("COMPONENT_UPDATE");
+	EventSystem::EntityUpdateEvent entupdate;
+	EventSystem::ComponentUpdateEvent comupdate;
+
+	Global::EVENTHANDLER->HandleEvent(&entupdate);
+	Global::EVENTHANDLER->HandleEvent(&comupdate);
 }
 
 void Tiwaz::Engine::Render()
@@ -120,8 +113,11 @@ void Tiwaz::Engine::Render()
 
 void Tiwaz::Engine::Exit()
 {
-	Global::EVENTMANAGER->LaunchEvent("ENTITY_EXIT");
-	Global::EVENTMANAGER->LaunchEvent("COMPONENT_EXIT");
+	EventSystem::EntityExitEvent entexit;
+	EventSystem::ComponentExitEvent comexit;
+
+	Global::EVENTHANDLER->HandleEvent(&entexit);
+	Global::EVENTHANDLER->HandleEvent(&comexit);
 
 	//delete Global::LUA_INTERFACE;
 	//Global::LUA_INTERFACE = nullptr;
@@ -131,14 +127,14 @@ void Tiwaz::Engine::Exit()
 
 	Global::RENDER_WINDOW->TiwazDestroyWindow();
 
-	delete Global::RENDER_SCENE;
-	Global::RENDER_SCENE = nullptr;
-
 	delete Global::OBJECTMANAGER;
 	Global::OBJECTMANAGER = nullptr;
 
-	delete Global::EVENTMANAGER;
-	Global::EVENTMANAGER = nullptr;
+	delete Global::RENDER_SCENE;
+	Global::RENDER_SCENE = nullptr;
+
+	delete Global::EVENTHANDLER;
+	Global::EVENTHANDLER = nullptr;
 
 	delete Global::RENDER_WINDOW;
 	Global::RENDER_WINDOW = nullptr;

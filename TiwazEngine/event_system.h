@@ -1,9 +1,12 @@
 #pragma once
 
+#include <cstdint>
+
 #include <string>
 #include <tuple>
 #include <map>
 #include <typeinfo>
+#include <typeindex>
 #include <functional>
 #include <thread>
 
@@ -12,147 +15,14 @@
 
 namespace Tiwaz::EventSystem
 {
-	class EventHandler 
-	{
-	public:
-		~EventHandler()
-		{
-			m_object = nullptr;
-			m_container_function = nullptr;
-		}
-
-		template<typename TFunction, typename...TArgs> void SetFunction(TFunction func, TArgs...args)
-		{
-			if (std::is_function<TFunction>::value)
-			{
-				auto lam = [=]() { std::invoke(func, args...); };
-
-				m_container_function = lam;
-			}
-		}
-
-		template<typename TFunction, typename TObject, typename...TArgs> void SetMemberFunction(TFunction func, TObject object, TArgs...args)
-		{
-			if (std::is_member_function_pointer<TFunction>::value && std::is_pointer<TObject>::value && (object != nullptr))
-			{
-				auto lam = [=]() { std::invoke(func, object, args...); };
-
-				m_container_function = lam;
-				m_object = object;
-			}
-		}
-
-		void CallFunction()
-		{		
-			m_container_function();
-		}
-
-		void ResetFunction()
-		{
-			m_object = nullptr;
-			m_container_function = nullptr;
-		}
-
-		const void* ObjectPointer() { return m_object; }
-
-	private:
-		std::function<void()> m_container_function;
-		void* m_object = nullptr;
-	};
-
-	class EventsManager
-	{
-	public:
-		~EventsManager()
-		{
-			for (auto event_pair : m_eventhandler_map)
-			{
-				for (auto handler_pair : event_pair.second)
-				{
-					handler_pair.second->ResetFunction();
-					delete handler_pair.second;
-					handler_pair.second = nullptr;
-				}
-			}
-
-			m_eventhandler_map.clear();
-		}
-
-		template<typename TFunction, typename TObject, typename...TArgs> void AddHandle(const std::string & event_name, TObject object, TFunction func, TArgs...args)
-		{
-			if ((m_eventhandler_map.find(event_name) == m_eventhandler_map.cend()) || m_eventhandler_map.empty())
-			{
-				m_eventhandler_map.insert(std::make_pair(event_name, std::map<void*, EventHandler*>{}));
-			
-				//auto temp_object = Global::OBJECTMANAGER->AccessObjectByID(ID);
-
-				EventHandler* temp_handler = new EventHandler;
-				temp_handler->SetMemberFunction(func, object, args...);
-			
-				m_eventhandler_map[event_name].insert(std::make_pair(object, std::move(temp_handler)));
-
-				//temp_object = nullptr;
-				temp_handler = nullptr;	
-			}
-			else
-			{
-				//auto temp_object = Global::OBJECTMANAGER->AccessObjectByID(ID);
-
-				EventHandler* temp_handler = new EventHandler;
-				temp_handler->SetMemberFunction(func, object, args...);
-			
-				m_eventhandler_map[event_name].insert(std::make_pair(object, std::move(temp_handler)));
-
-				//temp_object = nullptr;
-				temp_handler = nullptr;
-			}		
-		}
-
-		template<typename TObject> void RemoveHandle(const std::string & event_name, TObject object)
-		{
-			if (std::is_pointer<TObject>::value && (object != nullptr))
-			{
-				delete m_eventhandler_map[event_name][object];
-				m_eventhandler_map[event_name][object] = nullptr;
-				m_eventhandler_map[event_name].erase(object);
-
-				if (m_eventhandler_map[event_name].empty())
-				{
-					m_eventhandler_map.erase(event_name);
-				}
-			}
-		}
-
-		void LaunchEvent(const std::string & event_name)
-		{
-			if (m_eventhandler_map.find(event_name) != m_eventhandler_map.cend())
-			{
-				for (auto handler_pair : m_eventhandler_map[event_name])
-				{
-					handler_pair.second->CallFunction();
-				}
-			}
-		}
-	private:
-		std::map<std::string, std::map<void*, EventHandler*>> m_eventhandler_map;
-	};
-}
-
-namespace Tiwaz::Global
-{
-	extern EventSystem::EventsManager* EVENTMANAGER;
-}
-
-namespace Tiwaz::EventSystem2
-{
 	class HandlerFunctionBase
 	{
 	public:
 		virtual ~HandlerFunctionBase() {};
 
-		void Execute(const EventSystem::Event* event) 
-		{ 
-			Call(event); 
+		void Execute(const EventSystem::Event* event)
+		{
+			Call(event);
 		}
 
 	private:
@@ -173,7 +43,7 @@ namespace Tiwaz::EventSystem2
 		}
 
 	private:
-		T* m_instance;
+		T * m_instance;
 		MemberFunction m_function;
 	};
 
@@ -182,61 +52,86 @@ namespace Tiwaz::EventSystem2
 	public:
 		~EventHandler()
 		{
-			for (auto pair : m_handlers)
+			for (auto pair : m_handles)
 			{
-				delete pair.second;
-				pair.second = nullptr;
+				for (auto pair2 : pair.second)
+				{
+					delete pair2.second;
+					pair2.second = nullptr;
+				}
+
+				pair.second.clear();
 			}
 
-			m_handlers.clear();
+			m_handles.clear();
 		}
 
 		void HandleEvent(const EventSystem::Event* event)
 		{
-			MapHandlers::iterator it = m_handlers.find(typeid(*event).raw_name());
-
-			if (it != m_handlers.cend())
+			if (event != nullptr)
 			{
-				it->second->Execute(event);
+				std::type_index typeindex = typeid(*event);
+
+				if (m_handles.find(typeindex) != m_handles.cend())
+				{
+					for (auto pair : m_handles[typeindex])
+					{
+						pair.second->Execute(event);
+					}
+				}
 			}
 		}
 
 		template<typename T, typename TEvent> void RegisterEventFunction(T* obj, void(T::*mem_fn)(TEvent*))
 		{
-			const char* type_name = typeid(TEvent).raw_name();
-
-			MapHandlers::iterator it = m_handlers.find(type_name);
-
 			if (obj != nullptr)
 			{
-				if (it == m_handlers.cend() || m_handlers.empty())
+				std::type_index typeindex = typeid(TEvent);
+				uintptr_t pointeruint = reinterpret_cast<uintptr_t>(obj);
+
+				if ((m_handles.find(typeindex) == m_handles.cend()) || m_handles.empty())
 				{
-					m_handlers.insert(std::make_pair(type_name, new MemberFunctionHandler<T, TEvent>(obj, mem_fn)));
+					m_handles.insert(std::make_pair(typeindex, std::map<uintptr_t, HandlerFunctionBase*>{}));
+
+					m_handles[typeindex].insert(std::make_pair(pointeruint, new MemberFunctionHandler<T, TEvent>(obj, mem_fn)));
+				}
+				else
+				{
+					m_handles[typeindex].insert(std::make_pair(pointeruint, new MemberFunctionHandler<T, TEvent>(obj, mem_fn)));
 				}
 			}
-
-			type_name = nullptr;
 		}
 
-		template<typename TEvent> void UnregisterEventFunction()
+		template<typename TEvent, typename T> void UnregisterEventFunction(T* obj)
 		{
-			const char* type_name = typeid(TEvent).raw_name();
-
-			MapHandlers::iterator it = m_handlers.find(type_name);
-
-			if (it != m_handlers.cend())
+			if (obj != nullptr)
 			{
-				delete it->second;
-				it->second = nullptr;
+				std::type_index typeindex = typeid(TEvent);
+				uintptr_t pointeruint = reinterpret_cast<uintptr_t>(obj);
 
-				m_handlers.erase(it);
+				if (m_handles.find(typeindex) != m_handles.cend())
+				{
+					delete m_handles[typeindex][pointeruint];
+					m_handles[typeindex][pointeruint] = nullptr;
+
+					m_handles[typeindex].erase(pointeruint);
+
+					if (m_handles[typeindex].empty())
+					{
+						m_handles[typeindex].clear();
+						m_handles.erase(typeindex);
+					}
+				}
 			}
-
-			type_name = nullptr;
 		}
 
 	private:
-		typedef std::map<const char*, HandlerFunctionBase*> MapHandlers;
-		MapHandlers m_handlers;
+		typedef std::map<std::type_index, std::map<uintptr_t, HandlerFunctionBase*>> MapMultiHandles;
+		MapMultiHandles m_handles;
 	};
+}
+
+namespace Tiwaz::Global
+{
+	extern EventSystem::EventHandler* EVENTHANDLER;
 }

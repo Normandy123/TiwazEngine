@@ -70,7 +70,7 @@ namespace Tiwaz::Component
 	class MeshComponent : public GraphicComponent
 	{
 	public:
-		void Exit()
+		~MeshComponent()
 		{
 			if (m_mesh != nullptr)
 			{
@@ -94,12 +94,7 @@ namespace Tiwaz::Component
 	class ModelComponent : public GraphicComponent
 	{
 	public:
-		void Init(const EventSystem::ComponentInitEvent* event)
-		{
-			std::cout << event->text << std::endl;
-		}
-
-		void Exit()
+		~ModelComponent()
 		{
 			if (!m_meshes.empty())
 			{

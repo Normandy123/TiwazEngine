@@ -13,6 +13,30 @@ namespace Tiwaz::EventSystem
 	class ComponentInitEvent : public Event
 	{
 	public:
-		std::string text;
+	};
+
+	class ComponentUpdateEvent : public Event
+	{
+	public:
+	};
+
+	class ComponentExitEvent : public Event
+	{
+	public:
+	};
+
+	class EntityInitEvent : public Event
+	{
+	public:
+	};
+
+	class EntityUpdateEvent : public Event
+	{
+	public:
+	};
+
+	class EntityExitEvent : public Event
+	{
+	public:
 	};
 }
