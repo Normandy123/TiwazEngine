@@ -4,6 +4,7 @@ Tiwaz::Window::IWindow* Tiwaz::Global::RENDER_WINDOW;
 
 #ifdef _WIN32
 HINSTANCE Tiwaz::Window::h_instance = GetModuleHandle(0);
+Tiwaz::Window::Window* Tiwaz::Window::p_callback_window;
 
 void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title)
 {
@@ -191,6 +192,8 @@ void Tiwaz::Window::Window::TiwazDestroyWindow()
 		CloseWindow(h_wnd);
 	}
 
+	p_callback_window = nullptr;
+
 	wglDeleteContext(opengl_rendering_context);
 	ReleaseDC(h_wnd, h_device_context);
 	DestroyWindow(h_wnd);
@@ -240,7 +243,7 @@ LRESULT CALLBACK Tiwaz::Window::Window::MessageHandler(HWND hWnd, UINT msg, WPAR
 		break;
 	case WM_CLOSE:
 		m_should_quit = true;
-		Global::SHOULD_EXIT = true;
+		Global::ENGINE_SHOULD_EXIT = true;
 		break;
 	case WM_DESTROY:
 		break;

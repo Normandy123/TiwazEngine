@@ -69,7 +69,7 @@ namespace Tiwaz::Window
 		
 	extern HINSTANCE h_instance;
 	
-	static Window* p_callback_window;
+	extern Window* p_callback_window;
 	
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{

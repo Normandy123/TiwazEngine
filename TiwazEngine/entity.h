@@ -12,9 +12,9 @@ namespace Tiwaz::Entity
 	public:
 		Entity()
 		{
-			Global::EVENTHANDLER->RegisterEventFunction(this, &Entity::Init);
-			Global::EVENTHANDLER->RegisterEventFunction(this, &Entity::Update);
-			Global::EVENTHANDLER->RegisterEventFunction(this, &Entity::Exit);
+			Global::EVENTHANDLER->RegisterEventFunction(&Entity::Init, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&Entity::Update, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&Entity::Exit, this);
 		}
 
 		~Entity()

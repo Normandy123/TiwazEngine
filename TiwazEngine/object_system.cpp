@@ -39,19 +39,6 @@ namespace Tiwaz::ObjectSystem
 
 	const uint64_t ObjectManager::AddObject(EngineObject* object)
 	{
-			/*
-			bool exist = false;
-
-			for (auto obj : m_objects)
-			{
-				if (obj.second == object)
-				{
-					exist = true;
-					break;
-				}
-			}
-			*/
-
 		if (object->object_ID() == 0 && object != nullptr)
 		{
 			uint64_t new_ID = 0;
@@ -103,7 +90,7 @@ namespace Tiwaz::ObjectSystem
 
 	EngineObject* ObjectManager::AccessObjectByID(const uint64_t & ID)
 	{
-		if ((m_objects.find(ID) != m_objects.cend()) || (!m_objects.empty()))
+		if (m_objects.find(ID) != m_objects.cend() || !m_objects.empty())
 		{
 			return m_objects[ID];
 		}

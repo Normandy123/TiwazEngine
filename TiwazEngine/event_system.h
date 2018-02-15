@@ -3,12 +3,13 @@
 #include <cstdint>
 
 #include <string>
+#include <array>
 #include <tuple>
 #include <map>
 #include <typeinfo>
 #include <typeindex>
-#include <functional>
 #include <thread>
+#include <mutex>
 
 #include "object_system.h"
 #include "events.h"
@@ -43,7 +44,7 @@ namespace Tiwaz::EventSystem
 		}
 
 	private:
-		T * m_instance;
+		T* m_instance;
 		MemberFunction m_function;
 	};
 
@@ -52,6 +53,14 @@ namespace Tiwaz::EventSystem
 	public:
 		~EventHandler()
 		{
+			for (auto thread : m_threads)
+			{
+				if (thread != nullptr)
+				{
+					thread->join();
+				}
+			}
+
 			for (auto pair : m_handles)
 			{
 				for (auto pair2 : pair.second)
@@ -72,6 +81,8 @@ namespace Tiwaz::EventSystem
 			{
 				std::type_index typeindex = typeid(*event);
 
+				std::lock_guard<std::mutex> lock(m_handles_mutex);
+
 				if (m_handles.find(typeindex) != m_handles.cend())
 				{
 					for (auto pair : m_handles[typeindex])
@@ -82,20 +93,21 @@ namespace Tiwaz::EventSystem
 			}
 		}
 
-		template<typename T, typename TEvent> void RegisterEventFunction(T* obj, void(T::*mem_fn)(TEvent*))
+		template<typename TEvent, typename T> void RegisterEventFunction(void(T::*mem_fn)(TEvent*), T* obj)
 		{
 			if (obj != nullptr)
 			{
 				std::type_index typeindex = typeid(TEvent);
 				uintptr_t pointeruint = reinterpret_cast<uintptr_t>(obj);
 
-				if ((m_handles.find(typeindex) == m_handles.cend()) || m_handles.empty())
-				{
-					m_handles.insert(std::make_pair(typeindex, std::map<uintptr_t, HandlerFunctionBase*>{}));
+				std::lock_guard<std::mutex> lock(m_handles_mutex);
 
-					m_handles[typeindex].insert(std::make_pair(pointeruint, new MemberFunctionHandler<T, TEvent>(obj, mem_fn)));
+				if (m_handles.find(typeindex) == m_handles.cend() || m_handles.empty())
+				{
+					m_handles.insert(std::make_pair(typeindex, std::map<uintptr_t, HandlerFunctionBase*>{}));				
 				}
-				else
+
+				if (m_handles[typeindex].find(pointeruint) == m_handles[typeindex].cend() || m_handles[typeindex].empty())
 				{
 					m_handles[typeindex].insert(std::make_pair(pointeruint, new MemberFunctionHandler<T, TEvent>(obj, mem_fn)));
 				}
@@ -108,6 +120,8 @@ namespace Tiwaz::EventSystem
 			{
 				std::type_index typeindex = typeid(TEvent);
 				uintptr_t pointeruint = reinterpret_cast<uintptr_t>(obj);
+
+				std::lock_guard<std::mutex> lock(m_handles_mutex);
 
 				if (m_handles.find(typeindex) != m_handles.cend())
 				{
@@ -128,6 +142,10 @@ namespace Tiwaz::EventSystem
 	private:
 		typedef std::map<std::type_index, std::map<uintptr_t, HandlerFunctionBase*>> MapMultiHandles;
 		MapMultiHandles m_handles;
+
+		std::vector<std::thread*> m_threads;
+
+		std::mutex m_handles_mutex;
 	};
 }
 

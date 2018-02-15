@@ -3,5 +3,6 @@
 namespace Tiwaz::Global
 {
 	double DELTA_TIME = 0.0;
-	bool SHOULD_EXIT = true;
+	bool ENGINE_IS_RUNNING = false;
+	bool ENGINE_SHOULD_EXIT = true;
 }

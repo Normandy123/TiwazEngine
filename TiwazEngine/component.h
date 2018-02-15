@@ -10,9 +10,9 @@ namespace Tiwaz::Component
 	public:
 		ComponentBase()
 		{	
-			Global::EVENTHANDLER->RegisterEventFunction(this, &ComponentBase::Init);
-			Global::EVENTHANDLER->RegisterEventFunction(this, &ComponentBase::Update);
-			Global::EVENTHANDLER->RegisterEventFunction(this, &ComponentBase::Exit);
+			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::Init, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::Update, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::Exit, this);
 		}
 
 		virtual ~ComponentBase()

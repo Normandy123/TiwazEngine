@@ -127,6 +127,9 @@ namespace Tiwaz::MessageSystem
 
 			ss_current_time.clear();
 			ss_file_name.clear();
+
+			delete time_block;
+			time_block = nullptr;
 		}
 	};
 }

@@ -8,7 +8,7 @@ int Tiwaz::Engine::Run()
 
 	Init();
 
-	while (!Global::SHOULD_EXIT)
+	while (!Global::ENGINE_SHOULD_EXIT)
 	{
 		deltatime_timer.Start();
 
@@ -27,7 +27,7 @@ int Tiwaz::Engine::Run()
 
 void Tiwaz::Engine::Init()
 {
-	Global::SHOULD_EXIT = false;
+	Global::ENGINE_SHOULD_EXIT = false;
 
 	Global::MESSAGE_BUFFER = new MessageSystem::MessageBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
@@ -44,7 +44,7 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
-	for (size_t i = 0; i < 1; ++i)
+	for (size_t i = 0; i < 100; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
 
@@ -142,6 +142,13 @@ std::thread* Tiwaz::Global::ENGINE_THREAD;
 
 const int Tiwaz::RunEngine()
 {
+	if (Global::ENGINE_IS_RUNNING)
+	{
+		return -1;
+	}
+
+	Global::ENGINE_IS_RUNNING = true;
+
 	Global::ENGINE = new Engine;
 	Global::ENGINE_THREAD = new std::thread(&Engine::Run, Global::ENGINE);
 
@@ -150,6 +157,11 @@ const int Tiwaz::RunEngine()
 
 const int Tiwaz::ExitEngine()
 {
+	if (!Global::ENGINE_IS_RUNNING)
+	{
+		return -1;
+	}
+
 	Global::ENGINE_THREAD->join();
 
 	delete Global::ENGINE_THREAD;
@@ -157,6 +169,8 @@ const int Tiwaz::ExitEngine()
 
 	delete Global::ENGINE;
 	Global::ENGINE = nullptr;
+
+	Global::ENGINE_IS_RUNNING = false;
 
 	return 0;
 }

@@ -30,6 +30,9 @@ void Tiwaz::Message(const MessageSystem::MessageType & type, const std::string &
 
 	print_text = ss_current_time.str() + " TIWAZENGINE: ";
 
+	delete time_block;
+	time_block = nullptr;
+
 	switch (type)
 	{
 	case MessageSystem::TIWAZ_TEXT:
@@ -43,7 +46,7 @@ void Tiwaz::Message(const MessageSystem::MessageType & type, const std::string &
 		temp_message = new MessageSystem::Message(type, location, text, print_text);
 		temp_message->PrintMessage();
 		Global::MESSAGE_BUFFER->AddMessage(std::move(temp_message));
-		Global::SHOULD_EXIT = true;
+		Global::ENGINE_SHOULD_EXIT = true;
 		break;
 	default:
 		print_text += MessageSystem::str_message_type[type] + ": " + location + ": " + text;
