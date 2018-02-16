@@ -1,12 +1,14 @@
 #pragma once
 
 #include <string>
+#include <memory>
+#include "graphic_types.h"
 
 namespace Tiwaz::EventSystem
 {
 	class Event
 	{
-	public:
+	protected:
 		virtual ~Event() {};
 	};
 
@@ -23,6 +25,12 @@ namespace Tiwaz::EventSystem
 	class ComponentExitEvent : public Event
 	{
 	public:
+	};
+
+	class ModelComponentInitEvent : public Event
+	{
+	public:
+		std::shared_ptr<Graphic::Model> model;
 	};
 
 	class EntityInitEvent : public Event

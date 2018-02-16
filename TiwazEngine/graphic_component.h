@@ -94,8 +94,15 @@ namespace Tiwaz::Component
 	class ModelComponent : public GraphicComponent
 	{
 	public:
+		ModelComponent()
+		{
+			Global::EVENTHANDLER->RegisterEventFunction(&ModelComponent::Init, this);
+		}
+
 		~ModelComponent()
 		{
+			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ModelComponentInitEvent>(this);
+
 			if (!m_meshes.empty())
 			{
 				for (auto mesh_comp : m_meshes)
@@ -106,6 +113,11 @@ namespace Tiwaz::Component
 			}
 
 			m_meshes.clear();
+		}
+
+		void Init(const EventSystem::ModelComponentInitEvent* event)
+		{
+			SetModelData(event->model);
 		}
 
 		void SetModelData(Graphic::Model* model_data)

@@ -53,14 +53,6 @@ namespace Tiwaz::EventSystem
 	public:
 		~EventHandler()
 		{
-			for (auto thread : m_threads)
-			{
-				if (thread != nullptr)
-				{
-					thread->join();
-				}
-			}
-
 			for (auto pair : m_handles)
 			{
 				for (auto pair2 : pair.second)
@@ -75,7 +67,7 @@ namespace Tiwaz::EventSystem
 			m_handles.clear();
 		}
 
-		void HandleEvent(const EventSystem::Event* event)
+		void HandleEvent(const Event* event)
 		{
 			if (event != nullptr)
 			{
@@ -88,6 +80,25 @@ namespace Tiwaz::EventSystem
 					for (auto pair : m_handles[typeindex])
 					{
 						pair.second->Execute(event);
+					}
+				}
+			}
+		}
+
+		template<typename T> void OneObjectEvent(const Event* event, T* obj)
+		{
+			if (obj != nullptr)
+			{
+				std::type_index typeindex = typeid(*event);
+				uintptr_t pointeruint = reinterpret_cast<uintptr_t>(obj);
+
+				std::lock_guard<std::mutex> lock(m_handles_mutex);
+
+				if (m_handles.find(typeindex) != m_handles.cend())
+				{
+					if (m_handles[typeindex].find(pointeruint) != m_handles[typeindex].cend())
+					{
+						m_handles[typeindex][pointeruint]->Execute(event);
 					}
 				}
 			}
@@ -142,8 +153,6 @@ namespace Tiwaz::EventSystem
 	private:
 		typedef std::map<std::type_index, std::map<uintptr_t, HandlerFunctionBase*>> MapMultiHandles;
 		MapMultiHandles m_handles;
-
-		std::vector<std::thread*> m_threads;
 
 		std::mutex m_handles_mutex;
 	};

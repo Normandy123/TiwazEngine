@@ -33,6 +33,15 @@ namespace Tiwaz
 		void Exit();
 
 		Timer::Timer deltatime_timer;
+
+		EventSystem::EntityInitEvent entinit;
+		EventSystem::ComponentInitEvent compinit;
+
+		EventSystem::EntityUpdateEvent entupdate;
+		EventSystem::ComponentUpdateEvent comupdate;
+
+		EventSystem::EntityExitEvent entexit;
+		EventSystem::ComponentExitEvent comexit;
 	};
 
 	extern const int RunEngine();

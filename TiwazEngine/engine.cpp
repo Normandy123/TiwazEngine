@@ -44,12 +44,15 @@ void Tiwaz::Engine::Init()
 
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
+	EventSystem::ModelComponentInitEvent modelevent;
+	modelevent.model = std::make_shared<Graphic::Model>(Loader::LoadModel("data/models/cones2.dae"));
+
 	for (size_t i = 0; i < 100; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
-
-		temp_obj->SetModelData(Loader::LoadModel("data/models/cones2.dae"));
 	}
+
+	Global::EVENTHANDLER->HandleEvent(&modelevent);
 
 	/*
 	Component::ModelComponent* model = CreateObject<Component::ModelComponent>();
@@ -74,9 +77,6 @@ void Tiwaz::Engine::Init()
 	RemoveObject(model);
 	*/
 
-	EventSystem::EntityInitEvent entinit;
-	EventSystem::ComponentInitEvent compinit;
-
 	Global::EVENTHANDLER->HandleEvent(&entinit);
 	Global::EVENTHANDLER->HandleEvent(&compinit);
 }
@@ -84,9 +84,6 @@ void Tiwaz::Engine::Init()
 void Tiwaz::Engine::Update()
 {
 	Global::RENDER_WINDOW->TiwazUpdate();
-
-	EventSystem::EntityUpdateEvent entupdate;
-	EventSystem::ComponentUpdateEvent comupdate;
 
 	Global::EVENTHANDLER->HandleEvent(&entupdate);
 	Global::EVENTHANDLER->HandleEvent(&comupdate);
@@ -107,9 +104,6 @@ void Tiwaz::Engine::Render()
 
 void Tiwaz::Engine::Exit()
 {
-	EventSystem::EntityExitEvent entexit;
-	EventSystem::ComponentExitEvent comexit;
-
 	Global::EVENTHANDLER->HandleEvent(&entexit);
 	Global::EVENTHANDLER->HandleEvent(&comexit);
 
