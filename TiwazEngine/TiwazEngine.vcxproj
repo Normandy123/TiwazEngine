@@ -147,6 +147,7 @@
     <ClCompile Include="event_system.cpp" />
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="graphic_component.cpp" />
+    <ClCompile Include="graphic_system.cpp" />
     <ClCompile Include="graphic_types.cpp" />
     <ClCompile Include="message_system.cpp" />
     <ClCompile Include="object_system.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="event_system.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="graphic_component.h" />
+    <ClInclude Include="graphic_system.h" />
     <ClInclude Include="graphic_types.h" />
     <ClInclude Include="message_system.h" />
     <ClInclude Include="object_system.h" />

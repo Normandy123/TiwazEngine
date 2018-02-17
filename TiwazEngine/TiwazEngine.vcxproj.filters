@@ -120,6 +120,9 @@
     <ClCompile Include="graphic_types.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="graphic_system.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="events.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="graphic_system.h">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

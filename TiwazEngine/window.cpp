@@ -1,5 +1,9 @@
 #include "window.h"
 
+#include "engine_vars.h"
+#include "message_system.h"
+#include "graphic_system.h"
+
 Tiwaz::Window::IWindow* Tiwaz::Global::RENDER_WINDOW;
 
 #ifdef _WIN32
@@ -232,12 +236,17 @@ void Tiwaz::Window::Window::TiwazSwapBuffers()
 
 LRESULT CALLBACK Tiwaz::Window::Window::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	uint16_t new_width = 0;
+	uint16_t new_height = 0;
+
 	switch (msg)
 	{
 	case WM_CREATE:
 		break;
 	case WM_SIZE:
-		glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
+		new_width = static_cast<uint16_t>(LOWORD(lParam));
+		new_height = static_cast<uint16_t>(HIWORD(lParam));
+		Global::GRAPHICMANAGER->ResizeScreen(new_width, new_height);
 		break;
 	case WM_PAINT:
 		break;

@@ -4,9 +4,6 @@
 
 #include <string>
 
-#include "engine_vars.h"
-#include "message_system.h"
-
 namespace Tiwaz::Window
 {
 	class IWindow
@@ -22,6 +19,7 @@ namespace Tiwaz::Window
 		virtual void TiwazSwapBuffers() = 0;
 
 		virtual const bool ShouldQuit() = 0;
+		virtual const bool IsOpen() = 0;
 	};
 }
 
