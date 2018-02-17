@@ -95,14 +95,14 @@ void Tiwaz::Engine::Exit()
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;
 
-	delete Global::EVENTHANDLER;
-	Global::EVENTHANDLER = nullptr;
-
 	delete Global::GRAPHICMANAGER;
 	Global::GRAPHICMANAGER = nullptr;
 
 	delete Global::RENDER_WINDOW;
 	Global::RENDER_WINDOW = nullptr;
+
+	delete Global::EVENTHANDLER;
+	Global::EVENTHANDLER = nullptr;
 
 	delete Global::MESSAGE_BUFFER;
 	Global::MESSAGE_BUFFER = nullptr;
