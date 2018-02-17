@@ -45,7 +45,7 @@ void Tiwaz::Engine::Init()
 	Global::RENDER_WINDOW->TiwazShowWindow();
 
 	EventSystem::ModelComponentInitEvent modelevent;
-	modelevent.model = std::make_shared<Graphic::Model>(Loader::LoadModel("data/models/cones2.dae"));
+	//modelevent.model = Loader::LoadModel("data/models/cones2.dae");
 
 	for (size_t i = 0; i < 100; ++i)
 	{

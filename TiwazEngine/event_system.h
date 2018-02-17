@@ -27,7 +27,7 @@ namespace Tiwaz::EventSystem
 		}
 
 	private:
-		virtual void Call(const EventSystem::Event* event) = 0;
+		virtual void Call(const Event* event) = 0;
 	};
 
 	template<typename T, typename TEvent>
@@ -38,7 +38,7 @@ namespace Tiwaz::EventSystem
 
 		MemberFunctionHandler(T* instance, MemberFunction mem_fn) : m_instance(instance), m_function(mem_fn) {};
 
-		void Call(const EventSystem::Event* event)
+		void Call(const Event* event)
 		{
 			(m_instance->*m_function)(static_cast<TEvent*>(event));
 		}

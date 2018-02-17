@@ -117,7 +117,7 @@ namespace Tiwaz::Component
 
 		void Init(const EventSystem::ModelComponentInitEvent* event)
 		{
-			SetModelData(event->model);
+			//SetModelData(event->model);
 		}
 
 		void SetModelData(Graphic::Model* model_data)

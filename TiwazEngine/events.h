@@ -30,7 +30,6 @@ namespace Tiwaz::EventSystem
 	class ModelComponentInitEvent : public Event
 	{
 	public:
-		std::shared_ptr<Graphic::Model> model;
 	};
 
 	class EntityInitEvent : public Event
