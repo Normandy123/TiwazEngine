@@ -32,6 +32,7 @@ void Tiwaz::Engine::Init()
 	Global::MESSAGEBUFFER = new MessageSystem::MessageBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTHANDLER = new EventSystem::EventHandler;
+	Global::MODELLOADER = new Loader::ModelLoader;
 	Global::RENDERSCENE = new Graphic::RenderScene;
 	Global::GRAPHICMANAGER = new Graphic::GraphicManager;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
@@ -40,14 +41,22 @@ void Tiwaz::Engine::Init()
 	Global::RENDERWINDOW = new Window::Window;
 	Global::RENDERWINDOW->TiwazCreateWindow(1280, 720, "TIWAZ_ENGINE");
 
-	//modelevent.model = Loader::LoadModel("data/models/cones2.dae");
-
-	Loader::ModelLoader model_loader;
-	model_loader.AddResource("data/models/cones2.dae");
+	Global::MODELLOADER->AddResource("data/models/cones2.dae");
 
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
+		temp_obj->SetModelData(1);
+
+		for (Component::Component<Component::MeshComponent>* mesh : temp_obj->MeshComponents())
+		{
+			std::vector<glm::vec3> temp_vec = mesh->ptr()->Vertices();
+
+			for (size_t j = 0; j < temp_vec.size(); ++j)
+			{
+				std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
+			}
+		}
 	}
 
 	Global::EVENTHANDLER->HandleEvent(&entinit);
@@ -100,6 +109,9 @@ void Tiwaz::Engine::Exit()
 
 	delete Global::GRAPHICMANAGER;
 	Global::GRAPHICMANAGER = nullptr;
+
+	delete Global::MODELLOADER;
+	Global::MODELLOADER = nullptr;
 
 	delete Global::RENDERWINDOW;
 	Global::RENDERWINDOW = nullptr;

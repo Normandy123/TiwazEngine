@@ -74,7 +74,7 @@ namespace Tiwaz::ObjectSystem
 
 	EngineObject* ObjectManager::AccessObjectByID(const uint64_t & ID)
 	{
-		if (m_objects.find(ID) != m_objects.cend() || !m_objects.empty())
+		if (m_objects.find(ID) != m_objects.cend())
 		{
 			return m_objects[ID];
 		}

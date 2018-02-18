@@ -94,3 +94,8 @@ namespace Tiwaz::Loader
 		return temp_model_data;
 	}
 }
+
+namespace Tiwaz::Global
+{
+	Loader::ModelLoader* MODELLOADER;
+}

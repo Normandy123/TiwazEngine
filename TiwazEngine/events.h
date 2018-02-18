@@ -57,7 +57,7 @@ namespace Tiwaz::EventSystem
 	class ModelComponentInitEvent : public ComponentInitEvent
 	{
 	public:
-		uint64_t model_data_ID = 0;
+		uint64_t model_ID = 0;
 	};
 
 	//Entity Events

@@ -10,6 +10,7 @@
 #include "component.h"
 #include "message_system.h"
 #include "graphic_types.h"
+#include "resources_loaders.h"
 
 namespace Tiwaz::Component
 {
@@ -122,10 +123,11 @@ namespace Tiwaz::Component
 
 		void SetModelData(const uint64_t & model_ID)
 		{
-			/*
+			Loader::ModelData* model_data = Global::MODELLOADER->AccessResource(model_ID);
+
 			Component<MeshComponent>* temp_mesh_comp;
 
-			for (Graphic::Mesh* temp_mesh_data : model_data->m_meshes)
+			for (Graphic::Mesh* temp_mesh_data : model_data->graphic_model.m_meshes)
 			{
 				temp_mesh_comp = new Component<MeshComponent>();
 				temp_mesh_comp->ptr()->SetMeshData(temp_mesh_data);
@@ -134,7 +136,10 @@ namespace Tiwaz::Component
 
 				temp_mesh_comp = nullptr;
 			}
-			*/
+
+			model_data = nullptr;
+
+			model_data_ID = 0;
 		}
 
 		const std::vector<Component<MeshComponent>*> MeshComponents() { return m_meshes; }

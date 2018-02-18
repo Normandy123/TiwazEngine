@@ -106,7 +106,7 @@ namespace Tiwaz::Loader
 				delete m_resources_map[ID];
 				m_resources_map[ID] = nullptr;
 
-				m_resources_map.erase(ID);				
+				m_resources_map.erase(ID);	
 			}
 		}
 
@@ -145,4 +145,9 @@ namespace Tiwaz::Loader
 			return temp_ID;
 		}
 	};
+}
+
+namespace Tiwaz::Global
+{
+	extern Loader::ModelLoader* MODELLOADER;
 }
