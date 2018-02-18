@@ -49,3 +49,38 @@ void Tiwaz::Counter::Counter::Reset()
 {
 	m_current_value = m_start_value;
 }
+
+Tiwaz::Counter::IDCounter::IDCounter()
+{
+}
+
+Tiwaz::Counter::IDCounter::~IDCounter()
+{
+	m_free_IDs.clear();
+}
+
+const uint64_t Tiwaz::Counter::IDCounter::NewID()
+{
+	uint64_t return_value = 0;
+
+	if (m_free_IDs.empty())
+	{
+		return_value = m_counter.Value();
+		++m_counter;
+	}
+	else
+	{
+		return_value = m_free_IDs.front();
+		m_free_IDs.pop_front();
+	}
+
+	return return_value;
+}
+
+void Tiwaz::Counter::IDCounter::ReleaseID(const uint64_t & value)
+{
+	if (std::find(m_free_IDs.begin(), m_free_IDs.end(), value) == m_free_IDs.cend())
+	{
+		m_free_IDs.emplace_back(value);
+	}
+}

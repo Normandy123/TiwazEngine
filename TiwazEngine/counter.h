@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <deque>
 
 namespace Tiwaz::Counter
 {
@@ -18,8 +19,21 @@ namespace Tiwaz::Counter
 
 		void Reset();
 
-		inline const uint64_t Value() { return m_current_value; }
+		const uint64_t Value() { return m_current_value; }
 	private:
 		uint64_t m_current_value, m_count_value, m_start_value;
+	};
+
+	class IDCounter
+	{
+	public:
+		IDCounter();
+		~IDCounter();
+
+		const uint64_t NewID();
+		void ReleaseID(const uint64_t & value);
+	private:
+		Counter m_counter = Counter(1, 1, 1);
+		std::deque<uint64_t> m_free_IDs;
 	};
 }

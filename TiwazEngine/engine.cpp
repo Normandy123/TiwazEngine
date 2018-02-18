@@ -42,6 +42,9 @@ void Tiwaz::Engine::Init()
 
 	//modelevent.model = Loader::LoadModel("data/models/cones2.dae");
 
+	Loader::ModelLoader model_loader;
+	model_loader.AddResource("data/models/cones2.dae");
+
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();

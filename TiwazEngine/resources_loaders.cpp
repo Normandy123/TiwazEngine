@@ -75,20 +75,22 @@ namespace Tiwaz::Loader
 		}
 	}
 
-	Graphic::Model* LoadModel(const std::string & file_path)
+	ModelData* LoadModel(const std::string & file_path)
 	{
+		ModelData* temp_model_data = new ModelData();
+
+		temp_model_data->file_path = file_path;
+
 		Assimp::Importer importer;
 		const aiScene* ai_scene = importer.ReadFile(file_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		aiNode* root_node = ai_scene->mRootNode;
 
-		Graphic::Model* temp_graphic_model = new Graphic::Model();
-
-		ProcessMeshNode(temp_graphic_model, root_node, ai_scene);
+		ProcessMeshNode(std::addressof(temp_model_data->graphic_model), root_node, ai_scene);
 
 		root_node = nullptr;
 		ai_scene = nullptr;
 
-		return temp_graphic_model;
+		return temp_model_data;
 	}
 }

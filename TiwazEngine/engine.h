@@ -9,12 +9,13 @@
 
 #include "object_system.h"
 #include "event_system.h"
-#include "graphic_system.h"
 
 #include "entity.h"
 #include "graphic_component.h"
 
+#include "graphic_system.h"
 #include "render_scene.h"
+
 #include "resources_loaders.h"
 
 //#define TIWAZ_API __declspec(dllexport)

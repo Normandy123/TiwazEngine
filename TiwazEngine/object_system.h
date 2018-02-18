@@ -66,8 +66,7 @@ namespace Tiwaz::ObjectSystem
 	private:
 		std::map<uint64_t, EngineObject*> m_objects;
 
-		Counter::Counter m_ID_counter = Counter::Counter(1, 1, 1);
-		std::deque<uint64_t> m_free_IDs;
+		Counter::IDCounter m_ID_counter;
 	};
 }
 
