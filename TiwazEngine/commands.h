@@ -14,7 +14,7 @@ namespace Tiwaz
 
 			if (std::is_base_of<Component::GraphicComponent, T>::value)
 			{
-				Global::RENDER_SCENE->AddComponent(obj);
+				Global::RENDERSCENE->AddComponent(obj);
 			}
 
 			return obj;
@@ -29,7 +29,7 @@ namespace Tiwaz
 		{
 			if (std::is_base_of<Component::GraphicComponent, T>::value)
 			{
-				Global::RENDER_SCENE->RemoveComponent(object);
+				Global::RENDERSCENE->RemoveComponent(object);
 			}
 
 			Global::OBJECTMANAGER->RemoveObject(object->object_ID());

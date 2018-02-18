@@ -73,7 +73,6 @@ namespace Tiwaz::ObjectSystem
 		{
 			EngineObject* obj = m_objects[ID];
 
-			obj->Exit();
 			obj->SetObjectID(0);
 			m_free_IDs.emplace_back(ID);
 

@@ -136,7 +136,7 @@ namespace Tiwaz::MessageSystem
 
 namespace Tiwaz::Global
 {
-	extern MessageSystem::MessageBuffer* MESSAGE_BUFFER;
+	extern MessageSystem::MessageBuffer* MESSAGEBUFFER;
 }
 
 namespace Tiwaz

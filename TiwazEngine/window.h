@@ -25,7 +25,7 @@ namespace Tiwaz::Window
 
 namespace Tiwaz::Global
 {
-	extern Window::IWindow* RENDER_WINDOW;
+	extern Window::IWindow* RENDERWINDOW;
 }
 
 #ifdef _WIN32

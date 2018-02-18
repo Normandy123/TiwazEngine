@@ -26,7 +26,7 @@ namespace Tiwaz
 	class Engine
 	{
 	public:
-		int Run();
+		const int Run();
 
 	private:
 		void Init();

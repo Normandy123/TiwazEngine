@@ -1,6 +1,6 @@
 #include "engine.h"
 
-int Tiwaz::Engine::Run()
+const int Tiwaz::Engine::Run()
 {
 	std::mutex run_loop_mutex;
 
@@ -29,52 +29,52 @@ void Tiwaz::Engine::Init()
 {
 	Global::ENGINE_SHOULD_EXIT = false;
 
-	Global::MESSAGE_BUFFER = new MessageSystem::MessageBuffer;
+	Global::MESSAGEBUFFER = new MessageSystem::MessageBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTHANDLER = new EventSystem::EventHandler;
-	Global::RENDER_SCENE = new Graphic::RenderScene;
+	Global::RENDERSCENE = new Graphic::RenderScene;
 	Global::GRAPHICMANAGER = new Graphic::GraphicManager;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
 
-	Global::RENDER_WINDOW = new Window::Window;
-	Global::RENDER_WINDOW->TiwazCreateWindow(1280, 720, "TIWAZ_ENGINE");
+	Global::RENDERWINDOW = new Window::Window;
+	Global::RENDERWINDOW->TiwazCreateWindow(1280, 720, "TIWAZ_ENGINE");
 
-	EventSystem::ModelComponentInitEvent modelevent;
 	//modelevent.model = Loader::LoadModel("data/models/cones2.dae");
 
-	for (size_t i = 0; i < 100; ++i)
+	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
 	}
-
-	Global::EVENTHANDLER->HandleEvent(&modelevent);
 
 	Global::EVENTHANDLER->HandleEvent(&entinit);
 	Global::EVENTHANDLER->HandleEvent(&compinit);
 
 	Global::GRAPHICMANAGER->Init();
-	Global::RENDER_WINDOW->TiwazShowWindow();
+	Global::RENDERWINDOW->TiwazShowWindow();
 }
 
 void Tiwaz::Engine::Update()
 {
+	entupdate.delta_time = Global::DELTA_TIME;
+	comupdate.delta_time = Global::DELTA_TIME;
+
 	Global::EVENTHANDLER->HandleEvent(&entupdate);
 	Global::EVENTHANDLER->HandleEvent(&comupdate);
 
-	Global::RENDER_WINDOW->TiwazUpdate();
+	Global::RENDERWINDOW->TiwazUpdate();
 	Global::GRAPHICMANAGER->Update();
 }
 
 void Tiwaz::Engine::Render()
 {
 	Global::GRAPHICMANAGER->Render();
-	Global::RENDER_WINDOW->TiwazSwapBuffers();
+	Global::RENDERWINDOW->TiwazSwapBuffers();
 }
 
 void Tiwaz::Engine::Exit()
 {
-	Global::RENDER_WINDOW->TiwazCloseWindow();
+	Global::RENDERWINDOW->TiwazCloseWindow();
 
 	Global::EVENTHANDLER->HandleEvent(&entexit);
 	Global::EVENTHANDLER->HandleEvent(&comexit);
@@ -87,25 +87,25 @@ void Tiwaz::Engine::Exit()
 
 	Global::GRAPHICMANAGER->Exit();
 
-	Global::RENDER_WINDOW->TiwazDestroyWindow();
+	Global::RENDERWINDOW->TiwazDestroyWindow();
 
 	delete Global::OBJECTMANAGER;
 	Global::OBJECTMANAGER = nullptr;
 
-	delete Global::RENDER_SCENE;
-	Global::RENDER_SCENE = nullptr;
+	delete Global::RENDERSCENE;
+	Global::RENDERSCENE = nullptr;
 
 	delete Global::GRAPHICMANAGER;
 	Global::GRAPHICMANAGER = nullptr;
 
-	delete Global::RENDER_WINDOW;
-	Global::RENDER_WINDOW = nullptr;
+	delete Global::RENDERWINDOW;
+	Global::RENDERWINDOW = nullptr;
 
 	delete Global::EVENTHANDLER;
 	Global::EVENTHANDLER = nullptr;
 
-	delete Global::MESSAGE_BUFFER;
-	Global::MESSAGE_BUFFER = nullptr;
+	delete Global::MESSAGEBUFFER;
+	Global::MESSAGEBUFFER = nullptr;
 }
 
 Tiwaz::Engine* Tiwaz::Global::ENGINE;

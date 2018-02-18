@@ -4,12 +4,12 @@ namespace Tiwaz::Graphic
 {
 	GraphicManager::GraphicManager()
 	{
-
+		Global::EVENTHANDLER->RegisterEventFunction(&GraphicManager::OnScreenResize, this);
 	}
 
 	GraphicManager::~GraphicManager()
 	{
-
+		Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ScreenResizeEvent>(this);
 	}
 	
 	void GraphicManager::Init()
@@ -38,9 +38,9 @@ namespace Tiwaz::Graphic
 
 	}
 
-	void GraphicManager::ResizeScreen(const uint16_t new_width, const uint16_t new_height)
+	void GraphicManager::OnScreenResize(const EventSystem::ScreenResizeEvent* event)
 	{
-		glViewport(0, 0, new_width, new_height);
+		glViewport(0, 0, event->width, event->height);
 	}
 }
 

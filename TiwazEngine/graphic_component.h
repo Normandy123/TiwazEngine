@@ -96,7 +96,7 @@ namespace Tiwaz::Component
 	public:
 		ModelComponent()
 		{
-			Global::EVENTHANDLER->RegisterEventFunction(&ModelComponent::Init, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&ModelComponent::OnInit, this);
 		}
 
 		~ModelComponent()
@@ -105,7 +105,7 @@ namespace Tiwaz::Component
 
 			if (!m_meshes.empty())
 			{
-				for (auto mesh_comp : m_meshes)
+				for (Component<MeshComponent>* mesh_comp : m_meshes)
 				{
 					delete mesh_comp;
 					mesh_comp = nullptr;
@@ -115,13 +115,14 @@ namespace Tiwaz::Component
 			m_meshes.clear();
 		}
 
-		void Init(const EventSystem::ModelComponentInitEvent* event)
+		void OnInit(const EventSystem::ModelComponentInitEvent* event)
 		{
 			//SetModelData(event->model);
 		}
 
-		void SetModelData(Graphic::Model* model_data)
+		void SetModelData(const uint64_t & model_ID)
 		{
+			/*
 			Component<MeshComponent>* temp_mesh_comp;
 
 			for (Graphic::Mesh* temp_mesh_data : model_data->m_meshes)
@@ -133,11 +134,14 @@ namespace Tiwaz::Component
 
 				temp_mesh_comp = nullptr;
 			}
+			*/
 		}
 
-		std::vector<Component<MeshComponent>*> MeshComponents() { return m_meshes; }
+		const std::vector<Component<MeshComponent>*> MeshComponents() { return m_meshes; }
 
 	private:
 		std::vector<Component<MeshComponent>*> m_meshes;
+
+		uint64_t model_data_ID = 0;
 	};
 }

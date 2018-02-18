@@ -26,9 +26,9 @@ namespace Tiwaz
 		EngineObject();
 		virtual ~EngineObject();
 
-		virtual void Init() {}
-		virtual void Update() {}
-		virtual void Exit() {}	
+		virtual void OnInit(const EventSystem::InitEvent* event) {};
+		virtual void OnUpdate(const EventSystem::UpdateEvent* event) {};
+		virtual void OnExit(const EventSystem::ExitEvent* event) {};
 
 		const uint64_t object_ID() { return m_ID; }
 

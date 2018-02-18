@@ -10,9 +10,9 @@ namespace Tiwaz::Component
 	public:
 		ComponentBase()
 		{	
-			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::Init, this);
-			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::Update, this);
-			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::Exit, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::OnInit, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::OnUpdate, this);
+			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::OnExit, this);
 		}
 
 		virtual ~ComponentBase()
@@ -22,9 +22,9 @@ namespace Tiwaz::Component
 			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentExitEvent>(this);
 		}
 
-		virtual void Init(const EventSystem::ComponentInitEvent* event) {}
-		virtual void Update(const EventSystem::ComponentUpdateEvent* event) {}
-		virtual void Exit(const EventSystem::ComponentExitEvent* event) {}
+		virtual void OnInit(const EventSystem::ComponentInitEvent* event) {}
+		virtual void OnUpdate(const EventSystem::ComponentUpdateEvent* event) {}
+		virtual void OnExit(const EventSystem::ComponentExitEvent* event) {}
 	};
 
 	template<typename T> class Component

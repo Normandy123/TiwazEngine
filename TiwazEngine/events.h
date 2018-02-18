@@ -1,7 +1,8 @@
 #pragma once
 
+#include <cstdint>
+
 #include <string>
-#include <memory>
 #include "graphic_types.h"
 
 namespace Tiwaz::EventSystem
@@ -12,37 +13,65 @@ namespace Tiwaz::EventSystem
 		virtual ~Event() {};
 	};
 
-	class ComponentInitEvent : public Event
+	//Basic Events
+	class InitEvent : public Event
 	{
 	public:
 	};
 
-	class ComponentUpdateEvent : public Event
+	class UpdateEvent : public Event
+	{
+	public:
+		double delta_time = 0.0;
+	};
+
+	class ExitEvent : public Event
 	{
 	public:
 	};
 
-	class ComponentExitEvent : public Event
+	//Screen Events
+	class ScreenResizeEvent : public Event
+	{
+	public:
+		uint16_t width = 0;
+		uint16_t height = 0;
+	};
+
+	//Component Events
+	class ComponentInitEvent : public InitEvent
 	{
 	public:
 	};
 
-	class ModelComponentInitEvent : public Event
+	class ComponentUpdateEvent : public UpdateEvent
 	{
 	public:
 	};
 
-	class EntityInitEvent : public Event
+	class ComponentExitEvent : public ExitEvent
 	{
 	public:
 	};
 
-	class EntityUpdateEvent : public Event
+	class ModelComponentInitEvent : public ComponentInitEvent
+	{
+	public:
+		uint64_t model_data_ID = 0;
+	};
+
+	//Entity Events
+	class EntityInitEvent : public InitEvent
 	{
 	public:
 	};
 
-	class EntityExitEvent : public Event
+	class EntityUpdateEvent : public UpdateEvent
+	{
+	public:
+	};
+
+	class EntityExitEvent : public ExitEvent
 	{
 	public:
 	};

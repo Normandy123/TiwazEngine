@@ -11,7 +11,6 @@
 #include <thread>
 #include <mutex>
 
-#include "object_system.h"
 #include "events.h"
 
 namespace Tiwaz::EventSystem

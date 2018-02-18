@@ -10,7 +10,7 @@ const std::string Tiwaz::MessageSystem::str_message_type[Tiwaz::MessageSystem::T
 	"FATALERROR"
 };
 
-Tiwaz::MessageSystem::MessageBuffer* Tiwaz::Global::MESSAGE_BUFFER;
+Tiwaz::MessageSystem::MessageBuffer* Tiwaz::Global::MESSAGEBUFFER;
 
 void Tiwaz::Message(const MessageSystem::MessageType & type, const std::string & location, const std::string & text)
 {
@@ -39,20 +39,20 @@ void Tiwaz::Message(const MessageSystem::MessageType & type, const std::string &
 		print_text += text;
 		temp_message = new MessageSystem::Message(type, "", text, print_text);
 		temp_message->PrintMessage();
-		Global::MESSAGE_BUFFER->AddMessage(std::move(temp_message));
+		Global::MESSAGEBUFFER->AddMessage(std::move(temp_message));
 		break;
 	case MessageSystem::TIWAZ_FATALERROR:
 		print_text += MessageSystem::str_message_type[type] + ": " + location + ": " + text;
 		temp_message = new MessageSystem::Message(type, location, text, print_text);
 		temp_message->PrintMessage();
-		Global::MESSAGE_BUFFER->AddMessage(std::move(temp_message));
+		Global::MESSAGEBUFFER->AddMessage(std::move(temp_message));
 		Global::ENGINE_SHOULD_EXIT = true;
 		break;
 	default:
 		print_text += MessageSystem::str_message_type[type] + ": " + location + ": " + text;
 		temp_message = new MessageSystem::Message(type, location, text, print_text);
 		temp_message->PrintMessage();
-		Global::MESSAGE_BUFFER->AddMessage(std::move(temp_message));
+		Global::MESSAGEBUFFER->AddMessage(std::move(temp_message));
 		break;
 	}
 

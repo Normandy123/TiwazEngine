@@ -2,9 +2,9 @@
 
 #include "engine_vars.h"
 #include "message_system.h"
-#include "graphic_system.h"
+#include "event_system.h"
 
-Tiwaz::Window::IWindow* Tiwaz::Global::RENDER_WINDOW;
+Tiwaz::Window::IWindow* Tiwaz::Global::RENDERWINDOW;
 
 #ifdef _WIN32
 HINSTANCE Tiwaz::Window::h_instance = GetModuleHandle(0);
@@ -236,17 +236,17 @@ void Tiwaz::Window::Window::TiwazSwapBuffers()
 
 LRESULT CALLBACK Tiwaz::Window::Window::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	uint16_t new_width = 0;
-	uint16_t new_height = 0;
-
 	switch (msg)
 	{
 	case WM_CREATE:
 		break;
 	case WM_SIZE:
-		new_width = static_cast<uint16_t>(LOWORD(lParam));
-		new_height = static_cast<uint16_t>(HIWORD(lParam));
-		Global::GRAPHICMANAGER->ResizeScreen(new_width, new_height);
+		{
+			EventSystem::ScreenResizeEvent event;
+			event.width = static_cast<uint16_t>(LOWORD(lParam));
+			event.height = static_cast<uint16_t>(HIWORD(lParam));
+			Global::EVENTHANDLER->HandleEvent(&event);
+		}		
 		break;
 	case WM_PAINT:
 		break;

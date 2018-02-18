@@ -5,6 +5,8 @@
 #include <GLEW/glew.h>
 #include <GLM/glm.hpp>
 
+#include "event_system.h"
+
 namespace Tiwaz::Graphic
 {
 	class GraphicManager
@@ -18,7 +20,7 @@ namespace Tiwaz::Graphic
 		void Render();
 		void Exit();
 
-		void ResizeScreen(const uint16_t new_width, const uint16_t new_height);
+		void OnScreenResize(const EventSystem::ScreenResizeEvent* event);
 	};
 }
 
