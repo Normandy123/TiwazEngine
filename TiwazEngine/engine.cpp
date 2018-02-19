@@ -48,6 +48,7 @@ void Tiwaz::Engine::Init()
 		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
 		temp_obj->SetModelData(1);
 
+		/*
 		for (Component::Component<Component::MeshComponent>* mesh : temp_obj->MeshComponents())
 		{
 			std::vector<glm::vec3> temp_vec = mesh->ptr()->Vertices();
@@ -57,6 +58,7 @@ void Tiwaz::Engine::Init()
 				std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
 			}
 		}
+		*/
 	}
 
 	Global::EVENTHANDLER->HandleEvent(&entinit);

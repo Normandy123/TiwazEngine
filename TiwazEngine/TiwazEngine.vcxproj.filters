@@ -117,9 +117,6 @@
     <ClCompile Include="resources_loaders.cpp">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
-    <ClCompile Include="graphic_types.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="graphic_system.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
@@ -178,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="resources_loaders.h">
       <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="graphic_types.h">
-      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="events.h">
       <Filter>Header Files\Core</Filter>

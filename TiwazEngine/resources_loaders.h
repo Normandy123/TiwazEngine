@@ -13,12 +13,6 @@
 #include <assimp/postprocess.h>
 
 #include "counter.h"
-#include "graphic_types.h"
-
-namespace Tiwaz::Graphic
-{
-	struct Model;
-}
 
 namespace Tiwaz::Component
 {
@@ -28,17 +22,40 @@ namespace Tiwaz::Component
 
 namespace Tiwaz::Loader
 {
-	struct ResourceBase
+	struct MeshData
 	{
-		uint64_t resource_ID = 0;
+		~MeshData()
+		{
+			m_positions.clear();
+			m_normals.clear();
+			m_uvs.clear();
+
+			m_indices.clear();
+		}
+
+		std::string file_path = "";
+		std::string m_name = "";
+		uint64_t mesh_ID = 0;
+
+		std::vector<glm::vec3> m_positions;
+		std::vector<glm::vec3> m_normals;
+		std::vector<glm::vec2> m_uvs;
+
+		std::vector<unsigned int> m_indices;
 	};
 
 	struct ModelData
 	{
+		~ModelData()
+		{
+			m_meshes.clear();
+		}
+
 		std::string file_path = "";
+		std::string name = "";
 		uint64_t model_ID = 0;
 
-		Graphic::Model graphic_model;
+		std::vector<MeshData*> m_meshes;
 	};
 }
 

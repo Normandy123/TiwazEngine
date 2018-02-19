@@ -9,7 +9,6 @@
 
 #include "component.h"
 #include "message_system.h"
-#include "graphic_types.h"
 #include "resources_loaders.h"
 
 namespace Tiwaz::Component
@@ -80,7 +79,7 @@ namespace Tiwaz::Component
 			}
 		}
 
-		void SetMeshData(Graphic::Mesh* mesh) { m_mesh = mesh; }
+		void SetMeshData(Loader::MeshData* mesh) { m_mesh = mesh; }
 
 		const std::vector<glm::vec3> Vertices() { return m_mesh->m_positions; }
 		const std::vector<glm::vec3> Normals() { return m_mesh->m_normals; }
@@ -88,7 +87,7 @@ namespace Tiwaz::Component
 
 		const std::vector<unsigned int> Indices() { return m_mesh->m_indices; }
 	private:
-		Graphic::Mesh* m_mesh;
+		Loader::MeshData* m_mesh;
 	};
 
 
@@ -114,6 +113,8 @@ namespace Tiwaz::Component
 			}
 
 			m_meshes.clear();
+
+			m_model_data = nullptr;
 		}
 
 		void OnInit(const EventSystem::ModelComponentInitEvent* event)
@@ -127,7 +128,7 @@ namespace Tiwaz::Component
 
 			Component<MeshComponent>* temp_mesh_comp;
 
-			for (Graphic::Mesh* temp_mesh_data : model_data->graphic_model.m_meshes)
+			for (Loader::MeshData* temp_mesh_data : model_data->m_meshes)
 			{
 				temp_mesh_comp = new Component<MeshComponent>();
 				temp_mesh_comp->ptr()->SetMeshData(temp_mesh_data);
@@ -137,9 +138,9 @@ namespace Tiwaz::Component
 				temp_mesh_comp = nullptr;
 			}
 
-			model_data = nullptr;
+			m_model_data = model_data;
 
-			model_data_ID = 0;
+			model_data = nullptr;
 		}
 
 		const std::vector<Component<MeshComponent>*> MeshComponents() { return m_meshes; }
@@ -147,6 +148,6 @@ namespace Tiwaz::Component
 	private:
 		std::vector<Component<MeshComponent>*> m_meshes;
 
-		uint64_t model_data_ID = 0;
+		Loader::ModelData* m_model_data;
 	};
 }

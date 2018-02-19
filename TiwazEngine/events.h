@@ -3,7 +3,6 @@
 #include <cstdint>
 
 #include <string>
-#include "graphic_types.h"
 
 namespace Tiwaz::EventSystem
 {

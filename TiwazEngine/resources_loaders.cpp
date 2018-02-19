@@ -1,7 +1,6 @@
 #include "resources_loaders.h"
 
 #include "graphic_component.h"
-#include "graphic_types.h"
 
 namespace Tiwaz::Loader
 {
@@ -10,7 +9,7 @@ namespace Tiwaz::Loader
 
 	}
 
-	void ProcessMesh(Graphic::Mesh* mesh, aiMesh* ai_mesh, const aiScene* ai_scene)
+	void ProcessMesh(MeshData* mesh, aiMesh* ai_mesh, const aiScene* ai_scene)
 	{
 		for (size_t i = 0; i < ai_mesh->mNumVertices; ++i)
 		{
@@ -54,13 +53,13 @@ namespace Tiwaz::Loader
 		}
 	}
 
-	void ProcessMeshNode(Graphic::Model* model, aiNode* ai_node, const aiScene* ai_scene)
+	void ProcessMeshNode(ModelData* model, aiNode* ai_node, const aiScene* ai_scene)
 	{
 		for (size_t i = 0; i < ai_node->mNumMeshes; ++i)
 		{
 			aiMesh* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 
-			Graphic::Mesh* temp_mesh = new Graphic::Mesh();
+			MeshData* temp_mesh = new MeshData();
 
 			ProcessMesh(temp_mesh, ai_mesh, ai_scene);
 			model->m_meshes.push_back(temp_mesh);
@@ -86,7 +85,7 @@ namespace Tiwaz::Loader
 
 		aiNode* root_node = ai_scene->mRootNode;
 
-		ProcessMeshNode(std::addressof(temp_model_data->graphic_model), root_node, ai_scene);
+		ProcessMeshNode(temp_model_data, root_node, ai_scene);
 
 		root_node = nullptr;
 		ai_scene = nullptr;
