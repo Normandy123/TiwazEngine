@@ -48,6 +48,12 @@ namespace Tiwaz::Loader
 	{
 		~ModelData()
 		{
+			for (auto mesh : m_meshes)
+			{
+				delete mesh;
+				mesh = nullptr;
+			}
+
 			m_meshes.clear();
 		}
 

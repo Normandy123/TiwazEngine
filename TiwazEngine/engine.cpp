@@ -45,8 +45,15 @@ void Tiwaz::Engine::Init()
 
 	for (size_t i = 0; i < 1; ++i)
 	{
-		Component::ModelComponent* temp_obj = CreateObject<Component::ModelComponent>();
-		temp_obj->SetModelData(1);
+		Component::MeshComponent* temp_obj = CreateObject<Component::MeshComponent>();
+		temp_obj->SetMeshData(Global::MODELLOADER->AccessResource(1)->m_meshes[0]);
+
+		std::vector<glm::vec3> temp_vec = temp_obj->Positions();
+
+		for (size_t j = 0; j < temp_vec.size(); ++j)
+		{
+			std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
+		}
 
 		/*
 		for (Component::Component<Component::MeshComponent>* mesh : temp_obj->MeshComponents())

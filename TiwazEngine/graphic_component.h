@@ -72,16 +72,12 @@ namespace Tiwaz::Component
 	public:
 		~MeshComponent()
 		{
-			if (m_mesh != nullptr)
-			{
-				delete m_mesh;
-				m_mesh = nullptr;
-			}
+			m_mesh = nullptr;
 		}
 
 		void SetMeshData(Loader::MeshData* mesh) { m_mesh = mesh; }
 
-		const std::vector<glm::vec3> Vertices() { return m_mesh->m_positions; }
+		const std::vector<glm::vec3> Positions() { return m_mesh->m_positions; }
 		const std::vector<glm::vec3> Normals() { return m_mesh->m_normals; }
 		const std::vector<glm::vec2> UVs() { return m_mesh->m_uvs; }
 
@@ -131,7 +127,6 @@ namespace Tiwaz::Component
 			for (Loader::MeshData* temp_mesh_data : model_data->m_meshes)
 			{
 				temp_mesh_comp = new Component<MeshComponent>();
-				temp_mesh_comp->ptr()->SetMeshData(temp_mesh_data);
 
 				m_meshes.push_back(temp_mesh_comp);
 
