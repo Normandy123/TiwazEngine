@@ -41,19 +41,37 @@ void Tiwaz::Engine::Init()
 	Global::RENDERWINDOW = new Window::Window;
 	Global::RENDERWINDOW->TiwazCreateWindow(1280, 720, "TIWAZ_ENGINE");
 
-	Global::MODELLOADER->AddResource("data/models/cones2.dae");
+	//Global::MODELLOADER->AddResource("data/models/cones2.dae");
+
+	IO::BinaryIO binio;
+
+	FileFormats::MeshData<3> meshdata;
+	meshdata.ints[0] = 2;
+	meshdata.ints[1] = 3;
+	meshdata.ints[2] = 5;
+
+	binio.Write("test.bin", meshdata);
+
+	FileFormats::MeshData<3> meshdata2;
+
+	binio.Read("test.bin", meshdata2);
+
+	std::cout << meshdata2.mesh_name << std::endl;
+	//std::cout << meshdata2.ints[1] << std::endl;
 
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::MeshComponent* temp_obj = CreateObject<Component::MeshComponent>();
-		temp_obj->SetMeshData(Global::MODELLOADER->AccessResource(1)->m_meshes[0]);
+		//temp_obj->SetMeshData(Global::MODELLOADER->AccessResource(1)->m_meshes[0]);
 
+		/*
 		std::vector<glm::vec3> temp_vec = temp_obj->Positions();
 
 		for (size_t j = 0; j < temp_vec.size(); ++j)
 		{
 			std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
 		}
+		*/
 
 		/*
 		for (Component::Component<Component::MeshComponent>* mesh : temp_obj->MeshComponents())

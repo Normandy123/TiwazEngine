@@ -17,6 +17,8 @@
 #include "render_scene.h"
 
 #include "resources_loaders.h"
+#include "binary_IO.h"
+#include "file_types.h"
 
 //#define TIWAZ_API __declspec(dllexport)
 

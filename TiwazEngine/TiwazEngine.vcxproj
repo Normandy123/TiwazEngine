@@ -138,6 +138,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="binary_IO.cpp" />
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="counter.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="binary_IO.h" />
     <ClInclude Include="commands.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="counter.h" />
@@ -168,6 +170,7 @@
     <ClInclude Include="events.h" />
     <ClInclude Include="event_system.h" />
     <ClInclude Include="factory.h" />
+    <ClInclude Include="file_types.h" />
     <ClInclude Include="graphic_component.h" />
     <ClInclude Include="graphic_system.h" />
     <ClInclude Include="message_system.h" />
