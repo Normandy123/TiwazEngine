@@ -43,21 +43,17 @@ void Tiwaz::Engine::Init()
 
 	//Global::MODELLOADER->AddResource("data/models/cones2.dae");
 
-	IO::BinaryIO binio;
+	std::ofstream file_out;
+	file_out.open("test.bin", std::ios::binary);
 
-	FileFormats::MeshData<3> meshdata;
-	meshdata.ints[0] = 2;
-	meshdata.ints[1] = 3;
-	meshdata.ints[2] = 5;
+	FileFormats::MeshData meshdata;
 
-	binio.Write("test.bin", meshdata);
+	IO::WriteMesh(file_out, meshdata);
 
-	FileFormats::MeshData<3> meshdata2;
+	//FileFormats::MeshData meshdata2;
 
-	binio.Read("test.bin", meshdata2);
 
-	std::cout << meshdata2.mesh_name << std::endl;
-	//std::cout << meshdata2.ints[1] << std::endl;
+	//std::cout << meshdata2.mesh_name << std::endl;
 
 	for (size_t i = 0; i < 1; ++i)
 	{

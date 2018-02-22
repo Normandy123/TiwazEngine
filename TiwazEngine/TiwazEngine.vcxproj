@@ -147,6 +147,7 @@
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="event_system.cpp" />
     <ClCompile Include="factory.cpp" />
+    <ClCompile Include="file_types.cpp" />
     <ClCompile Include="graphic_component.cpp" />
     <ClCompile Include="graphic_system.cpp" />
     <ClCompile Include="message_system.cpp" />

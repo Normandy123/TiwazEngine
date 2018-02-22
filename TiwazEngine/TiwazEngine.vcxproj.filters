@@ -64,6 +64,9 @@
     <Filter Include="Header Files\Resources">
       <UniqueIdentifier>{088edf3f-c9d3-4818-854e-2c7085e4fa0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resouces">
+      <UniqueIdentifier>{2960c935-3d83-4aac-bb65-d744bce62ebb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="component.cpp">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="binary_IO.cpp">
       <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="file_types.cpp">
+      <Filter>Source Files\Resouces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

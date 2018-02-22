@@ -1,13 +1,22 @@
 #pragma once
 
 #include <string>
-#include <array>
+#include <vector>
+
+#include <GLM/glm.hpp>
 
 namespace Tiwaz::FileFormats
 {
-	template<size_t TSizeIndices> struct MeshData
+	struct MeshData
 	{
 		std::string mesh_name = "test";
-		unsigned int ints[TSizeIndices];
+
+		size_t size_positions = 0;
+		size_t size_normals = 0;
+		size_t size_uvs = 0;
+
+		std::vector<glm::vec3> positions;
+		std::vector<glm::vec3> normals;
+		std::vector<glm::vec2> uvs;
 	};
 }
