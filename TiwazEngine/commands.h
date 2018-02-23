@@ -5,7 +5,7 @@
 
 namespace Tiwaz
 {
-	template<typename T, typename...TArgs> T* CreateObject(TArgs&&...args)
+	template<typename T, typename...TArgs> static T* CreateObject(TArgs&&...args)
 	{
 		if (std::is_base_of<EngineObject, T>::value)
 		{
@@ -23,7 +23,7 @@ namespace Tiwaz
 		return nullptr;
 	}
 
-	template<typename T> const bool RemoveObject(T* object)
+	template<typename T> static const bool RemoveObject(T* object)
 	{
 		if (std::is_base_of<EngineObject, T>::value && object != nullptr)
 		{

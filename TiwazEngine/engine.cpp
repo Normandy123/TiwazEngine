@@ -50,6 +50,8 @@ void Tiwaz::Engine::Init()
 
 	IO::WriteMesh(file_out, meshdata);
 
+	file_out.close();
+
 	//FileFormats::MeshData meshdata2;
 
 
