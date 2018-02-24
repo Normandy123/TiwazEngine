@@ -43,19 +43,38 @@ void Tiwaz::Engine::Init()
 
 	//Global::MODELLOADER->AddResource("data/models/cones2.dae");
 
+	FileFormats::MeshData meshdata_write;
+	meshdata_write.size_positions = 2;
+	meshdata_write.positions = { glm::vec3(3.7, 513.12, -6.19), glm::vec3(-10.7, 9.9999, 5.0) };
+
 	std::ofstream file_out;
 	file_out.open("test.bin", std::ios::binary);
-
-	FileFormats::MeshData meshdata;
-
-	IO::WriteMesh(file_out, meshdata);
+	IO::WriteMesh(file_out, meshdata_write);
 
 	file_out.close();
 
-	//FileFormats::MeshData meshdata2;
+	file_out.open("test2.bin", std::ios::binary);
+	IO::WriteMesh(file_out, meshdata_write);
 
+	file_out.close();
 
-	//std::cout << meshdata2.mesh_name << std::endl;
+	FileFormats::MeshData meshdata_read;
+
+	std::ifstream file_in;
+	file_in.open("test.bin", std::ios::binary);
+	IO::ReadMesh(file_in, meshdata_read);
+
+	file_in.close();
+
+	std::cout << meshdata_read.mesh_name << std::endl;
+	std::cout << meshdata_read.size_positions << std::endl;
+
+	std::vector<glm::vec3> temp_vec = meshdata_read.positions;
+
+	for (size_t j = 0; j < temp_vec.size(); ++j)
+	{
+		std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
+	}
 
 	for (size_t i = 0; i < 1; ++i)
 	{
