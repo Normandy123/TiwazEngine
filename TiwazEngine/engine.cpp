@@ -46,6 +46,8 @@ void Tiwaz::Engine::Init()
 	FileFormats::MeshData meshdata_write;
 	meshdata_write.size_positions = 2;
 	meshdata_write.positions = { glm::vec3(3.7, 513.12, -6.19), glm::vec3(-10.7, 9.9999, 5.0) };
+	meshdata_write.size_indices = 8;
+	meshdata_write.indices = { 0, 6, 7, 12, 14, 1, 2, 3 };
 
 	std::ofstream file_out;
 	file_out.open("test.bin", std::ios::binary);
@@ -58,6 +60,8 @@ void Tiwaz::Engine::Init()
 
 	file_out.close();
 
+	std::cout << std::endl;
+
 	FileFormats::MeshData meshdata_read;
 
 	std::ifstream file_in;
@@ -69,11 +73,18 @@ void Tiwaz::Engine::Init()
 	std::cout << meshdata_read.mesh_name << std::endl;
 	std::cout << meshdata_read.size_positions << std::endl;
 
-	std::vector<glm::vec3> temp_vec = meshdata_read.positions;
+	std::vector<glm::vec3> temp_vec1 = meshdata_read.positions;
 
-	for (size_t j = 0; j < temp_vec.size(); ++j)
+	for (size_t j = 0; j < temp_vec1.size(); ++j)
 	{
-		std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
+		std::cout << "x: " << temp_vec1[j].x << "\ty: " << temp_vec1[j].y << "\tz: " << temp_vec1[j].z << std::endl;
+	}
+
+	std::vector<unsigned int> temp_vec2 = meshdata_read.indices;
+
+	for (size_t j = 0; j < temp_vec2.size(); ++j)
+	{
+		std::cout << temp_vec2[j] << std::endl;
 	}
 
 	for (size_t i = 0; i < 1; ++i)

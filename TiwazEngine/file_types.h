@@ -19,6 +19,6 @@ namespace Tiwaz::FileFormats
 		std::vector<glm::vec3> positions;
 		std::vector<glm::vec3> normals;
 		std::vector<glm::vec2> uvs;
-		std::vector<unsigned int> indices = {0, 6, 7, 12, 14, 1, 2, 3};
+		std::vector<unsigned int> indices;
 	};
 }
