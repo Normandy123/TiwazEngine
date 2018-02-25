@@ -20,26 +20,39 @@ namespace Tiwaz::IO
 	}
 
 	template<typename T> static void WriteVectorToStream(std::ofstream & stream, std::vector<T> vector)
-	{
-		const size_t value_size = sizeof(T);
-		
-		std::vector<char*> temp_char_vector;
-
-		for (T input_vector_value : vector)
+	{	
+		if (!vector.empty())
 		{
-			char char_value[value_size];
+			const size_t value_size = sizeof(T);
 
-			CopyToCharPointer(char_value, input_vector_value);
+			std::vector<char*> temp_char_vector;
 
-			temp_char_vector.push_back(char_value);
+			char* char_value;
+
+			for (T input_vector_value : vector)
+			{
+				char_value = new char[value_size];
+
+				CopyToCharPointer(char_value, input_vector_value);
+
+				temp_char_vector.push_back(char_value);
+
+				char_value = nullptr;
+			}
+
+			for (char* char_vector_value : temp_char_vector)
+			{
+				stream.write(char_vector_value, value_size);
+			}
+
+			for (char* value : temp_char_vector)
+			{
+				delete[] value;
+				value = nullptr;
+			}
+
+			temp_char_vector.clear();
 		}
-
-		for (char* char_vector_value : temp_char_vector)
-		{
-			stream.write(char_vector_value, value_size);
-		}
-
-		temp_char_vector.clear();
 	}
 
 	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec2> vector)
@@ -131,7 +144,7 @@ namespace Tiwaz::IO
 		WriteValueToStream(stream, mesh_input.size_uvs);
 		WriteValueToStream(stream, mesh_input.size_indices);
 
-		//WriteVectorToStream(stream, mesh_input.positions); 
+		WriteVectorToStream(stream, mesh_input.positions); 
 		WriteVectorToStream(stream, mesh_input.normals); 
 		WriteVectorToStream(stream, mesh_input.uvs);
 		WriteVectorToStream(stream, mesh_input.indices);
@@ -146,7 +159,7 @@ namespace Tiwaz::IO
 		ReadValueFromStream(stream, mesh_output.size_uvs);
 		ReadValueFromStream(stream, mesh_output.size_indices);
 
-		//ReadVectorFromStream(stream, mesh_output.positions, mesh_output.size_positions);
+		ReadVectorFromStream(stream, mesh_output.positions, mesh_output.size_positions);
 		ReadVectorFromStream(stream, mesh_output.normals, mesh_output.size_normals);
 		ReadVectorFromStream(stream, mesh_output.uvs, mesh_output.size_uvs);
 		ReadVectorFromStream(stream, mesh_output.indices, mesh_output.size_indices);
