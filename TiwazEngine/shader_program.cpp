@@ -20,7 +20,7 @@ namespace Tiwaz::Graphic::Shader
 		std::ifstream file("data/shaders/" + file_path);
 		if (file.fail())
 		{
-			Message(MessageSystem::TIWAZ_ERROR, "SHADER", "Failed to find shader file, with following path:\n" + file_path);
+			Log(LogSystem::TIWAZ_ERROR, "SHADER", "Failed to find shader file, with following path:\n" + file_path);
 		}
 
 		std::string fileContents;
@@ -54,7 +54,7 @@ namespace Tiwaz::Graphic::Shader
 			glDeleteShader(m_shader_ID);
 
 			std::string log = infoLog.data();
-			Message(MessageSystem::TIWAZ_ERROR, "SHADER", "Failed to compile shader, with following log:\n" + log);
+			Log(LogSystem::TIWAZ_ERROR, "SHADER", "Failed to compile shader, with following log:\n" + log);
 
 			infoLog.clear();
 		}
@@ -113,7 +113,7 @@ namespace Tiwaz::Graphic::Shader
 		GLuint location = glGetUniformLocation(m_program_ID, uniform_name.c_str());
 		if (location == GL_INVALID_INDEX)
 		{
-			Message(MessageSystem::TIWAZ_ERROR, "SHADER", "Uniform " + uniform_name + " not found in shader program!");
+			Log(LogSystem::TIWAZ_ERROR, "SHADER", "Uniform " + uniform_name + " not found in shader program!");
 		}
 
 		return location;
@@ -196,7 +196,7 @@ namespace Tiwaz::Graphic::Shader
 			glDeleteProgram(m_program_ID);
 
 			std::string log = infoLog.data();
-			Message(MessageSystem::TIWAZ_ERROR, "SHADER_PROGRAM", "Failed to link program, with following log:\n" + log);
+			Log(LogSystem::TIWAZ_ERROR, "SHADER_PROGRAM", "Failed to link program, with following log:\n" + log);
 
 			infoLog.clear();
 		}
@@ -228,7 +228,7 @@ namespace Tiwaz::Graphic::Shader
 			glDeleteProgram(m_program_ID);
 
 			std::string log = infoLog.data();
-			Message(MessageSystem::TIWAZ_ERROR, "SHADER_PROGRAM", "Failed to link program, with following log:\n" + log);
+			Log(LogSystem::TIWAZ_ERROR, "SHADER_PROGRAM", "Failed to link program, with following log:\n" + log);
 
 			infoLog.clear();
 		}

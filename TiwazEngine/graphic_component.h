@@ -8,7 +8,7 @@
 #include <GLM/glm.hpp>
 
 #include "component.h"
-#include "message_system.h"
+#include "log_system.h"
 #include "resources_loaders.h"
 
 namespace Tiwaz::Component
@@ -32,7 +32,7 @@ namespace Tiwaz::Component
 		}
 		else
 		{
-			Message(MessageSystem::TIWAZ_WARNING, "Component", "Can only convert glm::vec to float vector!");
+			Log(LogSystem::TIWAZ_WARNING, "Component", "Can only convert glm::vec to float vector!");
 			vec temp = { 0, 0, 0 };
 
 			return temp;

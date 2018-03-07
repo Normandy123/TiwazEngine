@@ -7,7 +7,7 @@
 #include <array>
 #include <vector>
 
-#include "message_system.h"
+#include "log_system.h"
 
 namespace Tiwaz::Graphic::Shader
 {

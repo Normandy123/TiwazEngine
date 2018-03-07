@@ -150,13 +150,14 @@
     <ClCompile Include="file_types.cpp" />
     <ClCompile Include="graphic_component.cpp" />
     <ClCompile Include="graphic_system.cpp" />
-    <ClCompile Include="message_system.cpp" />
+    <ClCompile Include="log_system.cpp" />
     <ClCompile Include="object_system.cpp" />
     <ClCompile Include="python_functions.cpp" />
     <ClCompile Include="render_scene.cpp" />
     <ClCompile Include="resources_loaders.cpp" />
     <ClCompile Include="shader_program.cpp" />
     <ClCompile Include="lua_interface.cpp" />
+    <ClCompile Include="singleton.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
@@ -174,13 +175,14 @@
     <ClInclude Include="file_types.h" />
     <ClInclude Include="graphic_component.h" />
     <ClInclude Include="graphic_system.h" />
-    <ClInclude Include="message_system.h" />
+    <ClInclude Include="log_system.h" />
     <ClInclude Include="object_system.h" />
     <ClInclude Include="python_functions.h" />
     <ClInclude Include="render_scene.h" />
     <ClInclude Include="resources_loaders.h" />
     <ClInclude Include="shader_program.h" />
     <ClInclude Include="lua_interface.h" />
+    <ClInclude Include="singleton.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

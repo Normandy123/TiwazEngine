@@ -1,6 +1,6 @@
 #include "object_system.h"
 
-#include "message_system.h"
+#include "log_system.h"
 
 namespace Tiwaz
 {
@@ -50,7 +50,7 @@ namespace Tiwaz::ObjectSystem
 		}
 		else
 		{
-			Message(MessageSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not add object, pointer is nullptr");
+			Log(LogSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not add object, pointer is nullptr");
 		}
 
 		return 0;
@@ -68,7 +68,7 @@ namespace Tiwaz::ObjectSystem
 		}
 		else
 		{
-			Message(MessageSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not remove invalid object with ID: " + std::to_string(ID));
+			Log(LogSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not remove invalid object with ID: " + std::to_string(ID));
 		}
 	}
 
@@ -80,7 +80,7 @@ namespace Tiwaz::ObjectSystem
 		}
 		else
 		{
-			Message(MessageSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not access invalid object with ID: " + std::to_string(ID));
+			Log(LogSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not access invalid object with ID: " + std::to_string(ID));
 		}
 
 		return nullptr;

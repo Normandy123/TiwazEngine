@@ -1,7 +1,7 @@
 #include "window.h"
 
 #include "engine_vars.h"
-#include "message_system.h"
+#include "log_system.h"
 #include "event_system.h"
 
 Tiwaz::Window::IWindow* Tiwaz::Global::RENDERWINDOW;
@@ -38,7 +38,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	if (!RegisterClassEx(&wcex))
 	{
 		MessageBox(NULL, "ERROR: Could not register window class!", "ERROR", MB_OK);
-		Message(MessageSystem::TIWAZ_FATALERROR, "WINDOW", "Could not register window class!");
+		Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not register window class!");
 	}
 
 	CREATESTRUCT cs;
@@ -62,7 +62,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	if (!h_wnd)
 	{
 		MessageBox(NULL, "ERROR: Could not create window!", "ERROR", MB_OK);
-		Message(MessageSystem::TIWAZ_FATALERROR, "WINDOW", "Could not create window!");
+		Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not create window!");
 	}
 
 	PIXELFORMATDESCRIPTOR temp_pfd;
@@ -94,7 +94,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	if (wglewInit() != GLEW_OK)
 	{
 		MessageBox(NULL, "ERROR: Could not intialize WGLEW!", "ERROR", MB_OK);
-		Message(MessageSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize WGLEW!");
+		Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize WGLEW!");
 	}
 
 	const int ARB_pixelformat_attributes[] =
@@ -183,7 +183,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	if (glewInit() != GLEW_OK)
 	{		
 		MessageBox(NULL, "ERROR: Could not intialize GLEW!", "ERROR", MB_OK);
-		Message(MessageSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize GLEW!");
+		Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize GLEW!");
 	}
 
 	m_should_quit = false;

@@ -5,7 +5,7 @@
 #define SOL_CHECK_ARGUMENTS 1
 #include <LUA/sol.hpp>
 
-#include "message_system.h"
+#include "log_system.h"
 
 namespace Tiwaz::Lua
 {
@@ -39,7 +39,7 @@ namespace Tiwaz::Lua
 			catch (const sol::error & e)
 			{ 
 				const std::string warning_message = "Failed to run lua script, with sol error: " + static_cast<std::string>(e.what());
-				Message(MessageSystem::TIWAZ_WARNING, "LUA_INTERFACE", warning_message);
+				Log(LogSystem::TIWAZ_WARNING, "LUA_INTERFACE", warning_message);
 				return -1;
 			}
 

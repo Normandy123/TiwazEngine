@@ -29,7 +29,7 @@ void Tiwaz::Engine::Init()
 {
 	Global::ENGINE_SHOULD_EXIT = false;
 
-	Global::MESSAGEBUFFER = new MessageSystem::MessageBuffer;
+	Global::LOGBUFFER = new LogSystem::LogsBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTHANDLER = new EventSystem::EventHandler;
 	Global::MODELLOADER = new Loader::ModelLoader;
@@ -178,8 +178,8 @@ void Tiwaz::Engine::Exit()
 	delete Global::EVENTHANDLER;
 	Global::EVENTHANDLER = nullptr;
 
-	delete Global::MESSAGEBUFFER;
-	Global::MESSAGEBUFFER = nullptr;
+	delete Global::LOGBUFFER;
+	Global::LOGBUFFER = nullptr;
 }
 
 Tiwaz::Engine* Tiwaz::Global::ENGINE;
