@@ -4,21 +4,21 @@
 #include <future>
 
 #include "engine_vars.h"
+
 #include "timer.h"
 #include "window.h"
 
 #include "object_system.h"
 #include "event_system.h"
 
-#include "entity.h"
 #include "graphic_component.h"
+#include "entity.h"
 
 #include "graphic_system.h"
 #include "render_scene.h"
 
-#include "resources_loaders.h"
 #include "binary_IO.h"
-#include "file_types.h"
+#include "resources_IO.h"
 
 //#define TIWAZ_API __declspec(dllexport)
 

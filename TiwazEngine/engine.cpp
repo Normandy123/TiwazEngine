@@ -32,7 +32,6 @@ void Tiwaz::Engine::Init()
 	Global::LOGBUFFER = new LogSystem::LogsBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
 	Global::EVENTHANDLER = new EventSystem::EventHandler;
-	Global::MODELLOADER = new Loader::ModelLoader;
 	Global::RENDERSCENE = new Graphic::RenderScene;
 	Global::GRAPHICMANAGER = new Graphic::GraphicManager;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
@@ -43,7 +42,7 @@ void Tiwaz::Engine::Init()
 
 	//Global::MODELLOADER->AddResource("data/models/cones2.dae");
 
-	FileFormats::MeshData meshdata_write;
+	BinaryFileFormats::MeshData meshdata_write;
 	meshdata_write.mesh_name = "test";
 	meshdata_write.size_positions = 2;
 	meshdata_write.positions = { glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) };
@@ -63,7 +62,7 @@ void Tiwaz::Engine::Init()
 
 	std::cout << std::endl;
 
-	FileFormats::MeshData meshdata_read;
+	BinaryFileFormats::MeshData meshdata_read;
 
 	std::ifstream file_in;
 	file_in.open("test.bin", std::ios::binary);
@@ -168,9 +167,6 @@ void Tiwaz::Engine::Exit()
 
 	delete Global::GRAPHICMANAGER;
 	Global::GRAPHICMANAGER = nullptr;
-
-	delete Global::MODELLOADER;
-	Global::MODELLOADER = nullptr;
 
 	delete Global::RENDERWINDOW;
 	Global::RENDERWINDOW = nullptr;
