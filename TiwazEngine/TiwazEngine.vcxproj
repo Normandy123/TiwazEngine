@@ -157,7 +157,6 @@
     <ClCompile Include="resources_loaders.cpp" />
     <ClCompile Include="shader_program.cpp" />
     <ClCompile Include="lua_interface.cpp" />
-    <ClCompile Include="singleton.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
@@ -182,7 +181,6 @@
     <ClInclude Include="resources_loaders.h" />
     <ClInclude Include="shader_program.h" />
     <ClInclude Include="lua_interface.h" />
-    <ClInclude Include="singleton.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

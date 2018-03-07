@@ -129,9 +129,6 @@
     <ClCompile Include="file_types.cpp">
       <Filter>Source Files\Resouces</Filter>
     </ClCompile>
-    <ClCompile Include="singleton.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="log_system.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -199,9 +196,6 @@
     </ClInclude>
     <ClInclude Include="binary_IO.h">
       <Filter>Header Files\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="singleton.h">
-      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="log_system.h">
       <Filter>Header Files\Core</Filter>
