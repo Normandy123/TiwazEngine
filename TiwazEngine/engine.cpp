@@ -44,8 +44,9 @@ void Tiwaz::Engine::Init()
 	//Global::MODELLOADER->AddResource("data/models/cones2.dae");
 
 	FileFormats::MeshData meshdata_write;
+	meshdata_write.mesh_name = "test";
 	meshdata_write.size_positions = 2;
-	meshdata_write.positions = { glm::vec3(3.7, 513.12, -6.19), glm::vec3(-10.7, 9.9999, 5.0) };
+	meshdata_write.positions = { glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) };
 	meshdata_write.size_indices = 8;
 	meshdata_write.indices = { 0, 6, 7, 12, 14, 1, 2, 3 };
 
@@ -72,6 +73,9 @@ void Tiwaz::Engine::Init()
 
 	std::cout << meshdata_read.mesh_name << std::endl;
 	std::cout << meshdata_read.size_positions << std::endl;
+	std::cout << meshdata_read.size_indices << std::endl;
+
+	std::cout << std::endl;
 
 	std::vector<glm::vec3> temp_vec1 = meshdata_read.positions;
 

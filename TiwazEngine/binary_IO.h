@@ -9,49 +9,23 @@
 
 namespace Tiwaz::IO
 {
-	template<typename T, size_t TSize = sizeof(T)> static void CopyToCharPointer(char* char_float, T value)
-	{
-		memcpy(char_float, &value, TSize);
-	}
-
 	template<typename T> static void WriteValueToStream(std::ofstream & stream, T data)
 	{
-		stream.write(reinterpret_cast<char*>(&data), sizeof(T));
+		stream.write(reinterpret_cast<const char*>(&data), sizeof(T));
+	}
+
+	template<typename T> static void WriteValueToStream(std::ofstream & stream, std::string data)
+	{
+		stream.write(&data.c_str(), data.size());
 	}
 
 	template<typename T> static void WriteVectorToStream(std::ofstream & stream, std::vector<T> vector)
 	{	
-		if (!vector.empty())
+		const size_t value_size = sizeof(T);
+
+		for (const T vector_value : vector)
 		{
-			const size_t value_size = sizeof(T);
-
-			std::vector<char*> temp_char_vector;
-
-			char* char_value;
-
-			for (T input_vector_value : vector)
-			{
-				char_value = new char[value_size];
-
-				CopyToCharPointer(char_value, input_vector_value);
-
-				temp_char_vector.push_back(char_value);
-
-				char_value = nullptr;
-			}
-
-			for (char* char_vector_value : temp_char_vector)
-			{
-				stream.write(char_vector_value, value_size);
-			}
-
-			for (char* value : temp_char_vector)
-			{
-				delete[] value;
-				value = nullptr;
-			}
-
-			temp_char_vector.clear();
+			stream.write(reinterpret_cast<const char*>(&vector_value), value_size);
 		}
 	}
 
@@ -59,60 +33,41 @@ namespace Tiwaz::IO
 	{
 		const size_t value_size = sizeof(float);
 
-		std::vector<char*> temp_char_vector;
+		std::vector<float> float_buffer;
 
-		for (glm::vec2 input_vector_value : vector)
+		for (const glm::vec2 vector_value : vector)
 		{
-			char char_float_x[value_size];
-			char char_float_y[value_size];
-
-			CopyToCharPointer(char_float_x, input_vector_value.x);
-			CopyToCharPointer(char_float_y, input_vector_value.y);
-
-			temp_char_vector.push_back(char_float_x);
-			temp_char_vector.push_back(char_float_y);
+			float_buffer.push_back(vector_value.x);
+			float_buffer.push_back(vector_value.y);
 		}
 
-		for (char* char_vector_value : temp_char_vector)
+		for (const float vector_value : float_buffer)
 		{
-			stream.write(char_vector_value, value_size);
+			stream.write(reinterpret_cast<const char*>(&vector_value), value_size);
 		}
 
-		temp_char_vector.clear();
+		float_buffer.clear();
 	}
 
 	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec3> vector)
 	{
 		const size_t value_size = sizeof(float);
 
-		std::vector<char*> temp_char_vector;
+		std::vector<float> float_buffer;
 
-		for (glm::vec3 input_vector_value : vector)
+		for (const glm::vec3 vector_value : vector)
 		{
-			char char_float_x[value_size];
-			char char_float_y[value_size];
-			char char_float_z[value_size];
-
-			CopyToCharPointer(char_float_x, input_vector_value.x);
-			CopyToCharPointer(char_float_y, input_vector_value.y);
-			CopyToCharPointer(char_float_z, input_vector_value.z);
-
-			temp_char_vector.push_back(char_float_x);
-			temp_char_vector.push_back(char_float_y);
-			temp_char_vector.push_back(char_float_z);
+			float_buffer.push_back(vector_value.x);
+			float_buffer.push_back(vector_value.y);
+			float_buffer.push_back(vector_value.z);
 		}
 
-		for (char* char_vector_value : temp_char_vector)
+		for (const float vector_value : float_buffer)
 		{
-			stream.write(char_vector_value, value_size);
+			stream.write(reinterpret_cast<const char*>(&vector_value), value_size);
 		}
 
-		temp_char_vector.clear();
-	}
-
-	template<typename T, size_t TSize = sizeof(T)> static void CopyToTypeRef(char* char_float, T & value)
-	{
-		memcpy(&value, char_float, TSize);
+		float_buffer.clear();
 	}
 
 	template<typename T> static void ReadValueFromStream(std::ifstream & stream, T & data)
@@ -123,16 +78,61 @@ namespace Tiwaz::IO
 	template<typename T> static void ReadVectorFromStream(std::ifstream & stream, std::vector<T> & vector, const size_t & size)
 	{
 		const size_t value_size = sizeof(T);
+
+		for (size_t i = 0; i < size; ++i)
+		{
+			T temp_value;
+
+			stream.read(reinterpret_cast<char*>(&temp_value), value_size);
+
+			vector.push_back(temp_value);
+		}
 	}
 
 	template<> static void ReadVectorFromStream(std::ifstream & stream, std::vector<glm::vec2> & vector, const size_t & size)
 	{
+		std::vector<float> float_buffer;
+
 		const size_t value_size = sizeof(float);
+
+		for (size_t i = 0; i < size * 2; ++i)
+		{
+			float temp_value;
+
+			stream.read(reinterpret_cast<char*>(&temp_value), value_size);
+
+			float_buffer.push_back(temp_value);
+		}
+
+		for (size_t j = 0; j < size * 2; j += 2)
+		{
+			vector.push_back(glm::vec2(float_buffer[j], float_buffer[j + 1]));
+		}
+
+		float_buffer.clear();
 	}
 
 	template<> static void ReadVectorFromStream(std::ifstream & stream, std::vector<glm::vec3> & vector, const size_t & size)
 	{
+		std::vector<float> float_buffer;
+
 		const size_t value_size = sizeof(float);
+
+		for (size_t i = 0; i < size * 3; ++i)
+		{
+			float temp_value;
+
+			stream.read(reinterpret_cast<char*>(&temp_value), value_size);
+
+			float_buffer.push_back(temp_value);
+		}
+
+		for (size_t j = 0; j < size * 3; j += 3)
+		{
+			vector.push_back(glm::vec3(float_buffer[j], float_buffer[j + 1], float_buffer[j + 2]));
+		}
+
+		float_buffer.clear();
 	}
 
 	static void WriteMesh(std::ofstream & stream, const FileFormats::MeshData & mesh_input)

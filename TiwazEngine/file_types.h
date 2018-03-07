@@ -9,7 +9,7 @@ namespace Tiwaz::FileFormats
 {
 	struct MeshData
 	{
-		std::string mesh_name = "test";
+		std::string mesh_name;
 
 		size_t size_positions = 0;
 		size_t size_normals = 0;
