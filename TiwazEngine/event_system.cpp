@@ -2,5 +2,5 @@
 
 namespace Tiwaz::Global
 {
-	EventSystem::EventHandler* EVENTHANDLER;
+	EventSystem::EventHandler* ENGINEEVENTHANDLER;
 }

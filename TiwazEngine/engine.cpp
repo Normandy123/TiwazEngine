@@ -31,7 +31,7 @@ void Tiwaz::Engine::Init()
 
 	Global::LOGBUFFER = new LogSystem::LogsBuffer;
 	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
-	Global::EVENTHANDLER = new EventSystem::EventHandler;
+	Global::ENGINEEVENTHANDLER = new EventSystem::EventHandler;
 	Global::RENDERSCENE = new Graphic::RenderScene;
 	Global::GRAPHICMANAGER = new Graphic::GraphicManager;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
@@ -40,14 +40,13 @@ void Tiwaz::Engine::Init()
 	Global::RENDERWINDOW = new Window::Window;
 	Global::RENDERWINDOW->TiwazCreateWindow(1280, 720, "TIWAZ_ENGINE");
 
-	//Global::MODELLOADER->AddResource("data/models/cones2.dae");
+	Loader::ResourcesManager<ResourcesFileFormats::ModelData> rsma(&Loader::LoadModel);
+	rsma.AddResource("data/models/cones2.dae");
 
 	BinaryFileFormats::MeshData meshdata_write;
 	meshdata_write.mesh_name = "test";
-	meshdata_write.size_positions = 2;
-	meshdata_write.positions = { glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) };
-	meshdata_write.size_indices = 8;
-	meshdata_write.indices = { 0, 6, 7, 12, 14, 1, 2, 3 };
+	meshdata_write.SetPositions({ glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) });
+	meshdata_write.SetIndices({ 0, 6, 7, 12, 14, 1, 2, 3 });
 
 	std::ofstream file_out;
 	file_out.open("test.bin", std::ios::binary);
@@ -76,14 +75,14 @@ void Tiwaz::Engine::Init()
 
 	std::cout << std::endl;
 
-	std::vector<glm::vec3> temp_vec1 = meshdata_read.positions;
+	std::vector<glm::vec3> temp_vec1 = meshdata_read.m_positions;
 
 	for (size_t j = 0; j < temp_vec1.size(); ++j)
 	{
 		std::cout << "x: " << temp_vec1[j].x << "\ty: " << temp_vec1[j].y << "\tz: " << temp_vec1[j].z << std::endl;
 	}
 
-	std::vector<unsigned int> temp_vec2 = meshdata_read.indices;
+	std::vector<unsigned int> temp_vec2 = meshdata_read.m_indices;
 
 	for (size_t j = 0; j < temp_vec2.size(); ++j)
 	{
@@ -117,8 +116,8 @@ void Tiwaz::Engine::Init()
 		*/
 	}
 
-	Global::EVENTHANDLER->HandleEvent(&entinit);
-	Global::EVENTHANDLER->HandleEvent(&compinit);
+	Global::ENGINEEVENTHANDLER->HandleEvent(&entinit);
+	Global::ENGINEEVENTHANDLER->HandleEvent(&compinit);
 
 	Global::GRAPHICMANAGER->Init();
 	Global::RENDERWINDOW->TiwazShowWindow();
@@ -129,8 +128,8 @@ void Tiwaz::Engine::Update()
 	entupdate.delta_time = Global::DELTA_TIME;
 	comupdate.delta_time = Global::DELTA_TIME;
 
-	Global::EVENTHANDLER->HandleEvent(&entupdate);
-	Global::EVENTHANDLER->HandleEvent(&comupdate);
+	Global::ENGINEEVENTHANDLER->HandleEvent(&entupdate);
+	Global::ENGINEEVENTHANDLER->HandleEvent(&comupdate);
 
 	Global::RENDERWINDOW->TiwazUpdate();
 	Global::GRAPHICMANAGER->Update();
@@ -146,8 +145,8 @@ void Tiwaz::Engine::Exit()
 {
 	Global::RENDERWINDOW->TiwazCloseWindow();
 
-	Global::EVENTHANDLER->HandleEvent(&entexit);
-	Global::EVENTHANDLER->HandleEvent(&comexit);
+	Global::ENGINEEVENTHANDLER->HandleEvent(&entexit);
+	Global::ENGINEEVENTHANDLER->HandleEvent(&comexit);
 
 	//delete Global::LUA_INTERFACE;
 	//Global::LUA_INTERFACE = nullptr;
@@ -171,8 +170,8 @@ void Tiwaz::Engine::Exit()
 	delete Global::RENDERWINDOW;
 	Global::RENDERWINDOW = nullptr;
 
-	delete Global::EVENTHANDLER;
-	Global::EVENTHANDLER = nullptr;
+	delete Global::ENGINEEVENTHANDLER;
+	Global::ENGINEEVENTHANDLER = nullptr;
 
 	delete Global::LOGBUFFER;
 	Global::LOGBUFFER = nullptr;

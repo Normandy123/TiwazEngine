@@ -23,17 +23,38 @@ namespace Tiwaz::Loader
 
 namespace Tiwaz::Loader
 {
-	template<typename T> class ResourcesLoader
+	template<typename T> class ResourcesManager
 	{
+	protected:
+		struct MapValue
+		{
+			explicit MapValue(const std::string & file_path, T* resource)
+			{
+				m_resource = resource;
+				m_file_path = file_path;
+			}
+
+			~MapValue()
+			{
+				m_file_path.clear();
+
+				delete m_resource;
+				m_resource = nullptr;
+			}
+
+			T* m_resource;
+			std::string m_file_path;
+		};
+
 	public:
 		typedef T*(*LoadFunctionPointer)(const std::string &);
 
-		ResourcesLoader(LoadFunctionPointer load_function)
+		ResourcesManager(LoadFunctionPointer load_function)
 		{
 			m_load_function = load_function;
 		}
 
-		virtual ~ResourcesLoader()
+		virtual ~ResourcesManager()
 		{
 			for (auto pair : m_resources_map)
 			{
@@ -42,7 +63,6 @@ namespace Tiwaz::Loader
 			}
 
 			m_resources_map.clear();
-			m_loaded_files_map.clear();
 		}
 
 		const uint64_t AddResource(const std::string & file_path)
@@ -51,9 +71,9 @@ namespace Tiwaz::Loader
 
 			if (file_path != "" && file_path != "UNDEFINED")
 			{
-				for (auto pair : m_loaded_files_map)
+				for (auto pair : m_resources_map)
 				{
-					if (pair.second == file_path)
+					if (pair.second->m_file_path == file_path)
 					{
 						found_path = true;
 						break;
@@ -64,8 +84,11 @@ namespace Tiwaz::Loader
 				{
 					uint64_t new_ID = m_ID_counter.NewID();
 
-					m_resources_map.insert(std::make_pair(new_ID, (*m_load_function)(file_path)));
-					m_loaded_files_map.insert(std::make_pair(new_ID, file_path));
+					MapValue* temp_value = new MapValue(file_path, (*m_load_function)(file_path));
+
+					m_resources_map.insert(std::make_pair(new_ID, temp_value));
+
+					temp_value = nullptr;
 
 					return new_ID;
 				}
@@ -91,7 +114,7 @@ namespace Tiwaz::Loader
 		{
 			if (m_resources_map.find(ID) != m_resources_map.cend())
 			{
-				return m_resources_map[ID];
+				return m_resources_map[ID]->m_resource;
 			}
 
 			return nullptr;
@@ -100,8 +123,7 @@ namespace Tiwaz::Loader
 	protected:
 		LoadFunctionPointer m_load_function;
 
-		std::map<uint64_t, T*> m_resources_map;
-		std::map<uint64_t, std::string> m_loaded_files_map;
+		std::map<uint64_t, MapValue*> m_resources_map;
 		Counter::IDCounter m_ID_counter;
 	};
 }

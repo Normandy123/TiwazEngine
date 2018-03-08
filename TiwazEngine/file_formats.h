@@ -15,13 +15,11 @@ namespace Tiwaz::BinaryFileFormats
 		{
 			mesh_name.clear();
 
-			positions.clear();
-			normals.clear();
-			uvs.clear();
-			indices.clear();
+			m_positions.clear();
+			m_normals.clear();
+			m_uvs.clear();
+			m_indices.clear();
 		}
-
-		uint64_t mesh_ID = 0;
 
 		std::string mesh_name = "UNDEFINED";
 
@@ -30,10 +28,34 @@ namespace Tiwaz::BinaryFileFormats
 		size_t size_uvs = 0;
 		size_t size_indices = 0;
 
-		std::vector<glm::vec3> positions;
-		std::vector<glm::vec3> normals;
-		std::vector<glm::vec2> uvs;
-		std::vector<unsigned int> indices;
+		std::vector<glm::vec3> m_positions;
+		std::vector<glm::vec3> m_normals;
+		std::vector<glm::vec2> m_uvs;
+		std::vector<unsigned int> m_indices;
+
+		void SetPositions(const std::vector<glm::vec3> & positions)
+		{
+			size_positions = positions.size();
+			m_positions = positions;
+		}
+
+		void SetNormals(const std::vector<glm::vec3> & normals)
+		{
+			size_normals = normals.size();
+			m_normals = normals;
+		}
+
+		void SetUvs(const std::vector<glm::vec2> & uvs)
+		{
+			size_uvs = uvs.size();
+			m_uvs = uvs;
+		}
+
+		void SetIndices(const std::vector<unsigned int> & indices)
+		{
+			size_indices = indices.size();
+			m_indices = indices;
+		}
 	};
 }
 

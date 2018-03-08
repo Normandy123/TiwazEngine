@@ -159,5 +159,5 @@ namespace Tiwaz::EventSystem
 
 namespace Tiwaz::Global
 {
-	extern EventSystem::EventHandler* EVENTHANDLER;
+	extern EventSystem::EventHandler* ENGINEEVENTHANDLER;
 }

@@ -245,7 +245,7 @@ LRESULT CALLBACK Tiwaz::Window::Window::MessageHandler(HWND hWnd, UINT msg, WPAR
 			EventSystem::ScreenResizeEvent event;
 			event.width = static_cast<uint16_t>(LOWORD(lParam));
 			event.height = static_cast<uint16_t>(HIWORD(lParam));
-			Global::EVENTHANDLER->HandleEvent(&event);
+			Global::ENGINEEVENTHANDLER->HandleEvent(&event);
 		}		
 		break;
 	case WM_PAINT:

@@ -4,12 +4,12 @@ namespace Tiwaz::Graphic
 {
 	GraphicManager::GraphicManager()
 	{
-		Global::EVENTHANDLER->RegisterEventFunction(&GraphicManager::OnScreenResize, this);
+		Global::ENGINEEVENTHANDLER->RegisterEventFunction(&GraphicManager::OnScreenResize, this);
 	}
 
 	GraphicManager::~GraphicManager()
 	{
-		Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ScreenResizeEvent>(this);
+		Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::ScreenResizeEvent>(this);
 	}
 	
 	void GraphicManager::Init()

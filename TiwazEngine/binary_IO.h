@@ -144,10 +144,10 @@ namespace Tiwaz::IO
 		WriteValueToStream(stream, mesh_input.size_uvs);
 		WriteValueToStream(stream, mesh_input.size_indices);
 
-		WriteVectorToStream(stream, mesh_input.positions); 
-		WriteVectorToStream(stream, mesh_input.normals); 
-		WriteVectorToStream(stream, mesh_input.uvs);
-		WriteVectorToStream(stream, mesh_input.indices);
+		WriteVectorToStream(stream, mesh_input.m_positions); 
+		WriteVectorToStream(stream, mesh_input.m_normals); 
+		WriteVectorToStream(stream, mesh_input.m_uvs);
+		WriteVectorToStream(stream, mesh_input.m_indices);
 	}
 
 	static void ReadMesh(std::ifstream & stream, BinaryFileFormats::MeshData & mesh_output)
@@ -159,9 +159,9 @@ namespace Tiwaz::IO
 		ReadValueFromStream(stream, mesh_output.size_uvs);
 		ReadValueFromStream(stream, mesh_output.size_indices);
 
-		ReadVectorFromStream(stream, mesh_output.positions, mesh_output.size_positions);
-		ReadVectorFromStream(stream, mesh_output.normals, mesh_output.size_normals);
-		ReadVectorFromStream(stream, mesh_output.uvs, mesh_output.size_uvs);
-		ReadVectorFromStream(stream, mesh_output.indices, mesh_output.size_indices);
+		ReadVectorFromStream(stream, mesh_output.m_positions, mesh_output.size_positions);
+		ReadVectorFromStream(stream, mesh_output.m_normals, mesh_output.size_normals);
+		ReadVectorFromStream(stream, mesh_output.m_uvs, mesh_output.size_uvs);
+		ReadVectorFromStream(stream, mesh_output.m_indices, mesh_output.size_indices);
 	}
 }

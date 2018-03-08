@@ -10,16 +10,16 @@ namespace Tiwaz::Component
 	public:
 		ComponentBase()
 		{	
-			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::OnInit, this);
-			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::OnUpdate, this);
-			Global::EVENTHANDLER->RegisterEventFunction(&ComponentBase::OnExit, this);
+			Global::ENGINEEVENTHANDLER->RegisterEventFunction(&ComponentBase::OnInit, this);
+			Global::ENGINEEVENTHANDLER->RegisterEventFunction(&ComponentBase::OnUpdate, this);
+			Global::ENGINEEVENTHANDLER->RegisterEventFunction(&ComponentBase::OnExit, this);
 		}
 
 		virtual ~ComponentBase()
 		{
-			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentInitEvent>(this);
-			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentUpdateEvent>(this);
-			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentExitEvent>(this);
+			Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentInitEvent>(this);
+			Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentUpdateEvent>(this);
+			Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::ComponentExitEvent>(this);
 		}
 
 		virtual void OnInit(const EventSystem::ComponentInitEvent* event) {}

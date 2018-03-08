@@ -38,7 +38,7 @@ namespace Tiwaz::Graphic
 		{
 			const std::vector<Component::GraphicComponent*>::iterator it = std::find(m_components.begin(), m_components.end(), component);
 
-			if ((it != m_components.cend()))
+			if (it != m_components.cend())
 			{
 				ptrdiff_t pd = std::distance(m_components.begin(), it);
 

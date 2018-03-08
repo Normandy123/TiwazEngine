@@ -12,16 +12,16 @@ namespace Tiwaz::Entity
 	public:
 		Entity()
 		{
-			Global::EVENTHANDLER->RegisterEventFunction(&Entity::Init, this);
-			Global::EVENTHANDLER->RegisterEventFunction(&Entity::Update, this);
-			Global::EVENTHANDLER->RegisterEventFunction(&Entity::Exit, this);
+			Global::ENGINEEVENTHANDLER->RegisterEventFunction(&Entity::Init, this);
+			Global::ENGINEEVENTHANDLER->RegisterEventFunction(&Entity::Update, this);
+			Global::ENGINEEVENTHANDLER->RegisterEventFunction(&Entity::Exit, this);
 		}
 
 		~Entity()
 		{
-			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::EntityInitEvent>(this);
-			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::EntityUpdateEvent>(this);
-			Global::EVENTHANDLER->UnregisterEventFunction<EventSystem::EntityExitEvent>(this);
+			Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::EntityInitEvent>(this);
+			Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::EntityUpdateEvent>(this);
+			Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::EntityExitEvent>(this);
 		}
 
 		virtual void Init(const EventSystem::EntityInitEvent* event) {}
