@@ -49,7 +49,7 @@ namespace Tiwaz
 		EventSystem::ComponentExitEvent comexit;
 	};
 
-	extern const int RunEngine();
+	extern const int RunEngine(bool debug, bool editor);
 	extern const int ExitEngine();
 }
 

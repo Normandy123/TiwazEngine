@@ -180,7 +180,7 @@ void Tiwaz::Engine::Exit()
 Tiwaz::Engine* Tiwaz::Global::ENGINE;
 std::thread* Tiwaz::Global::ENGINE_THREAD;
 
-const int Tiwaz::RunEngine()
+const int Tiwaz::RunEngine(bool debug, bool editor)
 {
 	if (Global::ENGINE_IS_RUNNING)
 	{

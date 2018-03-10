@@ -28,13 +28,11 @@ namespace Tiwaz::Global
 	extern Window::IWindow* RENDERWINDOW;
 }
 
-#ifdef _WIN32
+#ifdef _WIN64
+#include "platform.h"
 
 #include <GLEW/glew.h>
 #include <GLEW/wglew.h>
-
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 
 namespace Tiwaz::Window
 {
@@ -65,8 +63,6 @@ namespace Tiwaz::Window
 		MSG wnd_msg;
 	};
 		
-	extern HINSTANCE h_instance;
-	
 	extern Window* p_callback_window;
 	
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

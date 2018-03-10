@@ -6,8 +6,7 @@
 
 Tiwaz::Window::IWindow* Tiwaz::Global::RENDERWINDOW;
 
-#ifdef _WIN32
-HINSTANCE Tiwaz::Window::h_instance = GetModuleHandle(0);
+#ifdef _WIN64
 Tiwaz::Window::Window* Tiwaz::Window::p_callback_window;
 
 void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title)
@@ -27,9 +26,9 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hbrBackground = NULL;
-	wcex.hCursor = LoadCursor(h_instance, IDC_ARROW);
-	wcex.hIcon = LoadIcon(h_instance, IDI_APPLICATION);
-	wcex.hInstance = h_instance;
+	wcex.hCursor = LoadCursor(Platform::h_instance, IDC_ARROW);
+	wcex.hIcon = LoadIcon(Platform::h_instance, IDI_APPLICATION);
+	wcex.hInstance = Platform::h_instance;
 	wcex.lpfnWndProc = WndProc;
 	wcex.lpszClassName = "TIWAZ";
 	wcex.lpszMenuName = NULL;
@@ -49,7 +48,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	cs.cx = static_cast<int>(width);
 	cs.cy = static_cast<int>(height);
 	cs.dwExStyle = NULL;
-	cs.hInstance = h_instance;
+	cs.hInstance = Platform::h_instance;
 	cs.hMenu = NULL;
 	cs.hwndParent = NULL;
 	cs.lpCreateParams = NULL;
@@ -116,7 +115,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	const int ARB_context_attributes[] =
 	{
 		WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
-		WGL_CONTEXT_MINOR_VERSION_ARB, 6,
+		WGL_CONTEXT_MINOR_VERSION_ARB, 5,
 		WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
 		WGL_CONTEXT_FLAGS_ARB, GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT,
 		0
@@ -164,6 +163,8 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 
 		DescribePixelFormat(h_device_context, EXT_pixel_format, sizeof(EXT_pfd), &EXT_pfd);
 		SetPixelFormat(h_device_context, EXT_pixel_format, &EXT_pfd);
+
+		Log(LogSystem::TIWAZ_INFORMATION, "window", "ext");
 	}
 
 	if (wglewIsSupported("WGL_ARB_create_context"))
@@ -176,14 +177,6 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 
 		opengl_rendering_context = temp_context;
 		wglMakeCurrent(h_device_context, opengl_rendering_context);
-	}
-
-	glewExperimental = GL_TRUE;
-
-	if (glewInit() != GLEW_OK)
-	{		
-		MessageBox(NULL, "ERROR: Could not intialize GLEW!", "ERROR", MB_OK);
-		Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize GLEW!");
 	}
 
 	m_should_quit = false;
@@ -202,7 +195,7 @@ void Tiwaz::Window::Window::TiwazDestroyWindow()
 	ReleaseDC(h_wnd, h_device_context);
 	DestroyWindow(h_wnd);
 
-	UnregisterClass("TIWAZ", Tiwaz::Window::h_instance);
+	UnregisterClass("TIWAZ", Platform::h_instance);
 }
 
 void Tiwaz::Window::Window::TiwazShowWindow()

@@ -14,6 +14,13 @@ namespace Tiwaz::Graphic
 	
 	void GraphicManager::Init()
 	{
+		glewExperimental = GL_TRUE;
+
+		if (glewInit() != GLEW_OK)
+		{
+			Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize GLEW!");
+		}
+
 		glClearColor(0.2f, 0.5f, 0.7f, 1.0f);
 	}
 

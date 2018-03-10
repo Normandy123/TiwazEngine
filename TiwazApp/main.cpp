@@ -5,7 +5,7 @@
 #if DEBUGMODE
 int main(int argc, char* argv[])
 {
-	Tiwaz::RunEngine();
+	Tiwaz::RunEngine(true, false);
 
 	const int result = Tiwaz::ExitEngine();
 
@@ -15,13 +15,13 @@ int main(int argc, char* argv[])
 
 #if !DEBUGMODE
 
-#ifdef _WIN32
+#ifdef _WIN64
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-	Tiwaz::RunEngine();
+	Tiwaz::RunEngine(false, false);
 
 	const int result = Tiwaz::ExitEngine();
 

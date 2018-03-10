@@ -6,6 +6,7 @@
 #include <GLM/glm.hpp>
 
 #include "event_system.h"
+#include "log_system.h"
 
 namespace Tiwaz::Graphic
 {
