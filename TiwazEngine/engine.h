@@ -20,7 +20,7 @@
 #include "binary_IO.h"
 #include "resources_IO.h"
 
-//#define TIWAZ_API __declspec(dllexport)
+#define TIWAZ_APP __declspec(dllexport)
 
 //#include "lua_interface.h"
 
@@ -49,8 +49,8 @@ namespace Tiwaz
 		EventSystem::ComponentExitEvent comexit;
 	};
 
-	extern const int RunEngine(bool debug, bool editor);
-	extern const int ExitEngine();
+	TIWAZ_APP extern const int RunEngine(bool debug, bool editor);
+	TIWAZ_APP extern const int ExitEngine();
 }
 
 namespace Tiwaz::Global
