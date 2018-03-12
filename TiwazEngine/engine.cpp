@@ -37,8 +37,8 @@ void Tiwaz::Engine::Init()
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
 
-	Global::RENDERWINDOW = new Window::Window;
-	Global::RENDERWINDOW->TiwazCreateWindow(1280, 720, "TIWAZ_ENGINE");
+	Global::RENDERWINDOW = new Window::RenderWindow;
+	Global::RENDERWINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
 	Loader::ResourcesManager<ResourcesFileFormats::ModelData> rsma(&Loader::LoadModel);
 	rsma.AddResource("data/models/cones2.dae");

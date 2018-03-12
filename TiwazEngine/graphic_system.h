@@ -21,7 +21,13 @@ namespace Tiwaz::Graphic
 		void Render();
 		void Exit();
 
+		void OnScreenShow(const EventSystem::ScreenShowEvent* event);
 		void OnScreenResize(const EventSystem::ScreenResizeEvent* event);
+
+	private:
+		uint16_t m_width = 1024;
+		uint16_t m_height = 576;
+		float m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	};
 }
 

@@ -14,11 +14,6 @@ namespace Tiwaz::IO
 		stream.write(reinterpret_cast<const char*>(&data), sizeof(T));
 	}
 
-	template<typename T> static void WriteValueToStream(std::ofstream & stream, std::string data)
-	{
-		stream.write(&data.c_str(), data.size());
-	}
-
 	template<typename T> static void WriteVectorToStream(std::ofstream & stream, std::vector<T> vector)
 	{	
 		const size_t value_size = sizeof(T);

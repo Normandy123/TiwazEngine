@@ -6,10 +6,10 @@
 
 namespace Tiwaz::Window
 {
-	class IWindow
+	class IRenderWindow
 	{
 	public:
-		virtual void TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title) = 0;
+		virtual void TiwazCreateWindow(const uint16_t & width = 1024, const uint16_t & height = 576, const std::string & title = "TiwazEngine", const bool & fullscreen = false) = 0;
 		virtual void TiwazDestroyWindow() = 0;
 
 		virtual void TiwazShowWindow() = 0;
@@ -25,7 +25,7 @@ namespace Tiwaz::Window
 
 namespace Tiwaz::Global
 {
-	extern Window::IWindow* RENDERWINDOW;
+	extern Window::IRenderWindow* RENDERWINDOW;
 }
 
 #ifdef _WIN64
@@ -36,10 +36,10 @@ namespace Tiwaz::Global
 
 namespace Tiwaz::Window
 {
-	class Window : public IWindow
+	class RenderWindow : public IRenderWindow
 	{
 	public:
-		void TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title);
+		void TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title, const bool & fullscreen);
 		void TiwazDestroyWindow();
 	
 		void TiwazShowWindow();
@@ -63,7 +63,7 @@ namespace Tiwaz::Window
 		MSG wnd_msg;
 	};
 		
-	extern Window* p_callback_window;
+	extern RenderWindow* p_callback_window;
 	
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{

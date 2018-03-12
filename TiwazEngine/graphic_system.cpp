@@ -4,11 +4,13 @@ namespace Tiwaz::Graphic
 {
 	GraphicManager::GraphicManager()
 	{
+		Global::ENGINEEVENTHANDLER->RegisterEventFunction(&GraphicManager::OnScreenShow, this);
 		Global::ENGINEEVENTHANDLER->RegisterEventFunction(&GraphicManager::OnScreenResize, this);
 	}
 
 	GraphicManager::~GraphicManager()
 	{
+		Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::ScreenShowEvent>(this);
 		Global::ENGINEEVENTHANDLER->UnregisterEventFunction<EventSystem::ScreenResizeEvent>(this);
 	}
 	
@@ -45,9 +47,20 @@ namespace Tiwaz::Graphic
 
 	}
 
+	void GraphicManager::OnScreenShow(const EventSystem::ScreenShowEvent* event)
+	{
+		glViewport(0, 0, event->width, event->height);
+
+		m_width = event->width; m_height = event->height;
+		m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
+	}
+
 	void GraphicManager::OnScreenResize(const EventSystem::ScreenResizeEvent* event)
 	{
 		glViewport(0, 0, event->width, event->height);
+
+		m_width = event->width; m_height = event->height;
+		m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	}
 }
 

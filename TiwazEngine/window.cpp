@@ -4,12 +4,12 @@
 #include "log_system.h"
 #include "event_system.h"
 
-Tiwaz::Window::IWindow* Tiwaz::Global::RENDERWINDOW;
+Tiwaz::Window::IRenderWindow* Tiwaz::Global::RENDERWINDOW;
 
 #ifdef _WIN64
-Tiwaz::Window::Window* Tiwaz::Window::p_callback_window;
+Tiwaz::Window::RenderWindow* Tiwaz::Window::p_callback_window;
 
-void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title)
+void Tiwaz::Window::RenderWindow::TiwazCreateWindow(const uint16_t & width, const uint16_t & height, const std::string & title, const bool & fullscreen)
 {
 	Tiwaz::Window::p_callback_window = this;
 
@@ -163,8 +163,6 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 
 		DescribePixelFormat(h_device_context, EXT_pixel_format, sizeof(EXT_pfd), &EXT_pfd);
 		SetPixelFormat(h_device_context, EXT_pixel_format, &EXT_pfd);
-
-		Log(LogSystem::TIWAZ_INFORMATION, "window", "ext");
 	}
 
 	if (wglewIsSupported("WGL_ARB_create_context"))
@@ -182,7 +180,7 @@ void Tiwaz::Window::Window::TiwazCreateWindow(const uint16_t & width, const uint
 	m_should_quit = false;
 }
 
-void Tiwaz::Window::Window::TiwazDestroyWindow()
+void Tiwaz::Window::RenderWindow::TiwazDestroyWindow()
 {
 	if (!m_is_hidden)
 	{
@@ -198,7 +196,7 @@ void Tiwaz::Window::Window::TiwazDestroyWindow()
 	UnregisterClass("TIWAZ", Platform::h_instance);
 }
 
-void Tiwaz::Window::Window::TiwazShowWindow()
+void Tiwaz::Window::RenderWindow::TiwazShowWindow()
 {
 	ShowWindow(h_wnd, SW_SHOWDEFAULT);
 	UpdateWindow(h_wnd);
@@ -206,14 +204,14 @@ void Tiwaz::Window::Window::TiwazShowWindow()
 	m_is_hidden = false;
 }
 
-void Tiwaz::Window::Window::TiwazCloseWindow()
+void Tiwaz::Window::RenderWindow::TiwazCloseWindow()
 {
 	CloseWindow(h_wnd);
 
 	m_is_hidden = true;
 }
 
-void Tiwaz::Window::Window::TiwazUpdate()
+void Tiwaz::Window::RenderWindow::TiwazUpdate()
 {
 	if (PeekMessage(&wnd_msg, 0, 0, 0, PM_REMOVE))
 	{
@@ -222,16 +220,24 @@ void Tiwaz::Window::Window::TiwazUpdate()
 	}
 }
 
-void Tiwaz::Window::Window::TiwazSwapBuffers()
+void Tiwaz::Window::RenderWindow::TiwazSwapBuffers()
 {
 	SwapBuffers(h_device_context);
 }
 
-LRESULT CALLBACK Tiwaz::Window::Window::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Tiwaz::Window::RenderWindow::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
 	case WM_CREATE:
+		break;
+	case WM_SHOWWINDOW:
+		{
+			EventSystem::ScreenShowEvent event;
+			event.width = static_cast<uint16_t>(LOWORD(lParam));
+			event.height = static_cast<uint16_t>(HIWORD(lParam));
+			Global::ENGINEEVENTHANDLER->HandleEvent(&event);
+		}
 		break;
 	case WM_SIZE:
 		{
