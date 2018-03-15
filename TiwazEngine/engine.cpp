@@ -45,8 +45,8 @@ void Tiwaz::Engine::Init()
 
 	BinaryFileFormats::MeshData meshdata_write;
 	meshdata_write.mesh_name = "test";
-	meshdata_write.SetPositions({ glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) });
-	meshdata_write.SetIndices({ 0, 6, 7, 12, 14, 1, 2, 3 });
+	meshdata_write.m_positions = { glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) };
+	meshdata_write.m_indices = { 0, 6, 7, 12, 14, 1, 2, 3 };
 
 	std::ofstream file_out;
 	file_out.open("test.bin", std::ios::binary);
@@ -70,8 +70,6 @@ void Tiwaz::Engine::Init()
 	file_in.close();
 
 	std::cout << meshdata_read.mesh_name << std::endl;
-	std::cout << meshdata_read.size_positions << std::endl;
-	std::cout << meshdata_read.size_indices << std::endl;
 
 	std::cout << std::endl;
 

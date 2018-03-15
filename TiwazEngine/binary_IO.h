@@ -9,14 +9,28 @@
 
 namespace Tiwaz::IO
 {
+	constexpr const size_t BYTE_SIZE_SIZE_T = sizeof(size_t);
+	constexpr const size_t BYTE_SIZE_FLOAT = sizeof(float);
+
 	template<typename T> static void WriteValueToStream(std::ofstream & stream, T data)
 	{
 		stream.write(reinterpret_cast<const char*>(&data), sizeof(T));
 	}
 
+	template<> static void WriteValueToStream(std::ofstream & stream, std::string data)
+	{
+		const size_t string_size = data.size();
+
+		stream.write(reinterpret_cast<const char*>(&string_size), BYTE_SIZE_SIZE_T);
+		stream.write(data.c_str(), string_size);
+	}
+
 	template<typename T> static void WriteVectorToStream(std::ofstream & stream, std::vector<T> vector)
 	{	
 		const size_t value_size = sizeof(T);
+		const size_t data_size = vector.size() * value_size;
+
+		stream.write(reinterpret_cast<const char*>(&data_size), BYTE_SIZE_SIZE_T);
 
 		for (const T vector_value : vector)
 		{
@@ -26,7 +40,9 @@ namespace Tiwaz::IO
 
 	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec2> vector)
 	{
-		const size_t value_size = sizeof(float);
+		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT * 2;
+
+		stream.write(reinterpret_cast<const char*>(&data_size), BYTE_SIZE_SIZE_T);
 
 		std::vector<float> float_buffer;
 
@@ -38,7 +54,7 @@ namespace Tiwaz::IO
 
 		for (const float vector_value : float_buffer)
 		{
-			stream.write(reinterpret_cast<const char*>(&vector_value), value_size);
+			stream.write(reinterpret_cast<const char*>(&vector_value), BYTE_SIZE_FLOAT);
 		}
 
 		float_buffer.clear();
@@ -46,7 +62,9 @@ namespace Tiwaz::IO
 
 	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec3> vector)
 	{
-		const size_t value_size = sizeof(float);
+		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT * 3;
+
+		stream.write(reinterpret_cast<const char*>(&data_size), BYTE_SIZE_SIZE_T);
 
 		std::vector<float> float_buffer;
 
@@ -59,7 +77,7 @@ namespace Tiwaz::IO
 
 		for (const float vector_value : float_buffer)
 		{
-			stream.write(reinterpret_cast<const char*>(&vector_value), value_size);
+			stream.write(reinterpret_cast<const char*>(&vector_value), BYTE_SIZE_FLOAT);
 		}
 
 		float_buffer.clear();
@@ -70,11 +88,28 @@ namespace Tiwaz::IO
 		stream.read(reinterpret_cast<char*>(&data), sizeof(T));
 	}
 
-	template<typename T> static void ReadVectorFromStream(std::ifstream & stream, std::vector<T> & vector, const size_t & size)
+	template<> static void ReadValueFromStream(std::ifstream & stream, std::string & data)
+	{
+		size_t string_size = 0;
+		stream.read(reinterpret_cast<char*>(&string_size), BYTE_SIZE_SIZE_T);
+
+		char* raw_string = new char[string_size];
+
+		stream.read(raw_string, string_size);
+		data = std::string(raw_string, string_size);
+
+		delete[] raw_string;
+	}
+
+	template<typename T> static void ReadVectorFromStream(std::ifstream & stream, std::vector<T> & vector)
 	{
 		const size_t value_size = sizeof(T);
 
-		for (size_t i = 0; i < size; ++i)
+		size_t data_size = 0;
+		stream.read(reinterpret_cast<char*>(&data_size), BYTE_SIZE_SIZE_T);
+		const size_t vector_size = data_size / value_size;
+
+		for (size_t i = 0; i < vector_size; ++i)
 		{
 			T temp_value;
 
@@ -84,22 +119,24 @@ namespace Tiwaz::IO
 		}
 	}
 
-	template<> static void ReadVectorFromStream(std::ifstream & stream, std::vector<glm::vec2> & vector, const size_t & size)
+	template<> static void ReadVectorFromStream(std::ifstream & stream, std::vector<glm::vec2> & vector)
 	{
 		std::vector<float> float_buffer;
 
-		const size_t value_size = sizeof(float);
+		size_t data_size = 0;
+		stream.read(reinterpret_cast<char*>(&data_size), BYTE_SIZE_SIZE_T);
+		const size_t vector_size = data_size / BYTE_SIZE_FLOAT;
 
-		for (size_t i = 0; i < size * 2; ++i)
+		for (size_t i = 0; i < vector_size; ++i)
 		{
-			float temp_value;
+			float temp_value = 0.0f;
 
-			stream.read(reinterpret_cast<char*>(&temp_value), value_size);
+			stream.read(reinterpret_cast<char*>(&temp_value), BYTE_SIZE_FLOAT);
 
 			float_buffer.push_back(temp_value);
 		}
 
-		for (size_t j = 0; j < size * 2; j += 2)
+		for (size_t j = 0; j < vector_size; j += 2)
 		{
 			vector.push_back(glm::vec2(float_buffer[j], float_buffer[j + 1]));
 		}
@@ -107,22 +144,24 @@ namespace Tiwaz::IO
 		float_buffer.clear();
 	}
 
-	template<> static void ReadVectorFromStream(std::ifstream & stream, std::vector<glm::vec3> & vector, const size_t & size)
+	template<> static void ReadVectorFromStream(std::ifstream & stream, std::vector<glm::vec3> & vector)
 	{
 		std::vector<float> float_buffer;
 
-		const size_t value_size = sizeof(float);
+		size_t data_size = 0;
+		stream.read(reinterpret_cast<char*>(&data_size), BYTE_SIZE_SIZE_T);
+		const size_t size_vector = data_size / BYTE_SIZE_FLOAT;
 
-		for (size_t i = 0; i < size * 3; ++i)
+		for (size_t i = 0; i < size_vector; ++i)
 		{
-			float temp_value;
+			float temp_value = 0.0f;
 
-			stream.read(reinterpret_cast<char*>(&temp_value), value_size);
+			stream.read(reinterpret_cast<char*>(&temp_value), BYTE_SIZE_FLOAT);
 
 			float_buffer.push_back(temp_value);
 		}
 
-		for (size_t j = 0; j < size * 3; j += 3)
+		for (size_t j = 0; j < size_vector; j += 3)
 		{
 			vector.push_back(glm::vec3(float_buffer[j], float_buffer[j + 1], float_buffer[j + 2]));
 		}
@@ -134,11 +173,6 @@ namespace Tiwaz::IO
 	{
 		WriteValueToStream(stream, mesh_input.mesh_name);
 
-		WriteValueToStream(stream, mesh_input.size_positions); 
-		WriteValueToStream(stream, mesh_input.size_normals); 
-		WriteValueToStream(stream, mesh_input.size_uvs);
-		WriteValueToStream(stream, mesh_input.size_indices);
-
 		WriteVectorToStream(stream, mesh_input.m_positions); 
 		WriteVectorToStream(stream, mesh_input.m_normals); 
 		WriteVectorToStream(stream, mesh_input.m_uvs);
@@ -149,14 +183,9 @@ namespace Tiwaz::IO
 	{
 		ReadValueFromStream(stream, mesh_output.mesh_name);
 
-		ReadValueFromStream(stream, mesh_output.size_positions);
-		ReadValueFromStream(stream, mesh_output.size_normals); 
-		ReadValueFromStream(stream, mesh_output.size_uvs);
-		ReadValueFromStream(stream, mesh_output.size_indices);
-
-		ReadVectorFromStream(stream, mesh_output.m_positions, mesh_output.size_positions);
-		ReadVectorFromStream(stream, mesh_output.m_normals, mesh_output.size_normals);
-		ReadVectorFromStream(stream, mesh_output.m_uvs, mesh_output.size_uvs);
-		ReadVectorFromStream(stream, mesh_output.m_indices, mesh_output.size_indices);
+		ReadVectorFromStream(stream, mesh_output.m_positions);
+		ReadVectorFromStream(stream, mesh_output.m_normals);
+		ReadVectorFromStream(stream, mesh_output.m_uvs);
+		ReadVectorFromStream(stream, mesh_output.m_indices);
 	}
 }

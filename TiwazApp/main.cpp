@@ -1,8 +1,8 @@
 #include <engine.h>
 
-#define DEBUGMODE 1
+#define CONSOLEMODE 1
 
-#if DEBUGMODE
+#if CONSOLEMODE
 int main(int argc, char* argv[])
 {
 	Tiwaz::RunEngine(true, false);
@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 }
 #endif
 
-#if !DEBUGMODE
+#if !CONSOLEMODE
 
 #ifdef _WIN64
 #define WIN32_LEAN_AND_MEAN

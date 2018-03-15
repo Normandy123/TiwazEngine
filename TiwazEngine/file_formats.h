@@ -23,39 +23,10 @@ namespace Tiwaz::BinaryFileFormats
 
 		std::string mesh_name = "UNDEFINED";
 
-		size_t size_positions = 0;
-		size_t size_normals = 0;
-		size_t size_uvs = 0;
-		size_t size_indices = 0;
-
 		std::vector<glm::vec3> m_positions;
 		std::vector<glm::vec3> m_normals;
 		std::vector<glm::vec2> m_uvs;
 		std::vector<unsigned int> m_indices;
-
-		void SetPositions(const std::vector<glm::vec3> & positions)
-		{
-			size_positions = positions.size();
-			m_positions = positions;
-		}
-
-		void SetNormals(const std::vector<glm::vec3> & normals)
-		{
-			size_normals = normals.size();
-			m_normals = normals;
-		}
-
-		void SetUvs(const std::vector<glm::vec2> & uvs)
-		{
-			size_uvs = uvs.size();
-			m_uvs = uvs;
-		}
-
-		void SetIndices(const std::vector<unsigned int> & indices)
-		{
-			size_indices = indices.size();
-			m_indices = indices;
-		}
 	};
 }
 
