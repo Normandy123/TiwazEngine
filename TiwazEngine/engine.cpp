@@ -40,78 +40,64 @@ void Tiwaz::Engine::Init()
 	Global::RENDERWINDOW = new Window::RenderWindow;
 	Global::RENDERWINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
-	Loader::ResourcesManager<ResourcesFileFormats::ModelData> rsma(&Loader::LoadModel);
+	ResourcesIO::ResourcesManager<ResourcesFileFormats::ModelData> rsma(&ResourcesIO::LoadModel);
 	rsma.AddResource("data/models/cones2.dae");
 
-	BinaryFileFormats::MeshData meshdata_write;
-	meshdata_write.mesh_name = "test";
-	meshdata_write.m_positions = { glm::vec3(3.7f, 513.12f, -6.19f), glm::vec3(-10.7f, 9.9999f, 5.0f) };
-	meshdata_write.m_indices = { 0, 6, 7, 12, 14, 1, 2, 3 };
+	ResourcesFileFormats::ModelData* test1 = rsma.AccessResource(1);
 
 	std::ofstream file_out;
 	file_out.open("test.bin", std::ios::binary);
-	IO::WriteMesh(file_out, meshdata_write);
+	BinaryIO::WriteMesh(file_out, test1->meshes[0]);
 
 	file_out.close();
 
-	file_out.open("test2.bin", std::ios::binary);
-	IO::WriteMesh(file_out, meshdata_write);
-
-	file_out.close();
-
-	std::cout << std::endl;
-
-	BinaryFileFormats::MeshData meshdata_read;
+	BinaryFileFormats::MeshData* meshdata_read = new BinaryFileFormats::MeshData();
 
 	std::ifstream file_in;
 	file_in.open("test.bin", std::ios::binary);
-	IO::ReadMesh(file_in, meshdata_read);
+	BinaryIO::ReadMesh(file_in, meshdata_read);
 
 	file_in.close();
 
-	std::cout << meshdata_read.mesh_name << std::endl;
+	/*
+	std::cout << meshdata_read->mesh_name << std::endl;
 
 	std::cout << std::endl;
 
-	std::vector<glm::vec3> temp_vec1 = meshdata_read.m_positions;
+	std::vector<glm::vec3> temp_vec1 = meshdata_read->positions;
 
 	for (size_t j = 0; j < temp_vec1.size(); ++j)
 	{
 		std::cout << "x: " << temp_vec1[j].x << "\ty: " << temp_vec1[j].y << "\tz: " << temp_vec1[j].z << std::endl;
 	}
 
-	std::vector<unsigned int> temp_vec2 = meshdata_read.m_indices;
+	std::vector<glm::vec3> temp_vec2 = meshdata_read->normals;
 
 	for (size_t j = 0; j < temp_vec2.size(); ++j)
 	{
-		std::cout << temp_vec2[j] << std::endl;
+		std::cout << "x: " << temp_vec2[j].x << "\ty: " << temp_vec2[j].y << "\tz: " << temp_vec2[j].z << std::endl;
 	}
+
+	std::vector<glm::vec2> temp_vec3 = meshdata_read->uvs;
+
+	for (size_t j = 0; j < temp_vec3.size(); ++j)
+	{
+		std::cout << "x: " << temp_vec3[j].x << "\ty: " << temp_vec3[j].y << std::endl;
+	}
+
+	std::vector<unsigned int> temp_vec4 = meshdata_read->indices;
+
+	for (size_t j = 0; j < temp_vec4.size(); ++j)
+	{
+		std::cout << temp_vec4[j] << std::endl;
+	}
+
+	delete meshdata_read;
+	*/
 
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::MeshComponent* temp_obj = CreateObject<Component::MeshComponent>();
-		//temp_obj->SetMeshData(Global::MODELLOADER->AccessResource(1)->m_meshes[0]);
-
-		/*
-		std::vector<glm::vec3> temp_vec = temp_obj->Positions();
-
-		for (size_t j = 0; j < temp_vec.size(); ++j)
-		{
-			std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
-		}
-		*/
-
-		/*
-		for (Component::Component<Component::MeshComponent>* mesh : temp_obj->MeshComponents())
-		{
-			std::vector<glm::vec3> temp_vec = mesh->ptr()->Vertices();
-
-			for (size_t j = 0; j < temp_vec.size(); ++j)
-			{
-				std::cout << "x: " << temp_vec[j].x << "\ty: " << temp_vec[j].y << "\tz: " << temp_vec[j].z << std::endl;
-			}
-		}
-		*/
 	}
 
 	Global::ENGINEEVENTHANDLER->HandleEvent(&entinit);

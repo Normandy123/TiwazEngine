@@ -2,9 +2,9 @@
 
 #include "graphic_component.h"
 
-namespace Tiwaz::Loader
+namespace Tiwaz::ResourcesIO
 {
-	void ProcessMesh(ResourcesFileFormats::MeshData* mesh, aiMesh* ai_mesh, const aiScene* ai_scene)
+	void ProcessMesh(BinaryFileFormats::MeshData* mesh, aiMesh* ai_mesh, const aiScene* ai_scene)
 	{
 		mesh->mesh_name = ai_mesh->mName.C_Str();
 
@@ -56,7 +56,7 @@ namespace Tiwaz::Loader
 		{
 			aiMesh* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 
-			ResourcesFileFormats::MeshData* temp_mesh = new ResourcesFileFormats::MeshData();
+			BinaryFileFormats::MeshData* temp_mesh = new BinaryFileFormats::MeshData();
 
 			ProcessMesh(temp_mesh, ai_mesh, ai_scene);
 

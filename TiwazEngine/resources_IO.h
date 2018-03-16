@@ -16,12 +16,12 @@
 #include "file_formats.h"
 #include "binary_IO.h"
 
-namespace Tiwaz::Loader
+namespace Tiwaz::ResourcesIO
 {
 	extern ResourcesFileFormats::ModelData* LoadModel(const std::string & file_path);
 }
 
-namespace Tiwaz::Loader
+namespace Tiwaz::ResourcesIO
 {
 	template<typename T> class ResourcesManager
 	{
@@ -101,12 +101,14 @@ namespace Tiwaz::Loader
 		{
 			if (m_resources_map.find(ID) != m_resources_map.cend())
 			{
+				m_ID_counter.ReleaseID(ID);
+
 				m_loaded_files_map.erase(ID);
 
 				delete m_resources_map[ID];
 				m_resources_map[ID] = nullptr;
 
-				m_resources_map.erase(ID);	
+				m_resources_map.erase(ID);
 			}
 		}
 

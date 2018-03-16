@@ -37,11 +37,16 @@ namespace Tiwaz::Component
 			m_mesh = nullptr;
 		}
 
-		const std::vector<glm::vec3> Positions() { return m_mesh->m_positions; }
-		const std::vector<glm::vec3> Normals() { return m_mesh->m_normals; }
-		const std::vector<glm::vec2> UVs() { return m_mesh->m_uvs; }
+		void SetMesh(BinaryFileFormats::MeshData* mesh)
+		{
+			m_mesh = mesh;
+		}
 
-		const std::vector<unsigned int> Indices() { return m_mesh->m_indices; }
+		const std::vector<glm::vec3> Positions() { return m_mesh->positions; }
+		const std::vector<glm::vec3> Normals() { return m_mesh->normals; }
+		const std::vector<glm::vec2> UVs() { return m_mesh->uvs; }
+
+		const std::vector<unsigned int> Indices() { return m_mesh->indices; }
 
 	private:
 		BinaryFileFormats::MeshData* m_mesh;

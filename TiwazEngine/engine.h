@@ -20,9 +20,9 @@
 #include "binary_IO.h"
 #include "resources_IO.h"
 
-#define TIWAZ_APP __declspec(dllexport)
-
 //#include "lua_interface.h"
+
+#define TIWAZ_APP __declspec(dllexport)
 
 namespace Tiwaz
 {

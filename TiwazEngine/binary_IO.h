@@ -7,10 +7,10 @@
 
 #include "file_formats.h"
 
-namespace Tiwaz::IO
+namespace Tiwaz::BinaryIO
 {
-	constexpr const size_t BYTE_SIZE_SIZE_T = sizeof(size_t);
-	constexpr const size_t BYTE_SIZE_FLOAT = sizeof(float);
+	constexpr size_t BYTE_SIZE_SIZE_T = sizeof(size_t);
+	constexpr size_t BYTE_SIZE_FLOAT = sizeof(float);
 
 	template<typename T> static void WriteValueToStream(std::ofstream & stream, T data)
 	{
@@ -169,23 +169,32 @@ namespace Tiwaz::IO
 		float_buffer.clear();
 	}
 
-	static void WriteMesh(std::ofstream & stream, const BinaryFileFormats::MeshData & mesh_input)
+	static void WriteMesh(std::ofstream & stream, BinaryFileFormats::MeshData* mesh_input)
 	{
-		WriteValueToStream(stream, mesh_input.mesh_name);
+		WriteValueToStream(stream, mesh_input->mesh_name);
 
-		WriteVectorToStream(stream, mesh_input.m_positions); 
-		WriteVectorToStream(stream, mesh_input.m_normals); 
-		WriteVectorToStream(stream, mesh_input.m_uvs);
-		WriteVectorToStream(stream, mesh_input.m_indices);
+		WriteVectorToStream(stream, mesh_input->positions); 
+		WriteVectorToStream(stream, mesh_input->normals); 
+		WriteVectorToStream(stream, mesh_input->uvs);
+		WriteVectorToStream(stream, mesh_input->indices);
 	}
 
-	static void ReadMesh(std::ifstream & stream, BinaryFileFormats::MeshData & mesh_output)
+	static void ReadMesh(std::ifstream & stream, BinaryFileFormats::MeshData* mesh_output)
 	{
-		ReadValueFromStream(stream, mesh_output.mesh_name);
+		ReadValueFromStream(stream, mesh_output->mesh_name);
 
-		ReadVectorFromStream(stream, mesh_output.m_positions);
-		ReadVectorFromStream(stream, mesh_output.m_normals);
-		ReadVectorFromStream(stream, mesh_output.m_uvs);
-		ReadVectorFromStream(stream, mesh_output.m_indices);
+		ReadVectorFromStream(stream, mesh_output->positions);
+		ReadVectorFromStream(stream, mesh_output->normals);
+		ReadVectorFromStream(stream, mesh_output->uvs);
+		ReadVectorFromStream(stream, mesh_output->indices);
 	}
+
+	class BinaryIOManager
+	{
+	public:
+
+	private:
+		std::ofstream m_output_stream;
+		std::ifstream m_input_stream;
+	};
 }

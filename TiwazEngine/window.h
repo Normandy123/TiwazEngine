@@ -28,8 +28,9 @@ namespace Tiwaz::Global
 	extern Window::IRenderWindow* RENDERWINDOW;
 }
 
-#ifdef _WIN64
 #include "platform.h"
+
+#ifdef _WIN64
 
 #include <GLEW/glew.h>
 #include <GLEW/wglew.h>
