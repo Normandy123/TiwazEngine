@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cstdint>
+
+#include <type_traits>
+
 #include "object_system.h"
 #include "render_scene.h"
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <type_traits>
 
 #include "file_formats.h"
 
@@ -192,7 +193,35 @@ namespace Tiwaz::BinaryIO
 	class BinaryIOManager
 	{
 	public:
+		template<typename TFunction, typename...TArgs> void Write(const std::string & file_path, TFunction write_function_ptr, TArgs...args)
+		{
+			if (file_path != "" && file_path != "UNDEFINED")
+			{
+				m_output_stream.open(file_path, std::ios::binary);
 
+				if (m_output_stream.is_open() && !m_output_stream.fail())
+				{
+					(*write_function_ptr)(m_output_stream, args...);
+
+					m_output_stream.close();
+				}
+			}
+		}
+
+		template<typename TFunction, typename...TArgs> void Read(const std::string & file_path, TFunction read_function_ptr, TArgs...args)
+		{
+			if (file_path != "" && file_path != "UNDEFINED")
+			{
+				m_input_stream.open(file_path, std::ios::binary);
+
+				if (m_input_stream.is_open() && !m_output_stream.fail())
+				{
+					(*read_function_ptr)(m_input_stream, args...);
+
+					m_input_stream.close();
+				}
+			}
+		}
 	private:
 		std::ofstream m_output_stream;
 		std::ifstream m_input_stream;

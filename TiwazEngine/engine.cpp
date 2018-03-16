@@ -45,21 +45,13 @@ void Tiwaz::Engine::Init()
 
 	ResourcesFileFormats::ModelData* test1 = rsma.AccessResource(1);
 
-	std::ofstream file_out;
-	file_out.open("test.bin", std::ios::binary);
-	BinaryIO::WriteMesh(file_out, test1->meshes[0]);
+	BinaryIO::BinaryIOManager bm;
 
-	file_out.close();
+	bm.Write("test.bin", &BinaryIO::WriteMesh, test1->meshes[0]);
 
 	BinaryFileFormats::MeshData* meshdata_read = new BinaryFileFormats::MeshData();
+	bm.Read("test.bin", &BinaryIO::ReadMesh, meshdata_read);
 
-	std::ifstream file_in;
-	file_in.open("test.bin", std::ios::binary);
-	BinaryIO::ReadMesh(file_in, meshdata_read);
-
-	file_in.close();
-
-	/*
 	std::cout << meshdata_read->mesh_name << std::endl;
 
 	std::cout << std::endl;
@@ -93,7 +85,6 @@ void Tiwaz::Engine::Init()
 	}
 
 	delete meshdata_read;
-	*/
 
 	for (size_t i = 0; i < 1; ++i)
 	{
