@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <future>
+#include <mutex>
 
 #include "engine_vars.h"
 
@@ -47,6 +48,8 @@ namespace Tiwaz
 
 		EventSystem::EntityExitEvent entexit;
 		EventSystem::ComponentExitEvent comexit;
+
+		std::mutex run_function_mutex;
 	};
 
 	TIWAZ_APP extern const int RunEngine(bool debug, bool editor);

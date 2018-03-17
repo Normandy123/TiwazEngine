@@ -2,8 +2,18 @@
 
 #include <string>
 #include <vector>
+#include <deque>
+#include <algorithm>
+
 #include <fstream>
+
 #include <type_traits>
+#include <memory>
+
+#include <atomic>
+#include <thread>
+#include <mutex>
+#include <future>
 
 #include "file_formats.h"
 
@@ -189,40 +199,37 @@ namespace Tiwaz::BinaryIO
 		ReadVectorFromStream(stream, mesh_output->indices);
 	}
 
-	class BinaryIOManager
+	template<typename TFunction, typename...TArgs> static void WriteFile(const std::string & file_path, TFunction write_function_pointer, TArgs...args)
 	{
-	public:
-		template<typename TFunction, typename...TArgs> void Write(const std::string & file_path, TFunction write_function_ptr, TArgs...args)
+		if (file_path != "" && file_path != "UNDEFINED")
 		{
-			if (file_path != "" && file_path != "UNDEFINED")
+			std::ofstream stream;
+
+			stream.open(file_path, std::ios::binary);
+
+			if (stream.is_open() && !stream.fail())
 			{
-				m_output_stream.open(file_path, std::ios::binary);
+				(*write_function_pointer)(stream, args...);
 
-				if (m_output_stream.is_open() && !m_output_stream.fail())
-				{
-					(*write_function_ptr)(m_output_stream, args...);
-
-					m_output_stream.close();
-				}
+				stream.close();
 			}
 		}
+	}
 
-		template<typename TFunction, typename...TArgs> void Read(const std::string & file_path, TFunction read_function_ptr, TArgs...args)
+	template<typename TFunction, typename...TArgs> static void ReadFile(const std::string & file_path, TFunction read_function_pointer, TArgs...args)
+	{
+		if (file_path != "" && file_path != "UNDEFINED")
 		{
-			if (file_path != "" && file_path != "UNDEFINED")
+			std::ifstream stream;
+
+			stream.open(file_path, std::ios::binary);
+
+			if (stream.is_open() && !stream.fail())
 			{
-				m_input_stream.open(file_path, std::ios::binary);
+				(*read_function_pointer)(stream, args...);
 
-				if (m_input_stream.is_open() && !m_output_stream.fail())
-				{
-					(*read_function_ptr)(m_input_stream, args...);
-
-					m_input_stream.close();
-				}
+				stream.close();
 			}
 		}
-	private:
-		std::ofstream m_output_stream;
-		std::ifstream m_input_stream;
-	};
+	}
 }

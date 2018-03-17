@@ -2,9 +2,7 @@
 
 const int Tiwaz::Engine::Run()
 {
-	std::mutex run_loop_mutex;
-
-	std::lock_guard<std::mutex> run_loop_lock(run_loop_mutex);
+	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
 
 	Init();
 
@@ -40,10 +38,8 @@ void Tiwaz::Engine::Init()
 	Global::RENDER_WINDOW = new Window::RenderWindow;
 	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
-	BinaryIO::BinaryIOManager binaryIO;
-
 	FileFormats::MeshData* meshdata_read = new FileFormats::MeshData();
-	binaryIO.Read("test.bin", &BinaryIO::ReadMesh, meshdata_read);
+	BinaryIO::ReadFile("test.bin", &BinaryIO::ReadMesh, meshdata_read);
 
 	std::cout << meshdata_read->mesh_name << std::endl;
 

@@ -3,19 +3,19 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <memory>
 
 #include "counter.h"
 #include "file_formats.h"
+#include "binary_IO.h"
 
 namespace Tiwaz::ResourcesIO
 {
-	template<typename T> class ResourcesManager
+	template<typename TResource> class ResourcesManager
 	{
 	protected:
 		struct MapValue
 		{
-			explicit MapValue(const std::string & file_path, T* resource)
+			explicit MapValue(const std::string & file_path, TResource* resource)
 			{
 				m_resource = resource;
 				m_file_path = file_path;
@@ -29,13 +29,13 @@ namespace Tiwaz::ResourcesIO
 				m_resource = nullptr;
 			}
 
-			T* m_resource;
+			TResource* m_resource;
 			std::string m_file_path;
 		};
 
 	public:
-		typedef void (*AccessFunctionPointer)(const std::string &, T*);
-		
+		typedef void(*AccessFunctionPointer)(const std::string &, TResource*);
+
 		explicit ResourcesManager(AccessFunctionPointer read_function)
 		{
 			m_read_function = read_function;
@@ -105,7 +105,7 @@ namespace Tiwaz::ResourcesIO
 			}
 		}
 
-		T* AccessResource(const uint64_t & ID)
+		TResource* AccessResource(const uint64_t & ID)
 		{
 			if (m_resources_map.find(ID) != m_resources_map.cend())
 			{
@@ -121,5 +121,7 @@ namespace Tiwaz::ResourcesIO
 
 		std::map<uint64_t, MapValue*> m_resources_map;
 		Counter::IDCounter m_ID_counter;
+
+		
 	};
 }
