@@ -1,6 +1,6 @@
 #include <engine.h>
 
-#define CONSOLEMODE 0
+#define CONSOLEMODE 1
 
 #if CONSOLEMODE
 int main(int argc, char* argv[])

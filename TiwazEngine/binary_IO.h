@@ -171,27 +171,7 @@ namespace Tiwaz::BinaryIO
 		float_buffer.clear();
 	}
 
-	static void WriteMesh(std::ofstream & stream, FileFormats::MeshData* mesh_input)
-	{
-		WriteValueToStream(stream, mesh_input->mesh_name);
-
-		WriteVectorToStream(stream, mesh_input->positions); 
-		WriteVectorToStream(stream, mesh_input->normals); 
-		WriteVectorToStream(stream, mesh_input->uvs);
-		WriteVectorToStream(stream, mesh_input->indices);
-	}
-
-	static void ReadMesh(std::ifstream & stream, FileFormats::MeshData* mesh_output)
-	{
-		ReadValueFromStream(stream, mesh_output->mesh_name);
-
-		ReadVectorFromStream(stream, mesh_output->positions);
-		ReadVectorFromStream(stream, mesh_output->normals);
-		ReadVectorFromStream(stream, mesh_output->uvs);
-		ReadVectorFromStream(stream, mesh_output->indices);
-	}
-
-	template<typename TFunction, typename...TArgs> static void WriteFile(const std::string & file_path, TFunction write_function_pointer, TArgs...args)
+	static void WriteMesh(const std::string & file_path, std::ofstream & stream, FileFormats::MeshData* mesh_input)
 	{
 		if (file_path != "" && file_path != "UNDEFINED")
 		{
@@ -201,14 +181,19 @@ namespace Tiwaz::BinaryIO
 
 			if (stream.is_open() && !stream.fail())
 			{
-				(*write_function_pointer)(stream, args...);
+				WriteValueToStream(stream, mesh_input->mesh_name);
 
-				stream.close();
+				WriteVectorToStream(stream, mesh_input->positions);
+				WriteVectorToStream(stream, mesh_input->normals);
+				WriteVectorToStream(stream, mesh_input->uvs);
+				WriteVectorToStream(stream, mesh_input->indices);
 			}
+
+			stream.close();
 		}
 	}
 
-	template<typename TFunction, typename...TArgs> static void ReadFile(const std::string & file_path, TFunction read_function_pointer, TArgs...args)
+	static void ReadMesh(const std::string & file_path, FileFormats::MeshData* mesh_output)
 	{
 		if (file_path != "" && file_path != "UNDEFINED")
 		{
@@ -218,7 +203,12 @@ namespace Tiwaz::BinaryIO
 
 			if (stream.is_open() && !stream.fail())
 			{
-				(*read_function_pointer)(stream, args...);
+				ReadValueFromStream(stream, mesh_output->mesh_name);
+
+				ReadVectorFromStream(stream, mesh_output->positions);
+				ReadVectorFromStream(stream, mesh_output->normals);
+				ReadVectorFromStream(stream, mesh_output->uvs);
+				ReadVectorFromStream(stream, mesh_output->indices);
 
 				stream.close();
 			}

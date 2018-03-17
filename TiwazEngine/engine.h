@@ -21,6 +21,8 @@
 #include "binary_IO.h"
 #include "resources_IO.h"
 
+#include "multithreading.h"
+
 //#include "lua_interface.h"
 
 #define TIWAZ_APP __declspec(dllexport)
