@@ -40,10 +40,10 @@ void Tiwaz::Engine::Init()
 	Global::RENDER_WINDOW = new Window::RenderWindow;
 	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
-	BinaryIO::BinaryIOManager bm;
+	BinaryIO::BinaryIOManager binaryIO;
 
 	FileFormats::MeshData* meshdata_read = new FileFormats::MeshData();
-	bm.Read("test.bin", &BinaryIO::ReadMesh, meshdata_read);
+	binaryIO.Read("test.bin", &BinaryIO::ReadMesh, meshdata_read);
 
 	std::cout << meshdata_read->mesh_name << std::endl;
 
