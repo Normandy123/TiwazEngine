@@ -19,7 +19,6 @@
 #include "render_scene.h"
 
 #include "binary_IO.h"
-#include "resources_IO.h"
 
 #include "multithreading.h"
 

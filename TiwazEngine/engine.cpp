@@ -35,7 +35,6 @@ void Tiwaz::Engine::Init()
 
 	BinaryIO::ReadMesh("test.bin", meshdata_read);
 
-	/*
 	std::cout << meshdata_read->mesh_name << std::endl;
 
 	std::cout << std::endl;
@@ -69,7 +68,6 @@ void Tiwaz::Engine::Init()
 	}
 
 	delete meshdata_read;
-	*/
 
 	for (size_t i = 0; i < 1; ++i)
 	{
