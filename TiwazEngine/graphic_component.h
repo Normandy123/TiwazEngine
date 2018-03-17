@@ -4,7 +4,6 @@
 #include <iostream>
 #include <type_traits>
 
-#define GLM_FORCE_SIZE_T_LENGTH
 #include <GLM/glm.hpp>
 
 #include "component.h"
@@ -13,8 +12,6 @@
 
 namespace Tiwaz::Component
 {
-	typedef std::vector<float> vec;
-
 	class GraphicComponent : public ComponentBase
 	{
 	public:

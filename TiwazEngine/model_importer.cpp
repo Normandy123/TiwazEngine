@@ -70,22 +70,18 @@ namespace Tiwaz::ModelImporter
 		}
 	}
 
-	FileFormats::ModelData* LoadModel(const std::string & file_path)
+	void LoadModel(const std::string & file_path, FileFormats::ModelData* model)
 	{
-		FileFormats::ModelData* temp_model_data = new FileFormats::ModelData();
-
-		temp_model_data->file_path = file_path;
+		model->file_path = file_path;
 
 		Assimp::Importer importer;
 		const aiScene* ai_scene = importer.ReadFile(file_path, aiProcess_Triangulate);
 
 		aiNode* root_node = ai_scene->mRootNode;
 
-		ProcessMeshNode(temp_model_data, root_node, ai_scene);
+		ProcessMeshNode(model, root_node, ai_scene);
 
 		root_node = nullptr;
 		ai_scene = nullptr;
-
-		return temp_model_data;
 	}
 }

@@ -2,18 +2,10 @@
 
 #include <string>
 #include <vector>
-#include <deque>
-#include <algorithm>
 
 #include <fstream>
 
 #include <type_traits>
-#include <memory>
-
-#include <atomic>
-#include <thread>
-#include <mutex>
-#include <future>
 
 #include "file_formats.h"
 

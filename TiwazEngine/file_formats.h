@@ -36,6 +36,12 @@ namespace Tiwaz::FileFormats
 			file_path.clear();
 			model_name.clear();
 
+			for (FileFormats::MeshData* mesh : meshes)
+			{
+				delete mesh;
+				mesh = nullptr;
+			}
+
 			meshes.clear();
 		}
 
