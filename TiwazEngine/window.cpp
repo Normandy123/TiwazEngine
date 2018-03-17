@@ -26,9 +26,9 @@ void Tiwaz::Window::RenderWindow::TiwazCreateWindow(const uint16_t & width, cons
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hbrBackground = NULL;
-	wcex.hCursor = LoadCursor(Platform::h_instance, IDC_ARROW);
-	wcex.hIcon = LoadIcon(Platform::h_instance, IDI_APPLICATION);
-	wcex.hInstance = Platform::h_instance;
+	wcex.hCursor = LoadCursor(Platform::hInstance, IDC_ARROW);
+	wcex.hIcon = LoadIcon(Platform::hInstance, IDI_APPLICATION);
+	wcex.hInstance = Platform::hInstance;
 	wcex.lpfnWndProc = WndProc;
 	wcex.lpszClassName = "TIWAZ";
 	wcex.lpszMenuName = NULL;
@@ -48,7 +48,7 @@ void Tiwaz::Window::RenderWindow::TiwazCreateWindow(const uint16_t & width, cons
 	cs.cx = static_cast<int>(width);
 	cs.cy = static_cast<int>(height);
 	cs.dwExStyle = NULL;
-	cs.hInstance = Platform::h_instance;
+	cs.hInstance = Platform::hInstance;
 	cs.hMenu = NULL;
 	cs.hwndParent = NULL;
 	cs.lpCreateParams = NULL;
@@ -193,7 +193,7 @@ void Tiwaz::Window::RenderWindow::TiwazDestroyWindow()
 	ReleaseDC(h_wnd, h_device_context);
 	DestroyWindow(h_wnd);
 
-	UnregisterClass("TIWAZ", Platform::h_instance);
+	UnregisterClass("TIWAZ", Platform::hInstance);
 }
 
 void Tiwaz::Window::RenderWindow::TiwazShowWindow()

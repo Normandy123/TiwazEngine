@@ -1,6 +1,6 @@
 #include <engine.h>
 
-#define CONSOLEMODE 1
+#define CONSOLEMODE 0
 
 #if CONSOLEMODE
 int main(int argc, char* argv[])
@@ -15,12 +15,14 @@ int main(int argc, char* argv[])
 
 #if !CONSOLEMODE
 
-#ifdef _WIN64
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+#include <platform.h>
 
+#ifdef _WIN64
+ 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
+	Tiwaz::InitPlatform(hInstance, pCmdLine, nCmdShow);
+
 	Tiwaz::RunEngine(false, false);
 
 	const int result = Tiwaz::ExitEngine();

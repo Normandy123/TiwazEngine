@@ -2,19 +2,12 @@
 
 const int Tiwaz::Engine::Run()
 {
-	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
-
 	Init();
 
 	while (!Global::ENGINE_SHOULD_EXIT)
 	{
-		deltatime_timer.Start();
-
 		Update();
 		Render();
-
-		Global::DELTA_TIME = deltatime_timer.DeltaTime();
-
 		//std::cout << Global::DELTA_TIME << std::endl;
 	}
 
@@ -25,7 +18,7 @@ const int Tiwaz::Engine::Run()
 
 void Tiwaz::Engine::Init()
 {
-	Global::ENGINE_SHOULD_EXIT = false;
+	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
 
 	Global::LOGS_BUFFER = new LogSystem::LogsBuffer;
 	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
@@ -89,6 +82,10 @@ void Tiwaz::Engine::Init()
 
 void Tiwaz::Engine::Update()
 {
+	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
+
+	deltatime_timer.Start();
+
 	entupdate.delta_time = Global::DELTA_TIME;
 	comupdate.delta_time = Global::DELTA_TIME;
 
@@ -101,12 +98,18 @@ void Tiwaz::Engine::Update()
 
 void Tiwaz::Engine::Render()
 {
+	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
+
 	Global::GRAPHIC_MANAGER->Render();
 	Global::RENDER_WINDOW->TiwazSwapBuffers();
+
+	Global::DELTA_TIME = deltatime_timer.DeltaTime();
 }
 
 void Tiwaz::Engine::Exit()
 {
+	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
+
 	Global::RENDER_WINDOW->TiwazCloseWindow();
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entexit);
@@ -151,6 +154,7 @@ const int Tiwaz::RunEngine(bool debug, bool editor)
 		return -1;
 	}
 
+	Global::ENGINE_SHOULD_EXIT = false;
 	Global::ENGINE_IS_RUNNING = true;
 
 	Global::ENGINE = new Engine;
