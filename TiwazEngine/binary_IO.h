@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <iostream>
 #include <type_traits>
 
 #include "file_formats.h"
@@ -170,7 +169,7 @@ namespace Tiwaz::BinaryIO
 		float_buffer.clear();
 	}
 
-	static void WriteMesh(std::ofstream & stream, BinaryFileFormats::MeshData* mesh_input)
+	static void WriteMesh(std::ofstream & stream, FileFormats::MeshData* mesh_input)
 	{
 		WriteValueToStream(stream, mesh_input->mesh_name);
 
@@ -180,7 +179,7 @@ namespace Tiwaz::BinaryIO
 		WriteVectorToStream(stream, mesh_input->indices);
 	}
 
-	static void ReadMesh(std::ifstream & stream, BinaryFileFormats::MeshData* mesh_output)
+	static void ReadMesh(std::ifstream & stream, FileFormats::MeshData* mesh_output)
 	{
 		ReadValueFromStream(stream, mesh_output->mesh_name);
 

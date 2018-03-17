@@ -51,5 +51,5 @@ namespace Tiwaz::Graphic
 
 namespace Tiwaz::Global
 {
-	Graphic::RenderScene* RENDERSCENE;
+	Graphic::RenderScene* RENDER_SCENE;
 }

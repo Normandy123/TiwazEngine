@@ -25,7 +25,7 @@ namespace Tiwaz::Window
 
 namespace Tiwaz::Global
 {
-	extern Window::IRenderWindow* RENDERWINDOW;
+	extern Window::IRenderWindow* RENDER_WINDOW;
 }
 
 #include "platform.h"

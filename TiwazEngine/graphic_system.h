@@ -33,5 +33,5 @@ namespace Tiwaz::Graphic
 
 namespace Tiwaz::Global
 {
-	extern Graphic::GraphicManager* GRAPHICMANAGER;
+	extern Graphic::GraphicManager* GRAPHIC_MANAGER;
 }

@@ -14,11 +14,11 @@ namespace Tiwaz
 		if (std::is_base_of<EngineObject, T>::value)
 		{
 			auto obj = new T(std::forward<TArgs>(args)...);
-			Global::OBJECTMANAGER->AddObject(obj);
+			Global::OBJECT_MANAGER->AddObject(obj);
 
 			if (std::is_base_of<Component::GraphicComponent, T>::value)
 			{
-				Global::RENDERSCENE->AddComponent(obj);
+				Global::RENDER_SCENE->AddComponent(obj);
 			}
 
 			return obj;
@@ -33,10 +33,10 @@ namespace Tiwaz
 		{
 			if (std::is_base_of<Component::GraphicComponent, T>::value)
 			{
-				Global::RENDERSCENE->RemoveComponent(object);
+				Global::RENDER_SCENE->RemoveComponent(object);
 			}
 
-			Global::OBJECTMANAGER->RemoveObject(object->object_ID());
+			Global::OBJECT_MANAGER->RemoveObject(object->object_ID());
 
 			delete object;
 			object = nullptr;

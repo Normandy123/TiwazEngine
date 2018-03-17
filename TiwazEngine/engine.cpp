@@ -29,27 +29,20 @@ void Tiwaz::Engine::Init()
 {
 	Global::ENGINE_SHOULD_EXIT = false;
 
-	Global::LOGBUFFER = new LogSystem::LogsBuffer;
-	Global::OBJECTMANAGER = new ObjectSystem::ObjectManager;
-	Global::ENGINEEVENTHANDLER = new EventSystem::EventHandler;
-	Global::RENDERSCENE = new Graphic::RenderScene;
-	Global::GRAPHICMANAGER = new Graphic::GraphicManager;
+	Global::LOGS_BUFFER = new LogSystem::LogsBuffer;
+	Global::OBJECT_MANAGER = new ObjectSystem::ObjectManager;
+	Global::ENGINE_EVENT_HANDLER = new EventSystem::EventHandler;
+	Global::RENDER_SCENE = new Graphic::RenderScene;
+	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
 
-	Global::RENDERWINDOW = new Window::RenderWindow;
-	Global::RENDERWINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
-
-	ResourcesIO::ResourcesManager<ResourcesFileFormats::ModelData> rsma(&ResourcesIO::LoadModel);
-	rsma.AddResource("data/models/cones2.dae");
-
-	ResourcesFileFormats::ModelData* test1 = rsma.AccessResource(1);
+	Global::RENDER_WINDOW = new Window::RenderWindow;
+	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
 	BinaryIO::BinaryIOManager bm;
 
-	bm.Write("test.bin", &BinaryIO::WriteMesh, test1->meshes[0]);
-
-	BinaryFileFormats::MeshData* meshdata_read = new BinaryFileFormats::MeshData();
+	FileFormats::MeshData* meshdata_read = new FileFormats::MeshData();
 	bm.Read("test.bin", &BinaryIO::ReadMesh, meshdata_read);
 
 	std::cout << meshdata_read->mesh_name << std::endl;
@@ -91,11 +84,11 @@ void Tiwaz::Engine::Init()
 		Component::MeshComponent* temp_obj = CreateObject<Component::MeshComponent>();
 	}
 
-	Global::ENGINEEVENTHANDLER->HandleEvent(&entinit);
-	Global::ENGINEEVENTHANDLER->HandleEvent(&compinit);
+	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
+	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);
 
-	Global::GRAPHICMANAGER->Init();
-	Global::RENDERWINDOW->TiwazShowWindow();
+	Global::GRAPHIC_MANAGER->Init();
+	Global::RENDER_WINDOW->TiwazShowWindow();
 }
 
 void Tiwaz::Engine::Update()
@@ -103,25 +96,25 @@ void Tiwaz::Engine::Update()
 	entupdate.delta_time = Global::DELTA_TIME;
 	comupdate.delta_time = Global::DELTA_TIME;
 
-	Global::ENGINEEVENTHANDLER->HandleEvent(&entupdate);
-	Global::ENGINEEVENTHANDLER->HandleEvent(&comupdate);
+	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entupdate);
+	Global::ENGINE_EVENT_HANDLER->HandleEvent(&comupdate);
 
-	Global::RENDERWINDOW->TiwazUpdate();
-	Global::GRAPHICMANAGER->Update();
+	Global::RENDER_WINDOW->TiwazUpdate();
+	Global::GRAPHIC_MANAGER->Update();
 }
 
 void Tiwaz::Engine::Render()
 {
-	Global::GRAPHICMANAGER->Render();
-	Global::RENDERWINDOW->TiwazSwapBuffers();
+	Global::GRAPHIC_MANAGER->Render();
+	Global::RENDER_WINDOW->TiwazSwapBuffers();
 }
 
 void Tiwaz::Engine::Exit()
 {
-	Global::RENDERWINDOW->TiwazCloseWindow();
+	Global::RENDER_WINDOW->TiwazCloseWindow();
 
-	Global::ENGINEEVENTHANDLER->HandleEvent(&entexit);
-	Global::ENGINEEVENTHANDLER->HandleEvent(&comexit);
+	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entexit);
+	Global::ENGINE_EVENT_HANDLER->HandleEvent(&comexit);
 
 	//delete Global::LUA_INTERFACE;
 	//Global::LUA_INTERFACE = nullptr;
@@ -129,27 +122,27 @@ void Tiwaz::Engine::Exit()
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
 
-	Global::GRAPHICMANAGER->Exit();
+	Global::GRAPHIC_MANAGER->Exit();
 
-	Global::RENDERWINDOW->TiwazDestroyWindow();
+	Global::RENDER_WINDOW->TiwazDestroyWindow();
 
-	delete Global::OBJECTMANAGER;
-	Global::OBJECTMANAGER = nullptr;
+	delete Global::OBJECT_MANAGER;
+	Global::OBJECT_MANAGER = nullptr;
 
-	delete Global::RENDERSCENE;
-	Global::RENDERSCENE = nullptr;
+	delete Global::RENDER_SCENE;
+	Global::RENDER_SCENE = nullptr;
 
-	delete Global::GRAPHICMANAGER;
-	Global::GRAPHICMANAGER = nullptr;
+	delete Global::GRAPHIC_MANAGER;
+	Global::GRAPHIC_MANAGER = nullptr;
 
-	delete Global::RENDERWINDOW;
-	Global::RENDERWINDOW = nullptr;
+	delete Global::RENDER_WINDOW;
+	Global::RENDER_WINDOW = nullptr;
 
-	delete Global::ENGINEEVENTHANDLER;
-	Global::ENGINEEVENTHANDLER = nullptr;
+	delete Global::ENGINE_EVENT_HANDLER;
+	Global::ENGINE_EVENT_HANDLER = nullptr;
 
-	delete Global::LOGBUFFER;
-	Global::LOGBUFFER = nullptr;
+	delete Global::LOGS_BUFFER;
+	Global::LOGS_BUFFER = nullptr;
 }
 
 Tiwaz::Engine* Tiwaz::Global::ENGINE;

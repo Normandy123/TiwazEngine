@@ -72,5 +72,5 @@ namespace Tiwaz::ObjectSystem
 
 namespace Tiwaz::Global
 {
-	extern ObjectSystem::ObjectManager* OBJECTMANAGER;
+	extern ObjectSystem::ObjectManager* OBJECT_MANAGER;
 }

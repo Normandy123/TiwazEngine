@@ -55,6 +55,12 @@
     <Filter Include="Source Files\IO">
       <UniqueIdentifier>{66aa463f-e883-49e6-b7d9-37d7d72bba23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{44b1b072-c97c-4824-bbe5-08279c7edd94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{8bc6aecc-4add-4918-afa4-3510a0dcb23a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="component.cpp">
@@ -119,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="platform.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="model_importer.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="platform.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="model_importer.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

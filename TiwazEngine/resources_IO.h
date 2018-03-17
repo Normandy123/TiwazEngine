@@ -3,23 +3,10 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <iostream>
-
-#include <GLM/glm.hpp>
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/mesh.h>
-#include <assimp/postprocess.h>
+#include <memory>
 
 #include "counter.h"
 #include "file_formats.h"
-#include "binary_IO.h"
-
-namespace Tiwaz::ResourcesIO
-{
-	extern ResourcesFileFormats::ModelData* LoadModel(const std::string & file_path);
-}
 
 namespace Tiwaz::ResourcesIO
 {

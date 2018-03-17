@@ -7,7 +7,7 @@
 
 #include <GLM/glm.hpp>
 
-namespace Tiwaz::BinaryFileFormats
+namespace Tiwaz::FileFormats
 {
 	struct MeshData
 	{
@@ -28,10 +28,7 @@ namespace Tiwaz::BinaryFileFormats
 		std::vector<glm::vec2> uvs;
 		std::vector<unsigned int> indices;
 	};
-}
 
-namespace Tiwaz::ResourcesFileFormats
-{
 	struct ModelData
 	{
 		~ModelData()
@@ -45,6 +42,6 @@ namespace Tiwaz::ResourcesFileFormats
 		std::string file_path = "UNDEFINED";
 		std::string model_name = "UNDEFINED";
 
-		std::vector<BinaryFileFormats::MeshData*> meshes;
+		std::vector<FileFormats::MeshData*> meshes;
 	};
 }

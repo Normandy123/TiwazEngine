@@ -153,6 +153,7 @@
     <ClCompile Include="graphic_component.cpp" />
     <ClCompile Include="graphic_system.cpp" />
     <ClCompile Include="log_system.cpp" />
+    <ClCompile Include="model_importer.cpp" />
     <ClCompile Include="object_system.cpp" />
     <ClCompile Include="platform.cpp" />
     <ClCompile Include="render_scene.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="graphic_component.h" />
     <ClInclude Include="graphic_system.h" />
     <ClInclude Include="log_system.h" />
+    <ClInclude Include="model_importer.h" />
     <ClInclude Include="object_system.h" />
     <ClInclude Include="platform.h" />
     <ClInclude Include="render_scene.h" />

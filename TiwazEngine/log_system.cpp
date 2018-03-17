@@ -10,7 +10,7 @@ const std::string Tiwaz::LogSystem::str_log_type[Tiwaz::LogSystem::TIWAZ_SIZE_LO
 	"FATALERROR"
 };
 
-Tiwaz::LogSystem::LogsBuffer* Tiwaz::Global::LOGBUFFER;
+Tiwaz::LogSystem::LogsBuffer* Tiwaz::Global::LOGS_BUFFER;
 
 void Tiwaz::Log(const LogSystem::LogType & type, const std::string & location, const std::string & text)
 {
@@ -39,20 +39,20 @@ void Tiwaz::Log(const LogSystem::LogType & type, const std::string & location, c
 		print_text += text;
 		temp_log = new LogSystem::Log(type, "", text, print_text);
 		temp_log->PrintLog();
-		Global::LOGBUFFER->AddLog(std::move(temp_log));
+		Global::LOGS_BUFFER->AddLog(std::move(temp_log));
 		break;
 	case LogSystem::TIWAZ_FATALERROR:
 		print_text += LogSystem::str_log_type[type] + ": " + location + ": " + text;
 		temp_log = new LogSystem::Log(type, location, text, print_text);
 		temp_log->PrintLog();
-		Global::LOGBUFFER->AddLog(std::move(temp_log));
+		Global::LOGS_BUFFER->AddLog(std::move(temp_log));
 		Global::ENGINE_SHOULD_EXIT = true;
 		break;
 	default:
 		print_text += LogSystem::str_log_type[type] + ": " + location + ": " + text;
 		temp_log = new LogSystem::Log(type, location, text, print_text);
 		temp_log->PrintLog();
-		Global::LOGBUFFER->AddLog(std::move(temp_log));
+		Global::LOGS_BUFFER->AddLog(std::move(temp_log));
 		break;
 	}
 

@@ -136,7 +136,7 @@ namespace Tiwaz::LogSystem
 
 namespace Tiwaz::Global
 {
-	extern LogSystem::LogsBuffer* LOGBUFFER;
+	extern LogSystem::LogsBuffer* LOGS_BUFFER;
 }
 
 namespace Tiwaz

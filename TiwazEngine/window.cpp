@@ -4,7 +4,7 @@
 #include "log_system.h"
 #include "event_system.h"
 
-Tiwaz::Window::IRenderWindow* Tiwaz::Global::RENDERWINDOW;
+Tiwaz::Window::IRenderWindow* Tiwaz::Global::RENDER_WINDOW;
 
 #ifdef _WIN64
 Tiwaz::Window::RenderWindow* Tiwaz::Window::p_callback_window;
@@ -236,7 +236,7 @@ LRESULT CALLBACK Tiwaz::Window::RenderWindow::MessageHandler(HWND hWnd, UINT msg
 			EventSystem::ScreenShowEvent event;
 			event.width = static_cast<uint16_t>(LOWORD(lParam));
 			event.height = static_cast<uint16_t>(HIWORD(lParam));
-			Global::ENGINEEVENTHANDLER->HandleEvent(&event);
+			Global::ENGINE_EVENT_HANDLER->HandleEvent(&event);
 		}
 		break;
 	case WM_SIZE:
@@ -244,7 +244,7 @@ LRESULT CALLBACK Tiwaz::Window::RenderWindow::MessageHandler(HWND hWnd, UINT msg
 			EventSystem::ScreenResizeEvent event;
 			event.width = static_cast<uint16_t>(LOWORD(lParam));
 			event.height = static_cast<uint16_t>(HIWORD(lParam));
-			Global::ENGINEEVENTHANDLER->HandleEvent(&event);
+			Global::ENGINE_EVENT_HANDLER->HandleEvent(&event);
 		}		
 		break;
 	case WM_PAINT:

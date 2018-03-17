@@ -37,7 +37,7 @@ namespace Tiwaz::Component
 			m_mesh = nullptr;
 		}
 
-		void SetMesh(BinaryFileFormats::MeshData* mesh)
+		void SetMesh(FileFormats::MeshData* mesh)
 		{
 			m_mesh = mesh;
 		}
@@ -49,6 +49,6 @@ namespace Tiwaz::Component
 		const std::vector<unsigned int> Indices() { return m_mesh->indices; }
 
 	private:
-		BinaryFileFormats::MeshData* m_mesh;
+		FileFormats::MeshData* m_mesh;
 	};
 }
