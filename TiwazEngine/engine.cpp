@@ -28,7 +28,7 @@ void Tiwaz::Engine::Init()
 	Global::ENGINE_SHOULD_EXIT = false;
 
 	Global::LOGS_BUFFER = new LogSystem::LogsBuffer;
-	Global::OBJECT_MANAGER = new ObjectSystem::ObjectManager;
+	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
 	Global::ENGINE_EVENT_HANDLER = new EventSystem::EventHandler;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
@@ -122,8 +122,8 @@ void Tiwaz::Engine::Exit()
 
 	Global::RENDER_WINDOW->TiwazDestroyWindow();
 
-	delete Global::OBJECT_MANAGER;
-	Global::OBJECT_MANAGER = nullptr;
+	delete Global::OBJECTS_MANAGER;
+	Global::OBJECTS_MANAGER = nullptr;
 
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;

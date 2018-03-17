@@ -13,14 +13,14 @@
 
 namespace Tiwaz::ObjectSystem
 {
-	class ObjectManager;
+	class ObjectsManager;
 }
 
 namespace Tiwaz
 {
 	class EngineObject
 	{
-	friend ObjectSystem::ObjectManager;
+	friend ObjectSystem::ObjectsManager;
 
 	public:
 		EngineObject();
@@ -42,18 +42,18 @@ namespace Tiwaz
 
 namespace Tiwaz::ObjectSystem
 {
-	class ObjectManager
+	class ObjectsManager
 	{
 	public:
-		ObjectManager();
+		ObjectsManager();
 
-		ObjectManager(const ObjectManager & other)	= delete;
-		ObjectManager(ObjectManager && other)		= delete;
+		ObjectsManager(const ObjectsManager & other)	= delete;
+		ObjectsManager(ObjectsManager && other)		= delete;
 
-		ObjectManager& operator=(const ObjectManager & other)	= delete;
-		ObjectManager& operator=(ObjectManager && other)		= delete;
+		ObjectsManager& operator=(const ObjectsManager & other)	= delete;
+		ObjectsManager& operator=(ObjectsManager && other)		= delete;
 
-		~ObjectManager();
+		~ObjectsManager();
 
 		const uint64_t AddObject(EngineObject* object);
 
@@ -72,5 +72,5 @@ namespace Tiwaz::ObjectSystem
 
 namespace Tiwaz::Global
 {
-	extern ObjectSystem::ObjectManager* OBJECT_MANAGER;
+	extern ObjectSystem::ObjectsManager* OBJECTS_MANAGER;
 }

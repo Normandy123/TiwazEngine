@@ -19,12 +19,12 @@ namespace Tiwaz
 
 namespace Tiwaz::ObjectSystem
 {
-	ObjectManager::ObjectManager()
+	ObjectsManager::ObjectsManager()
 	{
 
 	}
 
-	ObjectManager::~ObjectManager()
+	ObjectsManager::~ObjectsManager()
 	{
 		for (std::pair<uint64_t, EngineObject*> object_pair : m_objects)
 		{
@@ -37,7 +37,7 @@ namespace Tiwaz::ObjectSystem
 		m_ID_counter.~IDCounter();
 	}
 
-	const uint64_t ObjectManager::AddObject(EngineObject* object)
+	const uint64_t ObjectsManager::AddObject(EngineObject* object)
 	{
 		if (object->object_ID() == 0 && object != nullptr)
 		{
@@ -56,7 +56,7 @@ namespace Tiwaz::ObjectSystem
 		return 0;
 	}
 
-	void ObjectManager::RemoveObject(const uint64_t & ID)
+	void ObjectsManager::RemoveObject(const uint64_t & ID)
 	{
 		if (m_objects.find(ID) != m_objects.cend())
 		{
@@ -72,7 +72,7 @@ namespace Tiwaz::ObjectSystem
 		}
 	}
 
-	EngineObject* ObjectManager::AccessObjectByID(const uint64_t & ID)
+	EngineObject* ObjectsManager::AccessObjectByID(const uint64_t & ID)
 	{
 		if (m_objects.find(ID) != m_objects.cend())
 		{
@@ -89,5 +89,5 @@ namespace Tiwaz::ObjectSystem
 
 namespace Tiwaz::Global
 {
-	ObjectSystem::ObjectManager* OBJECT_MANAGER;
+	ObjectSystem::ObjectsManager* OBJECTS_MANAGER;
 }
