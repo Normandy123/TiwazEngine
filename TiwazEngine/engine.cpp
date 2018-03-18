@@ -8,6 +8,7 @@ const int Tiwaz::Engine::Run()
 	{
 		Update();
 		Render();
+
 		//std::cout << Global::DELTA_TIME << std::endl;
 	}
 

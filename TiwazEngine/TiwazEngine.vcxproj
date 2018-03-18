@@ -99,6 +99,8 @@
       <AdditionalDependencies>assimp-vc140-mt.lib;lua53.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
       </EntryPointSymbol>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <MapExports>false</MapExports>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

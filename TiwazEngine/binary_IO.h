@@ -171,7 +171,7 @@ namespace Tiwaz::BinaryIO
 		float_buffer.clear();
 	}
 
-	static void WriteMesh(const std::string & file_path, std::ofstream & stream, FileFormats::MeshData* mesh_input)
+	static void WriteMesh(const std::string & file_path, FileFormats::MeshData* mesh_input)
 	{
 		if (file_path != "" && file_path != "UNDEFINED")
 		{

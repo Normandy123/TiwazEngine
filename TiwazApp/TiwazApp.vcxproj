@@ -114,6 +114,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>TiwazEngine.lib;assimp-vc140-mt.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
