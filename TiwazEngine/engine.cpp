@@ -22,10 +22,10 @@ void Tiwaz::Engine::Init()
 	std::unique_lock<std::mutex> engine_loop_lock(run_function_mutex);
 
 	Global::LOGS_BUFFER = new LogSystem::LogsBuffer;
-	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
 	Global::ENGINE_EVENT_HANDLER = new EventSystem::EventHandler;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
+	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
 

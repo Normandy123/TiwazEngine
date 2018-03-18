@@ -11,9 +11,9 @@ namespace Tiwaz::Graphic
 
 	RenderScene::~RenderScene()
 	{
-		for (Component::GraphicComponent* comp : m_components)
+		for (Component::GraphicComponent* component : m_components)
 		{
-			comp = nullptr;
+			component = nullptr;
 		}
 
 		m_components.clear();
