@@ -7,8 +7,8 @@
 #include <GLM/glm.hpp>
 
 #include "component.h"
-#include "log_system.h"
-#include "resources_IO.h"
+#include "file_formats.h"
+#include "render_scene.h"
 
 namespace Tiwaz::Component
 {
@@ -17,12 +17,12 @@ namespace Tiwaz::Component
 	public:
 		GraphicComponent()
 		{
-
+			Global::RENDER_SCENE->AddComponent(this);
 		}
 
-		~GraphicComponent()
+		virtual ~GraphicComponent()
 		{
-			
+			Global::RENDER_SCENE->RemoveComponent(this);
 		}
 	};
 

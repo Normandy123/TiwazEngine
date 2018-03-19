@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+
 #include <vector>
 #include <algorithm>
 
@@ -19,9 +20,9 @@ namespace Tiwaz::Graphic
 
 		void AddComponent(Component::GraphicComponent* component);
 
-		void RemoveComponent(const Component::GraphicComponent* component);
+		void RemoveComponent(Component::GraphicComponent const * component);
 
-		const std::vector<Component::GraphicComponent*>* Components() { return std::addressof(m_components); }
+		std::vector<Component::GraphicComponent*> const * Components() { return std::addressof(m_components); }
 
 	private:
 		std::vector<Component::GraphicComponent*> m_components;

@@ -32,7 +32,7 @@ namespace Tiwaz::Graphic
 		}
 	}
 
-	void RenderScene::RemoveComponent(const Component::GraphicComponent* component)
+	void RenderScene::RemoveComponent(Component::GraphicComponent const * component)
 	{
 		if (component != nullptr)
 		{

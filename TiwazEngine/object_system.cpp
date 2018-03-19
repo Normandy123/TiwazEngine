@@ -85,6 +85,28 @@ namespace Tiwaz::ObjectSystem
 
 		return nullptr;
 	}
+
+	const bool ObjectsManager::HasObject(const uint64_t & ID)
+	{
+		if (m_objects.find(ID) != m_objects.cend())
+		{
+			return true;
+		}
+
+		return false;
+	}
+	const bool ObjectsManager::HasObject(EngineObject const * object)
+	{
+		for (std::pair<uint64_t, EngineObject*> object_pair : m_objects)
+		{
+			if (object_pair.second == object)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
 
 namespace Tiwaz::Global

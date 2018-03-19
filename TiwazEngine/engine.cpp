@@ -68,12 +68,13 @@ void Tiwaz::Engine::Init()
 		std::cout << temp_vec4[j] << std::endl;
 	}
 
-	delete meshdata_read;
-
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::MeshComponent* temp_obj = CreateObject<Component::MeshComponent>();
+		temp_obj->SetMesh(meshdata_read);
 	}
+
+	delete meshdata_read;
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);
@@ -124,7 +125,6 @@ void Tiwaz::Engine::Exit()
 	//Global::FACTORY = nullptr;
 
 	Global::GRAPHIC_MANAGER->Exit();
-
 	Global::RENDER_WINDOW->TiwazDestroyWindow();
 
 	delete Global::OBJECTS_MANAGER;
