@@ -24,6 +24,8 @@ namespace Tiwaz::Graphic
 
 		std::vector<Component::GraphicComponent*> const * Components() { return std::addressof(m_components); }
 
+		const bool HasComponents() { return !m_components.empty(); };
+
 	private:
 		std::vector<Component::GraphicComponent*> m_components;
 	};

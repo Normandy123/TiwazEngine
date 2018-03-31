@@ -25,9 +25,10 @@ void Tiwaz::Engine::Init()
 	Global::ENGINE_EVENT_HANDLER = new EventSystem::EventHandler;
 	Global::RENDER_SCENE = new Graphic::RenderScene;
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
+	Global::MAIN_RENDERER = new Graphic::MainRenderer;
 	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
-	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 	//Global::FACTORY = new Factory::Factory;
+	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 
 	Global::RENDER_WINDOW = new Window::RenderWindow;
 	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
@@ -75,6 +76,7 @@ void Tiwaz::Engine::Init()
 	}
 
 	delete meshdata_read;
+	meshdata_read = nullptr;
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);
@@ -118,17 +120,20 @@ void Tiwaz::Engine::Exit()
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entexit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&comexit);
 
+	Global::GRAPHIC_MANAGER->Exit();
+	Global::RENDER_WINDOW->TiwazDestroyWindow();
+
 	//delete Global::LUA_INTERFACE;
 	//Global::LUA_INTERFACE = nullptr;
 
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
 
-	Global::GRAPHIC_MANAGER->Exit();
-	Global::RENDER_WINDOW->TiwazDestroyWindow();
-
 	delete Global::OBJECTS_MANAGER;
 	Global::OBJECTS_MANAGER = nullptr;
+
+	delete Global::MAIN_RENDERER;
+	Global::MAIN_RENDERER = nullptr;
 
 	delete Global::RENDER_SCENE;
 	Global::RENDER_SCENE = nullptr;

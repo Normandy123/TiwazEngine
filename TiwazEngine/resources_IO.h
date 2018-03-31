@@ -120,8 +120,11 @@ namespace Tiwaz::ResourcesIO
 		AccessFunctionPointer m_read_function = nullptr;
 
 		std::map<uint64_t, MapValue*> m_resources_map;
-		Counter::IDCounter m_ID_counter;
-
-		
+		Counter::IDCounter m_ID_counter;	
 	};
+}
+
+namespace Tiwaz::Global
+{
+
 }

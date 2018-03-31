@@ -132,6 +132,9 @@
     <ClCompile Include="multithreading.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="main_renderer.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h">
@@ -204,6 +207,12 @@
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="multithreading.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="main_renderer.h">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>

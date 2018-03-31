@@ -17,6 +17,7 @@
 
 #include "graphic_system.h"
 #include "render_scene.h"
+#include "main_renderer.h"
 
 #include "binary_IO.h"
 

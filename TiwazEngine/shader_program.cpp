@@ -18,6 +18,7 @@ namespace Tiwaz::Graphic::Shader
 	void Shader::CompileShader(const std::string & file_path)
 	{
 		std::ifstream file("data/shaders/" + file_path);
+
 		if (file.fail())
 		{
 			Log(LogSystem::TIWAZ_ERROR, "SHADER", "Failed to find shader file, with following path:\n" + file_path);
