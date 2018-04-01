@@ -71,8 +71,8 @@ void Tiwaz::Engine::Init()
 
 	for (size_t i = 0; i < 1; ++i)
 	{
-		Component::MeshComponent* temp_obj = CreateObject<Component::MeshComponent>();
-		temp_obj->SetMesh(meshdata_read);
+		Component::MeshComponent* temp_obj_1 = CreateObject<Component::MeshComponent>();
+		temp_obj_1->SetMesh(meshdata_read);
 	}
 
 	delete meshdata_read;

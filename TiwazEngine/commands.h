@@ -21,21 +21,6 @@ namespace Tiwaz
 		return nullptr;
 	}
 
-	template<typename T> static const bool RemoveObject(T* object)
-	{
-		if (std::is_base_of<EngineObject, T>::value && object != nullptr)
-		{
-			Global::OBJECTS_MANAGER->RemoveObject(object->object_ID());
-
-			delete object;
-			object = nullptr;
-
-			return true;
-		}
-
-		return false;
-	}
-
 	template<typename T> static const bool CanDelete(T const * object)
 	{
 		if (std::is_base_of<EngineObject, T>::value && object != nullptr)
@@ -43,7 +28,22 @@ namespace Tiwaz
 			if (Global::OBJECTS_MANAGER->HasObject(object))
 			{
 				return true;
-			}		
+			}
+		}
+
+		return false;
+	}
+
+	template<typename T> static const bool RemoveObject(T* object)
+	{
+		if (CanDelete(object))
+		{
+			Global::OBJECTS_MANAGER->RemoveObject(object->object_ID());
+
+			delete object;
+			object = nullptr;
+
+			return true;
 		}
 
 		return false;

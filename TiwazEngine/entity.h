@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #include "object_system.h"
 #include "event_system.h"
 

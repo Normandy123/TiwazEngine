@@ -31,29 +31,6 @@ namespace Tiwaz::Component
 		virtual void OnExit(const EventSystem::ComponentExitEvent* event) {}
 	};
 
-	template<typename T> class Component
-	{
-	public:
-		template<typename...TArgs> Component(TArgs...args)
-		{
-			m_component = CreateObject<T>(args...);
-		}
-
-		~Component()
-		{
-			RemoveObject(m_component);
-			m_component = nullptr;
-		}
-
-		T* ptr()
-		{
-			return m_component;
-		}
-
-	private:
-		T* m_component;
-	};
-
 	class TransformationComponent : public ComponentBase
 	{
 	public:
