@@ -12,7 +12,7 @@ const std::string Tiwaz::LogSystem::str_log_type[Tiwaz::LogSystem::TIWAZ_SIZE_LO
 
 Tiwaz::LogSystem::LogsBuffer* Tiwaz::Global::LOGS_BUFFER;
 
-void Tiwaz::Log(const LogSystem::LogType & type, const std::string & location, const std::string & text)
+void Tiwaz::Log(const LogSystem::LOGTYPE & type, const std::string & location, const std::string & text)
 {
 	LogSystem::Log* temp_log;
 	std::string print_text;

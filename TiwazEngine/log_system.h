@@ -12,7 +12,7 @@
 
 namespace Tiwaz::LogSystem
 {
-	enum LogType : uint8_t
+	enum LOGTYPE : uint8_t
 	{
 		TIWAZ_UNDEFINED,
 		TIWAZ_TEXT,
@@ -32,7 +32,7 @@ namespace Tiwaz::LogSystem
 	{
 		friend LogsBuffer;
 	public:
-		Log(const LogType & type, const std::string & location, const std::string & text, const std::string & print_text) :
+		Log(const LOGTYPE & type, const std::string & location, const std::string & text, const std::string & print_text) :
 			m_type(type), m_location(location), m_text(text), m_print_text(print_text)
 		{
 			m_str_type = str_log_type[m_type];
@@ -55,7 +55,7 @@ namespace Tiwaz::LogSystem
 		}
 
 	private:
-		LogType m_type;
+		LOGTYPE m_type;
 		std::string m_str_type;
 
 		std::string m_location;
@@ -141,5 +141,5 @@ namespace Tiwaz::Global
 
 namespace Tiwaz
 {
-	extern void Log(const LogSystem::LogType & type, const std::string & location, const std::string & text);
+	extern void Log(const LogSystem::LOGTYPE & type, const std::string & location, const std::string & text);
 }
