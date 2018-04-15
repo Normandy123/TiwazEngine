@@ -20,7 +20,7 @@ namespace Tiwaz::Graphic
 
 		if (glewInit() != GLEW_OK)
 		{
-			Log(LogSystem::TIWAZ_FATALERROR, "WINDOW", "Could not intialize GLEW!");
+			Log(LogSystem::TIWAZ_FATALERROR, "GRPAHIC", "Could not intialize GLEW!");
 		}
 
 		glClearColor(0.2f, 0.5f, 0.7f, 1.0f);

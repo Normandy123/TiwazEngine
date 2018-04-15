@@ -41,6 +41,7 @@ void Tiwaz::Engine::Init()
 
 	std::cout << std::endl;
 
+	/*
 	std::vector<glm::vec3> temp_vec1 = meshdata_read->positions;
 
 	for (size_t j = 0; j < temp_vec1.size(); ++j)
@@ -68,6 +69,7 @@ void Tiwaz::Engine::Init()
 	{
 		std::cout << temp_vec4[j] << std::endl;
 	}
+	*/
 
 	for (size_t i = 0; i < 1; ++i)
 	{
