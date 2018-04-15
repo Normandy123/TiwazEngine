@@ -2,34 +2,30 @@
 
 #include "file_formats.h"
 #include "render_scene.h"
+#include "g_buffer.h"
+#include "event_system.h"
 
 namespace Tiwaz::Graphic
 {
 	class MainRenderer
 	{
 	public:
-		MainRenderer()
-		{
+		MainRenderer();
+		~MainRenderer();
 
-		}
+		void Init();
+		void Update();
+		void Render();
+		void Exit();
 
-		~MainRenderer()
-		{
+		void OnScreenShow(const EventSystem::ScreenShowEvent* event);
+		void OnScreenResize(const EventSystem::ScreenResizeEvent* event);
 
-		}
+	private:
+		void GeometryPass();
+		void LightPass();
 
-		void Update()
-		{
-			
-		}
-
-		void Render()
-		{
-			if (Global::RENDER_SCENE->HasComponents())
-			{
-
-			}
-		}
+		GBuffer m_gbuffer;
 	};
 }
 

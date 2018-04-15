@@ -2,14 +2,17 @@
 
 #include <cstdint>
 
-#include <array>
-
 #include <GLEW/glew.h>
 
 #include "log_system.h"
 
 namespace Tiwaz::Graphic
 {
+	template<typename T> GLsizei ARRAY_SIZE_IN_ELEMENTS(T input_array[])
+	{
+		return static_cast<GLsizei>(sizeof(input_array) / sizeof(T));
+	}
+
 	class GBuffer
 	{
 	public:
@@ -22,18 +25,18 @@ namespace Tiwaz::Graphic
 			GBUFFER_NUM_TEXTURES
 		};
 
-		GBuffer();
 		~GBuffer();
 
-		bool Init(const uint16_t & screen_width, const uint16_t & screen_height);
+		void Init(const uint16_t & screen_width, const uint16_t & screen_height);
 
 		void BindForWriting();
 		void BindForReading();
+		void SetReadBuffer(GBUFFER_TEXTURE_TYPE texture_type);
 
 	private:
 		GLuint m_fbo;
 		GLuint m_depth_texture;
 
-		std::array<GLuint, GBUFFER_NUM_TEXTURES> m_textures;
+		GLuint m_textures[GBUFFER_NUM_TEXTURES];
 	};
 }

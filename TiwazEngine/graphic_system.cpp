@@ -1,5 +1,7 @@
 #include "graphic_system.h"
 
+#include "main_renderer.h"
+
 namespace Tiwaz::Graphic
 {
 	GraphicManager::GraphicManager()
@@ -24,11 +26,13 @@ namespace Tiwaz::Graphic
 		}
 
 		glClearColor(0.2f, 0.5f, 0.7f, 1.0f);
+
+		Global::MAIN_RENDERER->Init();
 	}
 
 	void GraphicManager::Update()
 	{
-
+		Global::MAIN_RENDERER->Update();
 	}
 
 	void GraphicManager::Render()
@@ -40,11 +44,13 @@ namespace Tiwaz::Graphic
 		glVertex3f(0.0, 0.5, 0.0);
 		glVertex3f(0.5, 0.0, 0.0);
 		glEnd();
+
+		Global::MAIN_RENDERER->Render();
 	}
 
 	void GraphicManager::Exit()
 	{
-
+		Global::MAIN_RENDERER->Exit();
 	}
 
 	void GraphicManager::OnScreenShow(const EventSystem::ScreenShowEvent* event)

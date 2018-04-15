@@ -24,6 +24,10 @@ namespace Tiwaz::Graphic
 		void OnScreenShow(const EventSystem::ScreenShowEvent* event);
 		void OnScreenResize(const EventSystem::ScreenResizeEvent* event);
 
+		const uint16_t ScreenWidth() { return m_width; }
+		const uint16_t ScreenHeight() { return m_height; }
+		const float ScreenRatio() { return m_ratio; }
+
 	private:
 		uint16_t m_width = 1024;
 		uint16_t m_height = 576;
