@@ -177,7 +177,7 @@ void Tiwaz::Window::RenderWindow::TiwazCreateWindow(const uint16_t & width, cons
 		wglMakeCurrent(h_device_context, opengl_rendering_context);
 	}
 
-	m_should_quit = false;
+	m_should_exit = false;
 }
 
 void Tiwaz::Window::RenderWindow::TiwazDestroyWindow()
@@ -250,7 +250,7 @@ LRESULT CALLBACK Tiwaz::Window::RenderWindow::MessageHandler(HWND hWnd, UINT msg
 	case WM_PAINT:
 		break;
 	case WM_CLOSE:
-		m_should_quit = true;
+		m_should_exit = true;
 		Global::ENGINE_SHOULD_EXIT = true;
 		break;
 	case WM_DESTROY:

@@ -51,10 +51,10 @@ namespace Tiwaz::Window
 	
 		LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
 	
-		const bool ShouldQuit() { return m_should_quit; };
+		const bool ShouldQuit() { return m_should_exit; };
 		const bool IsOpen() { return m_is_hidden; }
 	private:
-		bool m_should_quit = true;
+		bool m_should_exit = true;
 		bool m_is_hidden = true;
 	
 		HWND h_wnd;
