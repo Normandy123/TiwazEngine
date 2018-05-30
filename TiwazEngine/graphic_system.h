@@ -26,11 +26,16 @@ namespace Tiwaz::Graphic
 
 		const uint16_t ScreenWidth() { return m_width; }
 		const uint16_t ScreenHeight() { return m_height; }
+		const uint16_t HalfScreenWidth() { return m_half_width; }
+		const uint16_t HalfScreenHeight() { return m_half_height; }
+		
 		const float ScreenRatio() { return m_ratio; }
 
 	private:
 		uint16_t m_width = 1024;
 		uint16_t m_height = 576;
+		uint16_t m_half_width = 512;
+		uint16_t m_half_height = 288;
 		float m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	};
 }

@@ -121,4 +121,16 @@ namespace Tiwaz::Component
 
 		glm::mat4 m_transformation = glm::mat4(0.0f);
 	};
+
+	class CameraComponent : public ComponentBase
+	{
+	private:
+		bool m_has_changed = false;
+
+		glm::vec3 current_translation = glm::vec3(0.0f);
+		glm::vec3 current_rotation = glm::vec3(0.0f);
+		glm::vec3 current_scale = glm::vec3(1.0f);
+
+		glm::mat4 m_transformation = glm::mat4(0.0f);
+	};
 }

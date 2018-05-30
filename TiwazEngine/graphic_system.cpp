@@ -37,6 +37,7 @@ namespace Tiwaz::Graphic
 
 	void GraphicManager::Render()
 	{
+		/*
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glBegin(GL_TRIANGLES);
@@ -44,6 +45,7 @@ namespace Tiwaz::Graphic
 		glVertex3f(0.0, 0.5, 0.0);
 		glVertex3f(0.5, 0.0, 0.0);
 		glEnd();
+		*/
 
 		Global::MAIN_RENDERER->Render();
 	}
@@ -55,17 +57,19 @@ namespace Tiwaz::Graphic
 
 	void GraphicManager::OnScreenShow(const EventSystem::ScreenShowEvent* event)
 	{
-		glViewport(0, 0, event->width, event->height);
+		glViewport(0, 0, static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
 		m_width = event->width; m_height = event->height;
+		m_half_width = static_cast<uint16_t>(std::floor(event->width / 2.0f)); m_half_height = static_cast<uint16_t>(std::floor(event->height / 2.0f));
 		m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	}
 
 	void GraphicManager::OnScreenResize(const EventSystem::ScreenResizeEvent* event)
 	{
-		glViewport(0, 0, event->width, event->height);
+		glViewport(0, 0, static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
 		m_width = event->width; m_height = event->height;
+		m_half_width = static_cast<uint16_t>(std::floor(event->width / 2.0f)); m_half_height = static_cast<uint16_t>(std::floor(event->height / 2.0f));
 		m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	}
 }

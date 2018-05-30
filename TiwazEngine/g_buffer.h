@@ -8,7 +8,12 @@
 
 namespace Tiwaz::Graphic
 {
-	template<typename T> GLsizei ARRAY_SIZE_IN_ELEMENTS(T input_array[])
+	template<typename T> size_t ARRAY_SIZE_IN_ELEMENTS_size_t(T input_array[])
+	{
+		return sizeof(input_array) / sizeof(T);
+	}
+
+	template<typename T> GLsizei ARRAY_SIZE_IN_ELEMENTS_GLsizei(T input_array[])
 	{
 		return static_cast<GLsizei>(sizeof(input_array) / sizeof(T));
 	}
@@ -27,11 +32,12 @@ namespace Tiwaz::Graphic
 
 		~GBuffer();
 
-		void Init(const uint16_t & screen_width, const uint16_t & screen_height);
+		void Init(const GLsizei & screen_width, const GLsizei & screen_height);
 
 		void BindForWriting();
 		void BindForReading();
 		void SetReadBuffer(GBUFFER_TEXTURE_TYPE texture_type);
+		void Unbind();
 
 	private:
 		GLuint m_fbo;

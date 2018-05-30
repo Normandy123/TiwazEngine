@@ -25,6 +25,11 @@ namespace Tiwaz::Graphic
 		void GeometryPass();
 		void LightPass();
 
+		GLint m_width = 1024;
+		GLint m_height = 576;
+		GLint m_half_width = 512;
+		GLint m_half_height = 288;
+
 		GBuffer m_gbuffer;
 	};
 }
