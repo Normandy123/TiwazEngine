@@ -2,6 +2,8 @@
 
 Tiwaz::Graphic::GBuffer::~GBuffer()
 {
+	m_is_init = false;
+
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo);
 
 	for (size_t i = 0; i < ARRAY_SIZE_IN_ELEMENTS_size_t(m_textures); ++i)
@@ -51,7 +53,11 @@ void Tiwaz::Graphic::GBuffer::Init(const GLsizei & screen_width, const GLsizei &
 
 	if (framebuffer_status != GL_FRAMEBUFFER_COMPLETE)
 	{
-		Log(LogSystem::TIWAZ_ERROR, "GRPAHIC", "Could not intialize framebuffer!");
+		Log(LogSystem::TIWAZ_ERROR, "GRAPHIC", "Could not intialize framebuffer!");
+	}
+	else
+	{
+		m_is_init = true;
 	}
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
@@ -59,18 +65,21 @@ void Tiwaz::Graphic::GBuffer::Init(const GLsizei & screen_width, const GLsizei &
 
 void Tiwaz::Graphic::GBuffer::Resize(const GLsizei & screen_width, const GLsizei & screen_height)
 {
-	for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLsizei(m_textures); i++)
+	if (m_is_init)
 	{
-		glBindTexture(GL_TEXTURE_2D, m_textures[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, screen_width, screen_height,
-			0, GL_RGB, GL_FLOAT, nullptr);
+		for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLsizei(m_textures); i++)
+		{
+			glBindTexture(GL_TEXTURE_2D, m_textures[i]);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, screen_width, screen_height,
+				0, GL_RGB, GL_FLOAT, nullptr);
+		}
+
+		glBindTexture(GL_TEXTURE_2D, m_depth_texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, screen_width, screen_height,
+			0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-
-	glBindTexture(GL_TEXTURE_2D, m_depth_texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, screen_width, screen_height,
-		0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Tiwaz::Graphic::GBuffer::BindForWriting()

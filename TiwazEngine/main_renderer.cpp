@@ -21,7 +21,7 @@ Tiwaz::Graphic::MainRenderer::~MainRenderer()
 
 void Tiwaz::Graphic::MainRenderer::Init()
 {
-	m_gbuffer.Init(Global::GRAPHIC_MANAGER->ScreenWidth(), Global::GRAPHIC_MANAGER->ScreenHeight());
+	m_gbuffer.Init(static_cast<GLsizei>(Global::GRAPHIC_MANAGER->ScreenWidth()), static_cast<GLsizei>(Global::GRAPHIC_MANAGER->ScreenHeight()));
 }
 
 void Tiwaz::Graphic::MainRenderer::Update()
