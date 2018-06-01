@@ -45,5 +45,7 @@ namespace Tiwaz::Graphic
 		GLuint m_depth_texture;
 
 		GLuint m_textures[GBUFFER_NUM_TEXTURES];
+
+		bool m_is_init = false;
 	};
 }
