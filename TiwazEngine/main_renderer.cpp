@@ -1,5 +1,7 @@
 #include "main_renderer.h"
 
+#include "graphic_system.h"
+
 namespace Tiwaz::Global
 {
 	Graphic::MainRenderer* MAIN_RENDERER;
@@ -19,7 +21,7 @@ Tiwaz::Graphic::MainRenderer::~MainRenderer()
 
 void Tiwaz::Graphic::MainRenderer::Init()
 {
-
+	m_gbuffer.Init(Global::GRAPHIC_MANAGER->ScreenWidth(), Global::GRAPHIC_MANAGER->ScreenHeight());
 }
 
 void Tiwaz::Graphic::MainRenderer::Update()
@@ -41,7 +43,7 @@ void Tiwaz::Graphic::MainRenderer::Exit()
 
 void Tiwaz::Graphic::MainRenderer::OnScreenShow(const EventSystem::ScreenShowEvent * event)
 {
-	m_gbuffer.Init(static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
+	m_gbuffer.Resize(static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
 	m_width = static_cast<GLint>(event->width); m_height = static_cast<GLint>(event->height);
 	m_half_width = static_cast<GLint>(std::floor(m_width / 2.0f)); m_half_height = static_cast<GLuint>(std::floor(m_height / 2.0f));
@@ -49,7 +51,7 @@ void Tiwaz::Graphic::MainRenderer::OnScreenShow(const EventSystem::ScreenShowEve
 
 void Tiwaz::Graphic::MainRenderer::OnScreenResize(const EventSystem::ScreenResizeEvent * event)
 {
-	m_gbuffer.Init(static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
+	m_gbuffer.Resize(static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
 	m_width = static_cast<GLint>(event->width); m_height = static_cast<GLint>(event->height);
 	m_half_width = static_cast<GLint>(std::floor(m_width / 2.0f)); m_half_height = static_cast<GLuint>(std::floor(m_height / 2.0f));

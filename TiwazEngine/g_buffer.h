@@ -33,6 +33,7 @@ namespace Tiwaz::Graphic
 		~GBuffer();
 
 		void Init(const GLsizei & screen_width, const GLsizei & screen_height);
+		void Resize(const GLsizei & screen_width, const GLsizei & screen_height);
 
 		void BindForWriting();
 		void BindForReading();

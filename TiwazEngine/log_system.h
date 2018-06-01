@@ -1,12 +1,13 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <ctime>
 #include <chrono>
 #include <iostream>
 #include <fstream>
-#include <sstream>
+#include <filesystem>
 
 #include "engine_vars.h"
 
@@ -109,8 +110,16 @@ namespace Tiwaz::LogSystem
 			ss_current_time << time_block->tm_year + 1900 << "-" << time_block->tm_mon + 1 << "-" << time_block->tm_mday << " "
 				<< time_block->tm_hour << "-" << time_block->tm_min << "-" << time_block->tm_sec;
 
-			std::stringstream ss_file_name; 
-			ss_file_name << "logs/log" << ss_current_time.str() << ".tml";
+			std::filesystem::path search_path = std::filesystem::current_path();
+			search_path.append("logs");
+			
+			if (!std::filesystem::exists(search_path))
+			{
+				std::filesystem::create_directory(search_path);
+			}
+
+			std::stringstream ss_file_name;
+			ss_file_name << search_path.string() << "/log" << ss_current_time.str() << ".tml";
 			std::string file_name = ss_file_name.str();
 
 			std::ofstream out_log_file;
