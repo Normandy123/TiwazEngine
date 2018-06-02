@@ -13,6 +13,8 @@ namespace Tiwaz::BinaryIO
 {
 	constexpr size_t BYTE_SIZE_SIZE_T = sizeof(size_t);
 	constexpr size_t BYTE_SIZE_FLOAT = sizeof(float);
+	constexpr size_t BYTE_SIZE_FLOAT2 = BYTE_SIZE_FLOAT * 2;
+	constexpr size_t BYTE_SIZE_FLOAT3 = BYTE_SIZE_FLOAT * 3;
 
 	template<typename T> static void WriteValueToStream(std::ofstream & stream, T data)
 	{
@@ -42,7 +44,7 @@ namespace Tiwaz::BinaryIO
 
 	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec2> vector)
 	{
-		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT * 2;
+		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT2;
 
 		stream.write(reinterpret_cast<const char*>(&data_size), BYTE_SIZE_SIZE_T);
 
@@ -64,7 +66,7 @@ namespace Tiwaz::BinaryIO
 
 	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec3> vector)
 	{
-		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT * 3;
+		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT3;
 
 		stream.write(reinterpret_cast<const char*>(&data_size), BYTE_SIZE_SIZE_T);
 

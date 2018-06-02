@@ -8,12 +8,12 @@
 
 namespace Tiwaz::Graphic
 {
-	template<typename T> size_t ARRAY_SIZE_IN_ELEMENTS_size_t(T input_array[])
+	template<typename T> size_t ARRAY_SIZE_IN_ELEMENTS_SIZE_T(T input_array[])
 	{
 		return sizeof(input_array) / sizeof(T);
 	}
 
-	template<typename T> GLsizei ARRAY_SIZE_IN_ELEMENTS_GLsizei(T input_array[])
+	template<typename T> GLsizei ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(T input_array[])
 	{
 		return static_cast<GLsizei>(sizeof(input_array) / sizeof(T));
 	}

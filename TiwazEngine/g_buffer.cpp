@@ -4,9 +4,10 @@ Tiwaz::Graphic::GBuffer::~GBuffer()
 {
 	m_is_init = false;
 
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDeleteFramebuffers(1, &m_fbo);
 
-	for (size_t i = 0; i < ARRAY_SIZE_IN_ELEMENTS_size_t(m_textures); ++i)
+	for (size_t i = 0; i < ARRAY_SIZE_IN_ELEMENTS_SIZE_T(m_textures); ++i)
 	{
 		if (m_textures[i] != 0)
 		{
@@ -14,17 +15,17 @@ Tiwaz::Graphic::GBuffer::~GBuffer()
 		}
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDeleteFramebuffers(1, &m_fbo);
+	glDeleteTextures(ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures), m_textures);
+	glDeleteTextures(1, &m_depth_texture);
 }
 
 void Tiwaz::Graphic::GBuffer::Init(const GLsizei & screen_width, const GLsizei & screen_height)
 {
-	glGenTextures(ARRAY_SIZE_IN_ELEMENTS_GLsizei(m_textures), m_textures);
+	glGenTextures(ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures), m_textures);
 		
 	glGenTextures(1, &m_depth_texture);
 
-	for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLsizei(m_textures); i++)
+	for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures); i++)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, screen_width, screen_height,
@@ -47,7 +48,7 @@ void Tiwaz::Graphic::GBuffer::Init(const GLsizei & screen_width, const GLsizei &
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depth_texture, 0);
 
 	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-	glDrawBuffers(ARRAY_SIZE_IN_ELEMENTS_GLsizei(m_textures), DrawBuffers);
+	glDrawBuffers(ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures), DrawBuffers);
 
 	GLenum framebuffer_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
@@ -67,7 +68,7 @@ void Tiwaz::Graphic::GBuffer::Resize(const GLsizei & screen_width, const GLsizei
 {
 	if (m_is_init)
 	{
-		for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLsizei(m_textures); i++)
+		for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures); i++)
 		{
 			glBindTexture(GL_TEXTURE_2D, m_textures[i]);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, screen_width, screen_height,
