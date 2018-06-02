@@ -22,7 +22,7 @@ namespace Tiwaz::Graphic
 
 		if (glewInit() != GLEW_OK)
 		{
-			Log(LogSystem::TIWAZ_FATALERROR, "GRPAHIC", "Could not intialize GLEW!");
+			Log(LogSystem::TIWAZ_FATALERROR, "GRAPHIC", "Could not intialize GLEW!");
 		}
 
 		glClearColor(0.2f, 0.5f, 0.7f, 1.0f);
@@ -57,11 +57,7 @@ namespace Tiwaz::Graphic
 
 	void GraphicManager::OnScreenShow(const EventSystem::ScreenShowEvent* event)
 	{
-		glViewport(0, 0, static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
-		m_width = event->width; m_height = event->height;
-		m_half_width = static_cast<uint16_t>(std::floor(event->width / 2.0f)); m_half_height = static_cast<uint16_t>(std::floor(event->height / 2.0f));
-		m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	}
 
 	void GraphicManager::OnScreenResize(const EventSystem::ScreenResizeEvent* event)

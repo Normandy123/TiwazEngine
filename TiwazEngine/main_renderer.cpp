@@ -43,10 +43,7 @@ void Tiwaz::Graphic::MainRenderer::Exit()
 
 void Tiwaz::Graphic::MainRenderer::OnScreenShow(const EventSystem::ScreenShowEvent * event)
 {
-	m_gbuffer.Resize(static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
-	m_width = static_cast<GLint>(event->width); m_height = static_cast<GLint>(event->height);
-	m_half_width = static_cast<GLint>(std::floor(m_width / 2.0f)); m_half_height = static_cast<GLuint>(std::floor(m_height / 2.0f));
 }
 
 void Tiwaz::Graphic::MainRenderer::OnScreenResize(const EventSystem::ScreenResizeEvent * event)
