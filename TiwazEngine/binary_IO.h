@@ -181,7 +181,7 @@ namespace Tiwaz::BinaryIO
 
 			stream.open(file_path, std::ios::binary);
 
-			if (stream.is_open() && !stream.fail())
+			if (stream.is_open() && stream.good())
 			{
 				WriteValueToStream(stream, mesh_input->mesh_name);
 
@@ -203,7 +203,7 @@ namespace Tiwaz::BinaryIO
 
 			stream.open(file_path, std::ios::binary);
 
-			if (stream.is_open() && !stream.fail())
+			if (stream.is_open() && stream.good())
 			{
 				ReadValueFromStream(stream, mesh_output->mesh_name);
 

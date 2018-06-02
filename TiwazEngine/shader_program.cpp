@@ -21,7 +21,7 @@ namespace Tiwaz::Graphic::Shader
 
 		if (file.fail())
 		{
-			Log(LogSystem::TIWAZ_ERROR, "SHADER", "Failed to find shader file, with following path:\n" + file_path);
+			Log(LogSystem::TIWAZ_ERROR, "SHADER", "Failed to load shader file, with following path:\n" + file_path);
 		}
 
 		std::string fileContents;
