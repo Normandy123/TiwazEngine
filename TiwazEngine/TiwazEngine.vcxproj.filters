@@ -138,9 +138,6 @@
     <ClCompile Include="g_buffer.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="vertices_buffer.cpp">
-      <Filter>Source Files\Graphic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h">
@@ -222,9 +219,6 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="g_buffer.h">
-      <Filter>Header Files\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="vertices_buffer.h">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
