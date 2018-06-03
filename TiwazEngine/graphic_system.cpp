@@ -26,6 +26,7 @@ namespace Tiwaz::Graphic
 		}
 
 		glClearColor(0.2f, 0.5f, 0.7f, 1.0f);
+		glClearDepth(1.0f);
 
 		Global::MAIN_RENDERER->Init();
 	}

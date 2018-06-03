@@ -41,7 +41,7 @@ namespace Tiwaz::Graphic
 		void Unbind();
 
 	private:
-		GLuint m_fbo;
+		GLuint m_fbo = 0;
 		GLuint m_depth_texture;
 
 		GLuint m_textures[GBUFFER_NUM_TEXTURES];

@@ -166,6 +166,7 @@
     <ClCompile Include="shader_program.cpp" />
     <ClCompile Include="lua_interface.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="vertices_buffer.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +196,7 @@
     <ClInclude Include="shader_program.h" />
     <ClInclude Include="lua_interface.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="vertices_buffer.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

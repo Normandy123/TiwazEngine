@@ -59,6 +59,8 @@ void Tiwaz::Graphic::MainRenderer::GeometryPass()
 	m_gbuffer.BindForWriting();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//glDrawRangeElements(GL_TRIANGLES, 0, 100, 10, GL_UNSIGNED_INT, mm);
 }
 
 void Tiwaz::Graphic::MainRenderer::LightPass()
