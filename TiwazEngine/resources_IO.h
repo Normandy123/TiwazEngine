@@ -109,7 +109,7 @@ namespace Tiwaz::ResourcesIO
 
 		bool ValidID(const uint64_t & ID)
 		{
-			if (m_resources_map.find() != m_resources_map.cend())
+			if (m_resources_map.find(ID) != m_resources_map.cend())
 			{
 				return true;
 			}
