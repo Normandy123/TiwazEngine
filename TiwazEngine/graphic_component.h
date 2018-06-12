@@ -8,6 +8,7 @@
 
 #include "component.h"
 #include "file_formats.h"
+#include "resources_IO.h"
 #include "render_scene.h"
 
 namespace Tiwaz::Component
@@ -31,21 +32,33 @@ namespace Tiwaz::Component
 	public:
 		~MeshComponent()
 		{
-			m_mesh = nullptr;
+			m_mesh_ID = 0;
 		}
 
-		void SetMesh(FileFormats::MeshData* mesh)
+		void LoadAndSetMesh(const std::string & file_path)
 		{
-			m_mesh = mesh;
+			m_mesh_ID = Global::MESH_RESOURCES_MANAGER->ReadAndAddResource(file_path);
 		}
 
-		const std::vector<glm::vec3> Positions() { return m_mesh->positions; }
-		const std::vector<glm::vec3> Normals() { return m_mesh->normals; }
-		const std::vector<glm::vec2> UVs() { return m_mesh->uvs; }
+		void SetMesh(const uint64_t & ID)
+		{
+			if (Global::MESH_RESOURCES_MANAGER->ValidID(ID))
+			{
+				m_mesh_ID = ID;
+			}		
+		}
 
-		const std::vector<unsigned int> Indices() { return m_mesh->indices; }
+		const uint64_t MeshID()
+		{
+			return m_mesh_ID;
+		}
+
+		FileFormats::MeshData* AccessMesh()
+		{
+			return Global::MESH_RESOURCES_MANAGER->AccessResource(m_mesh_ID);
+		}
 
 	private:
-		FileFormats::MeshData* m_mesh;
+		uint64_t m_mesh_ID = 0;
 	};
 }

@@ -77,10 +77,14 @@ namespace Tiwaz::ResourcesIO
 				{
 					uint64_t new_ID = m_ID_counter.NewID();
 
-					MapValue* temp_value = new MapValue(file_path, (*m_read_function)(file_path));
+					TResource* temp_resource = new TResource;
+					(*m_read_function)(file_path, temp_resource);
+
+					MapValue* temp_value = new MapValue(file_path, temp_resource);
 
 					m_resources_map.insert(std::make_pair(new_ID, temp_value));
 
+					temp_resource = nullptr;
 					temp_value = nullptr;
 
 					return new_ID;
@@ -96,13 +100,21 @@ namespace Tiwaz::ResourcesIO
 			{
 				m_ID_counter.ReleaseID(ID);
 
-				m_loaded_files_map.erase(ID);
-
 				delete m_resources_map[ID];
 				m_resources_map[ID] = nullptr;
 
 				m_resources_map.erase(ID);
 			}
+		}
+
+		bool ValidID(const uint64_t & ID)
+		{
+			if (m_resources_map.find() != m_resources_map.cend())
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		TResource* AccessResource(const uint64_t & ID)
@@ -122,9 +134,18 @@ namespace Tiwaz::ResourcesIO
 		std::map<uint64_t, MapValue*> m_resources_map;
 		Counter::IDCounter m_ID_counter;	
 	};
+
+	class MeshResourcesManager : public ResourcesManager<FileFormats::MeshData>
+	{
+	public:
+		MeshResourcesManager() : ResourcesManager(&BinaryIO::ReadMesh)
+		{
+
+		}
+	};
 }
 
 namespace Tiwaz::Global
 {
-
+	extern ResourcesIO::MeshResourcesManager* MESH_RESOURCES_MANAGER;
 }

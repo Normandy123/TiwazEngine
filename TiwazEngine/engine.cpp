@@ -27,19 +27,12 @@ void Tiwaz::Engine::Init()
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
 	Global::MAIN_RENDERER = new Graphic::MainRenderer;
 	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
+	Global::MESH_RESOURCES_MANAGER = new ResourcesIO::MeshResourcesManager;
 	//Global::FACTORY = new Factory::Factory;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 
 	Global::RENDER_WINDOW = new Window::RenderWindow;
 	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
-
-	FileFormats::MeshData* meshdata_read = new FileFormats::MeshData();
-
-	BinaryIO::ReadMesh("test.bin", meshdata_read);
-
-	std::cout << meshdata_read->mesh_name << std::endl;
-
-	std::cout << std::endl;
 
 	/*
 	std::vector<glm::vec3> temp_vec1 = meshdata_read->positions;
@@ -74,11 +67,10 @@ void Tiwaz::Engine::Init()
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::MeshComponent* temp_obj_1 = CreateObject<Component::MeshComponent>();
-		temp_obj_1->SetMesh(meshdata_read);
-	}
+		temp_obj_1->LoadAndSetMesh("test.bin");
 
-	delete meshdata_read;
-	meshdata_read = nullptr;
+		std::cout << temp_obj_1->AccessMesh()->mesh_name << std::endl;
+	}
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);
@@ -130,6 +122,9 @@ void Tiwaz::Engine::Exit()
 
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
+
+	delete Global::MESH_RESOURCES_MANAGER;
+	Global::MESH_RESOURCES_MANAGER = nullptr;
 
 	delete Global::OBJECTS_MANAGER;
 	Global::OBJECTS_MANAGER = nullptr;
