@@ -33,7 +33,7 @@ namespace Tiwaz::LogSystem
 	{
 		friend LogsBuffer;
 	public:
-		Log(const LOGTYPE & type, const std::string & location, const std::string & text, const std::string & print_text) :
+		explicit Log(const LOGTYPE & type, const std::string & location, const std::string & text, const std::string & print_text) :
 			m_type(type), m_location(location), m_text(text), m_print_text(print_text)
 		{
 			m_str_type = str_log_type[m_type];
@@ -52,7 +52,10 @@ namespace Tiwaz::LogSystem
 
 		void PrintLog()
 		{
-			std::cout << m_print_text << std::endl;
+			if (Global::ENGINE_DEBUG)
+			{
+				std::cout << m_print_text << std::endl;
+			}		
 		}
 
 	private:

@@ -1,6 +1,7 @@
 #include <engine.h>
 
 #define CONSOLEMODE 1
+#define EDITORMODE 0
 
 #if CONSOLEMODE
 int main(int argc, char* argv[])

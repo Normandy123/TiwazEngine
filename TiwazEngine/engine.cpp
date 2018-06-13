@@ -172,6 +172,8 @@ const int Tiwaz::RunEngine(bool debug, bool editor)
 		return -1;
 	}
 
+	Global::ENGINE_DEBUG = debug;
+	Global::ENGINE_EDITOR = editor;
 	Global::ENGINE_SHOULD_EXIT = false;
 	Global::ENGINE_IS_RUNNING = true;
 
