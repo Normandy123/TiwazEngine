@@ -210,10 +210,10 @@ namespace Tiwaz::BinaryIO
 				ReadVectorFromStream(stream, mesh_output->positions);
 				ReadVectorFromStream(stream, mesh_output->normals);
 				ReadVectorFromStream(stream, mesh_output->uvs);
-				ReadVectorFromStream(stream, mesh_output->indices);
-
-				stream.close();
+				ReadVectorFromStream(stream, mesh_output->indices);				
 			}
+
+			stream.close();
 		}
 	}
 }
