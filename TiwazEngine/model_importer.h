@@ -15,5 +15,5 @@
 
 namespace Tiwaz::ModelImporter
 {
-	extern FileFormats::ModelData* LoadModel(const std::string & file_path);
+	extern void LoadModel(const std::string & file_path, FileFormats::ModelData* model);
 }

@@ -22,6 +22,8 @@
 #include "binary_IO.h"
 #include "resources_IO.h"
 
+#include "model_importer.h"
+
 #include "multithreading.h"
 
 //#include "lua_interface.h"

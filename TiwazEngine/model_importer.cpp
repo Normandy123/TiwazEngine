@@ -55,6 +55,7 @@ namespace Tiwaz::ModelImporter
 			aiMesh* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 
 			FileFormats::MeshData* temp_mesh = new FileFormats::MeshData();
+			temp_mesh->model_name = model->model_name;
 
 			ProcessMesh(temp_mesh, ai_mesh, ai_scene);
 
@@ -78,6 +79,8 @@ namespace Tiwaz::ModelImporter
 		const aiScene* ai_scene = importer.ReadFile(file_path, aiProcess_Triangulate);
 
 		aiNode* root_node = ai_scene->mRootNode;
+
+		model->model_name = root_node->mName.C_Str();
 
 		ProcessMeshNode(model, root_node, ai_scene);
 
