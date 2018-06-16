@@ -55,7 +55,6 @@ namespace Tiwaz::ModelImporter
 			aiMesh* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 
 			FileFormats::MeshData* temp_mesh = new FileFormats::MeshData();
-			temp_mesh->model_name = model->model_name;
 
 			ProcessMesh(temp_mesh, ai_mesh, ai_scene);
 
@@ -64,6 +63,7 @@ namespace Tiwaz::ModelImporter
 			temp_mesh = nullptr;
 			ai_mesh = nullptr;
 		}
+
 
 		for (size_t i = 0; i < ai_node->mNumChildren; ++i)
 		{

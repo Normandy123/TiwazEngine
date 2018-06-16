@@ -24,7 +24,6 @@ namespace Tiwaz::FileFormats
 		uint64_t ID = 0;
 
 		std::string mesh_name = "UNDEFINED";
-		std::string model_name = "UNDEFINED";
 
 		std::vector<glm::vec3> positions;
 		std::vector<glm::vec3> normals;
@@ -47,8 +46,6 @@ namespace Tiwaz::FileFormats
 
 			meshes.clear();
 		}
-
-		uint64_t ID = 0;
 
 		std::string file_path = "UNDEFINED";
 		std::string model_name = "UNDEFINED";

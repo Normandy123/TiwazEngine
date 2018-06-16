@@ -35,13 +35,14 @@ void Tiwaz::Engine::Init()
 	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
 	FileFormats::ModelData* test_model = new FileFormats::ModelData;
-	ModelImporter::LoadModel("data/models/cones2.dae", test_model);
+	ModelImporter::LoadModel("data/resources/models/cones2.dae", test_model);
 
 	std::cout << test_model->file_path << std::endl;
 	std::cout << test_model->model_name << std::endl;
 
 	for (FileFormats::MeshData* mesh : test_model->meshes)
 	{
+		BinaryIO::WriteMesh("data/resources/meshes/" + mesh->mesh_name + ".bin", mesh);
 		std::cout << mesh->mesh_name << std::endl;
 	}
 

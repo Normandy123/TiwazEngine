@@ -126,9 +126,6 @@
     <ClCompile Include="platform.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="model_importer.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="multithreading.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -137,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="g_buffer.cpp">
       <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh_buffer.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="model_importer.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +222,9 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="g_buffer.h">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh_buffer.h">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
