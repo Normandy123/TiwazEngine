@@ -3,6 +3,7 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 
+#include "commands.h"
 #include "constants.h"
 #include "event_system.h"
 #include "object_system.h"
@@ -110,7 +111,7 @@ namespace Tiwaz::Component
 			current_scale = vec;
 		}
 
-		glm::mat4 const * Transformation() { return std::addressof(m_transformation); }
+		const glm::mat4 Transformation() { return m_transformation; }
 
 	private:
 		bool m_has_changed = false;

@@ -31,6 +31,9 @@ namespace Tiwaz::Component
 		~MeshComponent()
 		{
 			m_mesh_ID = 0;
+
+			delete transformation;
+			transformation = nullptr;
 		}
 
 		TransformationComponent* transformation = new TransformationComponent;

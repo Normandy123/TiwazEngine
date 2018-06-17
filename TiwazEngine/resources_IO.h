@@ -49,7 +49,7 @@ namespace Tiwaz::ResourcesIO
 
 		virtual ~ResourcesManager()
 		{
-			for (auto pair : m_resources_map)
+			for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
 			{
 				delete pair.second;
 				pair.second = nullptr;
@@ -64,7 +64,7 @@ namespace Tiwaz::ResourcesIO
 
 			if (file_path != "" && file_path != "UNDEFINED")
 			{
-				for (auto pair : m_resources_map)
+				for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
 				{
 					if (pair.second->m_file_path == file_path)
 					{
@@ -122,6 +122,19 @@ namespace Tiwaz::ResourcesIO
 			if (m_resources_map.find(ID) != m_resources_map.cend())
 			{
 				return m_resources_map[ID]->m_resource;
+			}
+
+			return nullptr;
+		}
+
+		TResource* AccessResource(const std::string & file_path)
+		{
+			for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
+			{
+				if (pair.second->m_file_path == file_path)
+				{
+					return pair.second->m_resource;
+				}
 			}
 
 			return nullptr;
