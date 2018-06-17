@@ -25,7 +25,7 @@ void Tiwaz::Graphic::GBuffer::Init(const GLsizei & screen_width, const GLsizei &
 		
 	glGenTextures(1, &m_depth_texture);
 
-	for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures); i++)
+	for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures); ++i)
 	{
 		glBindTexture(GL_TEXTURE_2D, m_textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, screen_width, screen_height,
@@ -42,9 +42,9 @@ void Tiwaz::Graphic::GBuffer::Init(const GLsizei & screen_width, const GLsizei &
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textures[0], 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 1, GL_TEXTURE_2D, m_textures[1], 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 2, GL_TEXTURE_2D, m_textures[2], 0);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 3, GL_TEXTURE_2D, m_textures[3], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_textures[1], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_textures[2], 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, m_textures[3], 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depth_texture, 0);
 
 	GLenum DrawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
@@ -68,7 +68,7 @@ void Tiwaz::Graphic::GBuffer::Resize(const GLsizei & screen_width, const GLsizei
 {
 	if (m_is_init)
 	{
-		for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures); i++)
+		for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(m_textures); ++i)
 		{
 			glBindTexture(GL_TEXTURE_2D, m_textures[i]);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, screen_width, screen_height,

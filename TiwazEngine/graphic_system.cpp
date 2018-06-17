@@ -66,7 +66,7 @@ namespace Tiwaz::Graphic
 		glViewport(0, 0, static_cast<GLsizei>(event->width), static_cast<GLsizei>(event->height));
 
 		m_width = event->width; m_height = event->height;
-		m_half_width = static_cast<uint16_t>(std::floor(event->width / 2.0f)); m_half_height = static_cast<uint16_t>(std::floor(event->height / 2.0f));
+		m_half_width = static_cast<uint16_t>(event->width / 2.0f); m_half_height = static_cast<uint16_t>(event->height / 2.0f);
 		m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
 	}
 }
