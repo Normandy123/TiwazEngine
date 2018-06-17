@@ -50,7 +50,7 @@ namespace Tiwaz::ObjectSystem
 		}
 		else
 		{
-			Log(LogSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not add object, pointer is nullptr");
+			Log(LogSystem::TIWAZ_WARNING, "OBJECT_MANAGER", "Can not add object, ID is already added or pointer is nullptr");
 		}
 
 		return 0;

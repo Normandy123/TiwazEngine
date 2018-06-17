@@ -7,8 +7,6 @@
 #include <GLM/glm.hpp>
 
 #include "component.h"
-#include "file_formats.h"
-#include "resources_IO.h"
 #include "render_scene.h"
 
 namespace Tiwaz::Component
@@ -35,28 +33,7 @@ namespace Tiwaz::Component
 			m_mesh_ID = 0;
 		}
 
-		void LoadAndSetMesh(const std::string & file_path)
-		{
-			m_mesh_ID = Global::MESH_RESOURCES_MANAGER->ReadAndAddResource(file_path);
-		}
-
-		void SetMesh(const uint64_t & ID)
-		{
-			if (Global::MESH_RESOURCES_MANAGER->ValidID(ID))
-			{
-				m_mesh_ID = ID;
-			}		
-		}
-
-		const uint64_t MeshID()
-		{
-			return m_mesh_ID;
-		}
-
-		FileFormats::MeshData* AccessMesh()
-		{
-			return Global::MESH_RESOURCES_MANAGER->AccessResource(m_mesh_ID);
-		}
+		TransformationComponent* transformation = new TransformationComponent;
 
 	private:
 		uint64_t m_mesh_ID = 0;

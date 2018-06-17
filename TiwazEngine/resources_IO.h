@@ -134,18 +134,4 @@ namespace Tiwaz::ResourcesIO
 		std::map<uint64_t, MapValue*> m_resources_map;
 		Counter::IDCounter m_ID_counter;	
 	};
-
-	class MeshResourcesManager : public ResourcesManager<FileFormats::MeshData>
-	{
-	public:
-		MeshResourcesManager() : ResourcesManager(&BinaryIO::ReadMesh)
-		{
-
-		}
-	};
-}
-
-namespace Tiwaz::Global
-{
-	extern ResourcesIO::MeshResourcesManager* MESH_RESOURCES_MANAGER;
 }

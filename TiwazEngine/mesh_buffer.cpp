@@ -1,5 +1,7 @@
 #include "mesh_buffer.h"
 
+#include "log_system.h"
+
 Tiwaz::Graphic::MeshBuffer::~MeshBuffer()
 {
 	glBindVertexArray(0);

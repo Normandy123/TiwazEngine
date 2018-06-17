@@ -7,6 +7,8 @@
 
 #include <GLM/glm.hpp>
 
+#include "graphic_data_formats.h"
+
 namespace Tiwaz::FileFormats
 {
 	struct MeshData
@@ -15,20 +17,14 @@ namespace Tiwaz::FileFormats
 		{
 			mesh_name.clear();
 
-			positions.clear();
-			normals.clear();
-			uvs.clear();
-			indices.clear();
+			delete vertices;
+			vertices = nullptr;
 		}
 
-		uint64_t ID = 0;
-
+		std::string file_path = "UNDEFINED";
 		std::string mesh_name = "UNDEFINED";
 
-		std::vector<glm::vec3> positions;
-		std::vector<glm::vec3> normals;
-		std::vector<glm::vec2> uvs;
-		std::vector<unsigned int> indices;
+		Graphic::DataFormats::VerticesData* vertices = new Graphic::DataFormats::VerticesData;
 	};
 
 	struct ModelData

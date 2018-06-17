@@ -5,6 +5,7 @@
 #include <mutex>
 
 #include "engine_vars.h"
+#include "commands.h"
 
 #include "timer.h"
 #include "window.h"
@@ -23,8 +24,6 @@
 #include "resources_IO.h"
 
 #include "model_importer.h"
-
-#include "multithreading.h"
 
 //#include "lua_interface.h"
 

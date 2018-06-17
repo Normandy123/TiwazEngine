@@ -141,6 +141,9 @@
     <ClCompile Include="model_importer.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="graphic_data_formats.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h">
@@ -225,6 +228,9 @@
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="mesh_buffer.h">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="graphic_data_formats.h">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
   </ItemGroup>

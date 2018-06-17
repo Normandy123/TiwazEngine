@@ -1,7 +1,15 @@
 #pragma once
 
+#include <cstdint>
+
+#include <string>
+#include <vector>
+
 #include <GLEW/glew.h>
 #include <GLM/glm.hpp>
+
+#include "graphic_component.h"
+#include "graphic_data_formats.h"
 
 namespace Tiwaz::Graphic
 {
@@ -19,6 +27,8 @@ namespace Tiwaz::Graphic
 		void Update();
 		void Exit();
 
+		const uint64_t AddMesh(Component::MeshComponent* mesh);
+
 	private:
 		GLuint m_vao;
 
@@ -26,5 +36,7 @@ namespace Tiwaz::Graphic
 
 		GLuint m_ebo;
 		GLuint m_tbo;
+
+		std::vector<Component::MeshComponent*> m_mesh_components;
 	};
 }

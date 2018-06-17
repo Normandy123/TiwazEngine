@@ -153,6 +153,7 @@
     <ClCompile Include="factory.cpp" />
     <ClCompile Include="file_formats.cpp" />
     <ClCompile Include="graphic_component.cpp" />
+    <ClCompile Include="graphic_data_formats.cpp" />
     <ClCompile Include="graphic_system.cpp" />
     <ClCompile Include="g_buffer.cpp" />
     <ClCompile Include="log_system.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="factory.h" />
     <ClInclude Include="file_formats.h" />
     <ClInclude Include="graphic_component.h" />
+    <ClInclude Include="graphic_data_formats.h" />
     <ClInclude Include="graphic_system.h" />
     <ClInclude Include="g_buffer.h" />
     <ClInclude Include="log_system.h" />

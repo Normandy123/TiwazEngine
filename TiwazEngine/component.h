@@ -4,8 +4,8 @@
 #include <GLM/gtc/matrix_transform.hpp>
 
 #include "constants.h"
-#include "commands.h"
 #include "event_system.h"
+#include "object_system.h"
 
 namespace Tiwaz::Component
 {
@@ -131,6 +131,6 @@ namespace Tiwaz::Component
 		glm::vec3 current_rotation = glm::vec3(0.0f);
 		glm::vec3 current_scale = glm::vec3(1.0f);
 
-		glm::mat4 m_transformation = glm::mat4(0.0f);
+		glm::mat4 m_transformation = glm::mat4(1.0f);
 	};
 }
