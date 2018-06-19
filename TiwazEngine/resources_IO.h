@@ -60,35 +60,21 @@ namespace Tiwaz::ResourcesIO
 
 		const uint64_t ReadAndAddResource(const std::string & file_path)
 		{
-			bool found_path = false;
-
-			if (file_path != "" && file_path != "UNDEFINED")
+			if (!HasLoad(file_path))
 			{
-				for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
-				{
-					if (pair.second->m_file_path == file_path)
-					{
-						found_path = true;
-						break;
-					}
-				}
-
-				if (!found_path)
-				{
-					uint64_t new_ID = m_ID_counter.NewID();
-
-					TResource* temp_resource = new TResource;
-					(*m_read_function)(file_path, temp_resource);
-
-					MapValue* temp_value = new MapValue(file_path, temp_resource);
-
-					m_resources_map.insert(std::make_pair(new_ID, temp_value));
-
-					temp_resource = nullptr;
-					temp_value = nullptr;
-
-					return new_ID;
-				}
+				uint64_t new_ID = m_ID_counter.NewID();
+			
+				TResource* temp_resource = new TResource;
+				(*m_read_function)(file_path, temp_resource);
+			
+				MapValue* temp_value = new MapValue(file_path, temp_resource);
+			
+				m_resources_map.insert(std::make_pair(new_ID, temp_value));
+			
+				temp_resource = nullptr;
+				temp_value = nullptr;
+			
+				return new_ID;
 			}
 
 			return 0;
@@ -96,7 +82,7 @@ namespace Tiwaz::ResourcesIO
 
 		void RemoveResource(const uint64_t & ID)
 		{
-			if (m_resources_map.find(ID) != m_resources_map.cend())
+			if (ValidID(ID))
 			{
 				m_ID_counter.ReleaseID(ID);
 
@@ -107,21 +93,69 @@ namespace Tiwaz::ResourcesIO
 			}
 		}
 
-		bool ValidID(const uint64_t & ID)
+		const bool ValidID(const uint64_t & ID)
 		{
-			if (m_resources_map.find(ID) != m_resources_map.cend())
+			if (ID != 0)
 			{
-				return true;
+				if (m_resources_map.find(ID) != m_resources_map.cend())
+				{
+					return true;
+				}
 			}
 
 			return false;
 		}
 
+		const bool HasLoad(const std::string & file_path)
+		{
+			if (file_path != "" && file_path != "UNDEFINED")
+			{
+				for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
+				{
+					if (pair.second->m_file_path == file_path)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		const uint64_t IDByFilePath(const std::string & file_path)
+		{
+			if (HasLoad)
+			{
+				for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
+				{
+					if (pair.second->m_file_path == file_path)
+					{
+						return pair.first;
+					}
+				}
+			}
+
+			return 0;
+		}
+
+		const std::string FilePathByID(const uint64_t & ID)
+		{
+			if (ValidID(ID))
+			{
+				return m_resources_map[ID]->m_file_path;
+			}
+
+			return "UNDEFINED";
+		}
+
 		TResource* AccessResource(const uint64_t & ID)
 		{
-			if (m_resources_map.find(ID) != m_resources_map.cend())
+			if (ID != 0)
 			{
-				return m_resources_map[ID]->m_resource;
+				if (m_resources_map.find(ID) != m_resources_map.cend())
+				{
+					return m_resources_map[ID]->m_resource;
+				}
 			}
 
 			return nullptr;
@@ -129,11 +163,14 @@ namespace Tiwaz::ResourcesIO
 
 		TResource* AccessResource(const std::string & file_path)
 		{
-			for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
+			if (file_path != "" && file_path != "UNDEFINED")
 			{
-				if (pair.second->m_file_path == file_path)
+				for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
 				{
-					return pair.second->m_resource;
+					if (pair.second->m_file_path == file_path)
+					{
+						return pair.second->m_resource;
+					}
 				}
 			}
 

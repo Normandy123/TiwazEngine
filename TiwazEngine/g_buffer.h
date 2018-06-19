@@ -8,16 +8,6 @@
 
 namespace Tiwaz::Graphic
 {
-	template<typename T> size_t ARRAY_SIZE_IN_ELEMENTS_SIZE_T(T input_array[])
-	{
-		return sizeof(input_array) / sizeof(T);
-	}
-
-	template<typename T> GLsizei ARRAY_SIZE_IN_ELEMENTS_GLSIZEI(T input_array[])
-	{
-		return static_cast<GLsizei>(sizeof(input_array) / sizeof(T));
-	}
-
 	class GBuffer
 	{
 	public:
@@ -42,9 +32,9 @@ namespace Tiwaz::Graphic
 
 	private:
 		GLuint m_fbo = 0;
-		GLuint m_depth_texture;
+		GLuint m_depth_texture = 0;
 
-		GLuint m_textures[GBUFFER_NUM_TEXTURES];
+		GLuint m_textures[GBUFFER_NUM_TEXTURES] = {0};
 
 		bool m_is_init = false;
 	};

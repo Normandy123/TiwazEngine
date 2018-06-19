@@ -36,6 +36,10 @@ namespace Tiwaz::Component
 			transformation = nullptr;
 		}
 
+		//void SetMeshID(const uint64_t & ID) {}
+
+		const uint64_t MeshID() { return m_mesh_ID; }
+
 		TransformationComponent* transformation = new TransformationComponent;
 
 	private:

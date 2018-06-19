@@ -21,7 +21,6 @@ namespace Tiwaz::FileFormats
 			vertices = nullptr;
 		}
 
-		std::string file_path = "UNDEFINED";
 		std::string mesh_name = "UNDEFINED";
 
 		Graphic::DataFormats::VerticesData* vertices = new Graphic::DataFormats::VerticesData;
