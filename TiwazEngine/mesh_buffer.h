@@ -14,77 +14,23 @@
 
 #include "file_formats.h"
 #include "binary_IO.h"
-#include "resources_IO.h"
 
 namespace Tiwaz::Graphic
 {
-	class MeshesResourcesManager : public ResourcesIO::ResourcesManager<FileFormats::MeshData>
+	class TransformationsManager
 	{
 	public:
-		MeshesResourcesManager() : ResourcesIO::ResourcesManager<FileFormats::MeshData>(BinaryIO::ReadMesh) {}
+		glm::mat4 AccessTransformation(const uint64_t & ID) {}
+	private:
 
-		~MeshesResourcesManager() {}
 	};
 
 	class MeshesManager
 	{
 	public:
-		~MeshesManager()
-		{
-			for (std::pair<uint64_t, FileFormats::MeshData*> mesh_pair : m_meshes_map)
-			{
-				mesh_pair.second = nullptr;
-			}
-
-			m_meshes_map.clear();
-
-			m_resources_manager.~MeshesResourcesManager();
-			m_ID_counter.~IDCounter();		
-		}
-
-		const uint64_t LoadFromFile(const std::string & file_path)
-		{
-			if (m_resources_manager.HasLoad(file_path))
-			{
-				FileFormats::MeshData* temp_mesh;
-				const uint64_t new_ID = m_ID_counter.NewID();
-			
-				temp_mesh = m_resources_manager.AccessResource(file_path);
-			
-				m_meshes_map.insert(std::make_pair(new_ID, temp_mesh));
-			
-				temp_mesh = nullptr;
-			
-				return new_ID;
-			}
-			else
-			{
-				const uint64_t temp_res_ID = m_resources_manager.ReadAndAddResource(file_path);
-			
-				if (temp_res_ID != 0)
-				{
-					FileFormats::MeshData* temp_mesh;
-					const uint64_t new_ID = m_ID_counter.NewID();
-			
-					temp_mesh = m_resources_manager.AccessResource(temp_res_ID);
-			
-					m_meshes_map.insert(std::make_pair(new_ID, temp_mesh));
-			
-					temp_mesh = nullptr;
-			
-					return new_ID;
-				}
-			}
-
-			return 0;
-		}
-
+		
 	private:
-		std::map<uint64_t, FileFormats::MeshData*> m_meshes_map;
-
-		Counter::IDCounter m_ID_counter;
-
-		MeshesResourcesManager m_resources_manager;
+		std::map<uint64_t, Component::MeshComponent*> m_instances_map;
 	};
 
 	class MeshesBuffer
@@ -101,6 +47,8 @@ namespace Tiwaz::Graphic
 
 			~InstancedMesh()
 			{
+				transformation_IDs.clear();
+
 				glBindVertexArray(0);
 
 				glDeleteBuffers(7, m_vbos);
@@ -108,8 +56,8 @@ namespace Tiwaz::Graphic
 				glDeleteVertexArrays(1, &m_vao);
 			}
 
-			DataFormats::VerticesData vertices;
-			std::vector<glm::mat4> transformations;
+			uint64_t mesh_ID = 0;
+			std::vector<uint64_t> transformation_IDs;
 
 			GLuint m_vao = 0;
 			GLuint m_vbos[7] = {0};
@@ -118,13 +66,65 @@ namespace Tiwaz::Graphic
 		};
 
 	public:
-		~MeshesBuffer();
+		~MeshesBuffer()
+		{
+			for (std::pair<uint64_t, InstancedMesh*> instance : m_instances_map)
+			{
+				delete instance.second;
+				instance.second = nullptr;
+			}
+
+			m_instances_map.clear();
+		}
+
+		void AddMeshComponent(const uint64_t & mesh_ID, const uint64_t & transformation_ID)
+		{
+			if (mesh_ID != 0 && transformation_ID != 0)
+			{
+				for (std::pair<uint64_t, InstancedMesh*> pair : m_instances_map)
+				{
+					if (pair.second->mesh_ID == mesh_ID)
+					{
+						const std::vector<uint64_t>::iterator transformation_it = std::find(pair.second->transformation_IDs.begin(), pair.second->transformation_IDs.end(), transformation_ID);
+
+						if (transformation_it == pair.second->transformation_IDs.cend())
+						{
+							pair.second->transformation_IDs.push_back(transformation_ID);
+
+							//TODO: update transformation by IDs
+						}
+
+						break;
+					}
+					else
+					{
+						const uint64_t new_ID = m_ID_counter.NewID();
+
+						InstancedMesh* temp_instance = new InstancedMesh;
+						temp_instance->mesh_ID = mesh_ID;
+						temp_instance->transformation_IDs.push_back(transformation_ID);
+
+						//TODO: Load vertices and transformation by IDs
+
+						m_instances_map.insert(std::make_pair(new_ID, temp_instance));
+					}
+				}
+			}
+		}
 
 		void Init();
 		void Update();
 		void Exit();
 
 	private:
+		std::map<uint64_t, InstancedMesh*> m_instances_map;
 
+		Counter::IDCounter m_ID_counter;
 	};
+}
+
+namespace Tiwaz::Global
+{
+	extern Graphic::TransformationsManager* TRANSFORMATION_MANAGER;
+	extern Graphic::MeshesManager* MESHES_MANAGER;
 }

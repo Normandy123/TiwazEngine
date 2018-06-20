@@ -120,7 +120,7 @@ namespace Tiwaz::Component
 		glm::vec3 current_rotation = glm::vec3(0.0f);
 		glm::vec3 current_scale = glm::vec3(1.0f);
 
-		glm::mat4 m_transformation = glm::mat4(0.0f);
+		glm::mat4 m_transformation = glm::mat4();
 	};
 
 	class CameraComponent : public ComponentBase
@@ -132,6 +132,6 @@ namespace Tiwaz::Component
 		glm::vec3 current_rotation = glm::vec3(0.0f);
 		glm::vec3 current_scale = glm::vec3(1.0f);
 
-		glm::mat4 m_transformation = glm::mat4(1.0f);
+		glm::mat4 m_transformation = glm::mat4();
 	};
 }
