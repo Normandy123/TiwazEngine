@@ -20,9 +20,9 @@ namespace Tiwaz::Graphic
 
 		void AddComponent(Component::GraphicComponent* component);
 
-		void RemoveComponent(Component::GraphicComponent const * component);
+		void RemoveComponent(Component::GraphicComponent * component);
 
-		std::vector<Component::GraphicComponent*> const * Components() { return std::addressof(m_components); }
+		const std::vector<Component::GraphicComponent*> Components() { return m_components; }
 
 		const bool HasComponents() { return !m_components.empty(); };
 

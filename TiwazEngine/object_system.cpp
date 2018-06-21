@@ -13,8 +13,6 @@ namespace Tiwaz
 	{
 		m_ID = 0;
 	}
-
-	void EngineObject::SetObjectID(const uint64_t & ID) { m_ID = ID; }
 }
 
 namespace Tiwaz::ObjectSystem
@@ -42,7 +40,7 @@ namespace Tiwaz::ObjectSystem
 		{
 			const uint64_t new_ID = m_ID_counter.NewID();
 		
-			object->SetObjectID(new_ID);
+			object->m_ID = new_ID;
 			m_objects.insert(std::make_pair(new_ID, object));
 		
 			return new_ID;
@@ -59,11 +57,10 @@ namespace Tiwaz::ObjectSystem
 	{
 		if (m_objects.find(ID) != m_objects.cend())
 		{
-			m_objects[ID]->SetObjectID(0);
 			m_ID_counter.ReleaseID(ID);
 
 			m_objects[ID] = nullptr;
-			m_objects.erase(ID);
+			m_objects.erase(ID);	
 		}
 		else
 		{
@@ -94,7 +91,7 @@ namespace Tiwaz::ObjectSystem
 
 		return false;
 	}
-	const bool ObjectsManager::HasObject(EngineObject const * object)
+	const bool ObjectsManager::HasObject(const EngineObject *object)
 	{
 		for (std::pair<uint64_t, EngineObject*> object_pair : m_objects)
 		{

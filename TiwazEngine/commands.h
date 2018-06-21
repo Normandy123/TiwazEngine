@@ -21,7 +21,7 @@ namespace Tiwaz
 		return nullptr;
 	}
 
-	template<typename T> static const bool CanDelete(T const * object)
+	template<typename T> static const bool CanDelete(const T * object)
 	{
 		if (std::is_base_of<EngineObject, T>::value && object != nullptr)
 		{

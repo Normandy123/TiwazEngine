@@ -19,7 +19,7 @@ namespace Tiwaz::Graphic
 		m_components.clear();
 	}
 
-	void RenderScene::AddComponent(Component::GraphicComponent* component)
+	void RenderScene::AddComponent(Component::GraphicComponent * component)
 	{
 		if (component != nullptr)
 		{
@@ -27,12 +27,12 @@ namespace Tiwaz::Graphic
 
 			if (it == m_components.cend())
 			{
-				m_components.emplace_back(component);
+				m_components.push_back(component);
 			}
 		}
 	}
 
-	void RenderScene::RemoveComponent(Component::GraphicComponent const * component)
+	void RenderScene::RemoveComponent(Component::GraphicComponent * component)
 	{
 		if (component != nullptr)
 		{

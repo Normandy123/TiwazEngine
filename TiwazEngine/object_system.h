@@ -34,9 +34,6 @@ namespace Tiwaz
 
 	protected:
 		uint64_t m_ID = 0;
-
-	private:
-		void SetObjectID(const uint64_t & ID);
 	};
 }
 
@@ -62,7 +59,7 @@ namespace Tiwaz::ObjectSystem
 		EngineObject* AccessObjectByID(const uint64_t & ID);
 
 		const bool HasObject(const uint64_t & ID);
-		const bool HasObject(EngineObject const * object);
+		const bool HasObject(const EngineObject * object);
 
 	private:
 		std::map<uint64_t, EngineObject*> m_objects;
