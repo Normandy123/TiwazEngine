@@ -27,7 +27,6 @@ namespace Tiwaz::ObjectSystem
 		for (std::pair<uint64_t, EngineObject*> object_pair : m_objects)
 		{
 			delete object_pair.second;
-			object_pair.second = nullptr;
 		}
 
 		m_objects.clear();
@@ -57,10 +56,9 @@ namespace Tiwaz::ObjectSystem
 	{
 		if (m_objects.find(ID) != m_objects.cend())
 		{
-			m_ID_counter.ReleaseID(ID);
+			m_objects.erase(ID);
 
-			m_objects[ID] = nullptr;
-			m_objects.erase(ID);	
+			m_ID_counter.ReleaseID(ID);
 		}
 		else
 		{

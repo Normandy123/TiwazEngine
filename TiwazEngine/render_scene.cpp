@@ -11,11 +11,6 @@ namespace Tiwaz::Graphic
 
 	RenderScene::~RenderScene()
 	{
-		for (Component::GraphicComponent* component : m_components)
-		{
-			component = nullptr;
-		}
-
 		m_components.clear();
 	}
 
@@ -42,7 +37,6 @@ namespace Tiwaz::Graphic
 			{
 				ptrdiff_t pd = std::distance(m_components.begin(), it);
 
-				m_components[pd] = nullptr;
 				m_components.erase(m_components.cbegin() + pd);
 			}
 		}

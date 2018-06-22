@@ -5,17 +5,17 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <type_traits>
+#include <iostream>
 
 #include <GLEW/glew.h>
 #include <GLM/glm.hpp>
 
 #include "counter.h"
 #include "component.h"
+#include "graphic_component.h"
 
 #include "graphic_data_formats.h"
-
-#include "file_formats.h"
-#include "resources_IO.h"
 
 namespace Tiwaz::Graphic
 {
@@ -39,98 +39,76 @@ namespace Tiwaz::Graphic
 		DataFormats::VerticesData* m_vertices = new DataFormats::VerticesData;
 	};
 
-	//TODO implement TransformationManager
-	class TransformationsManager
+	template<typename TComponent> class ComponentsManager
 	{
 	public:
-		const uint64_t AddTransformation(Component::TransformationComponent* component)
+		~ComponentsManager()
 		{
-			
-		}
-
-		const glm::mat4 Transformation(const uint64_t & ID) 
-		{
-			if (m_transformations_map.find(ID) != m_transformations_map.cend())
-			{
-				return (*m_transformations_map[ID]);
-			}
-		}
-	private:
-		std::map<uint64_t, glm::mat4*> m_transformations_map;
-	};
-
-	class MeshesManager
-	{
-	public:
-		~MeshesManager()
-		{
-			for (std::pair<uint64_t, MeshData*> mesh_pair : m_meshes_map)
-			{
-				delete mesh_pair.second;
-				mesh_pair.second = nullptr;
-			}
-
-			m_meshes_map.clear();
+			m_components_map.clear();
 
 			m_ID_counter.~IDCounter();
 		}
 
-		const uint64_t AddMesh(MeshData* mesh)
+		const uint64_t AddComponent(TComponent* component)
 		{
-			if (mesh->m_mesh_ID == 0 && mesh != nullptr)
+			if (component != nullptr && !ComponentManaged(component))
 			{
 				const uint64_t new_ID = m_ID_counter.NewID();
-
-				mesh->m_mesh_ID = new_ID;
-				m_meshes_map.insert(std::make_pair(new_ID, mesh));
-			}
-		}
-
-		const uint64_t AddMesh(const std::string & file_path)
-		{
 			
+				m_components_map.insert(std::make_pair(new_ID, component));
+
+				return new_ID;
+			}
+
+			return 0;
 		}
 
-		void RemoveMesh(const uint64_t & ID)
+		void RemoveComponent(TComponent* component)
 		{
-			if (m_meshes_map.find(ID) != m_meshes_map.cend())
+			if (component != nullptr && ComponentManaged(component))
 			{
-				m_ID_counter.ReleaseID(ID);
+				for (std::pair<uint64_t, TComponent*> component_pair : m_components_map)
+				{
+					if (component_pair.second == component)
+					{
+						m_components_map.erase(component_pair.first);
 
-				m_meshes_map[ID] = nullptr;
-				m_meshes_map.erase(ID);				
+						m_ID_counter.ReleaseID(component_pair.first);
+					}
+				}
 			}
 		}
 
-		void SetVertices(const uint64_t & ID, DataFormats::VerticesData vertices)
+		const bool ComponentManaged(TComponent* component)
 		{
-			if (m_meshes_map.find(ID) != m_meshes_map.cend())
+			for (std::pair<uint64_t, TComponent*> component_pair : m_components_map)
 			{
-				(*m_meshes_map[ID]->m_vertices) = vertices;
+				if (component_pair.second == component)
+				{
+					return true;
+				}
 			}
-		}
 
-		const DataFormats::VerticesData Vertices(const uint64_t & ID) 
-		{
-			if (m_meshes_map.find(ID) != m_meshes_map.cend())
-			{
-				return (*m_meshes_map[ID]->m_vertices);
-			}	
-		}
-
-		const MeshData * const AccessMesh(const uint64_t & ID)
-		{
-			if (m_meshes_map.find(ID) != m_meshes_map.cend())
-			{
-				return m_meshes_map[ID];
-			}		
+			return false;
 		}
 
 	private:
-		std::map<uint64_t, MeshData*> m_meshes_map;
-		std::map<uint64_t, std::string> m_filepaths_map;
+		std::map<uint64_t, TComponent*> m_components_map;
 
 		Counter::IDCounter m_ID_counter;
+	};
+
+	//TODO implement TransformationManager
+	class TransformationsManager
+	{
+	public:
+
+	};
+
+	class MeshesManager : public ComponentsManager<Component::MeshComponent>
+	{
+	public:
+
 	};
 
 	class MeshesBuffer

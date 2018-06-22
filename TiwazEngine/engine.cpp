@@ -27,6 +27,7 @@ void Tiwaz::Engine::Init()
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
 	Global::MAIN_RENDERER = new Graphic::MainRenderer;
 	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
+	Global::MESHES_MANAGER = new Graphic::MeshesManager;
 	//Global::FACTORY = new Factory::Factory;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 
@@ -83,6 +84,8 @@ void Tiwaz::Engine::Init()
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::MeshComponent* temp_obj_1 = CreateObject<Component::MeshComponent>();
+		Global::MESHES_MANAGER->AddComponent(temp_obj_1);
+		Global::MESHES_MANAGER->RemoveComponent(temp_obj_1);
 	}
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
@@ -135,6 +138,9 @@ void Tiwaz::Engine::Exit()
 
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
+
+	delete Global::MESHES_MANAGER;
+	Global::MESHES_MANAGER = nullptr;
 
 	delete Global::OBJECTS_MANAGER;
 	Global::OBJECTS_MANAGER = nullptr;

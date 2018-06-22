@@ -52,7 +52,6 @@ namespace Tiwaz::ResourcesIO
 			for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
 			{
 				delete pair.second;
-				pair.second = nullptr;
 			}
 
 			m_resources_map.clear();
@@ -87,7 +86,6 @@ namespace Tiwaz::ResourcesIO
 				m_ID_counter.ReleaseID(ID);
 
 				delete m_resources_map[ID];
-				m_resources_map[ID] = nullptr;
 
 				m_resources_map.erase(ID);
 			}

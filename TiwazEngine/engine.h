@@ -25,6 +25,8 @@
 
 #include "model_importer.h"
 
+#include "mesh_buffer.h"
+
 //#include "lua_interface.h"
 
 #define TIWAZ_APP __declspec(dllexport)
