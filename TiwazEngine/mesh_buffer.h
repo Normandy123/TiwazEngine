@@ -99,7 +99,7 @@ namespace Tiwaz::Graphic
 	};
 
 	//TODO implement TransformationManager
-	class TransformationsManager
+	class TransformationsManager : public ComponentsManager<Component::TransformationComponent>
 	{
 	public:
 

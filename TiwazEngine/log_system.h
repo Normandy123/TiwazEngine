@@ -86,7 +86,6 @@ namespace Tiwaz::LogSystem
 			for (Log* log : m_buffer)
 			{
 				delete log;
-				log = nullptr;
 			}
 
 			m_buffer.clear();
