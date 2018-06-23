@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include <GLM/glm.hpp>
 
@@ -23,5 +24,16 @@ namespace Tiwaz::Graphic::DataFormats
 		std::vector<glm::vec3> normals;
 		std::vector<glm::vec2> uvs;
 		std::vector<unsigned int> indices;
+	};
+
+	struct MeshData
+	{
+		~MeshData()
+		{
+			delete vertices;
+			vertices = nullptr;
+		}
+
+		VerticesData* vertices = new VerticesData;
 	};
 }

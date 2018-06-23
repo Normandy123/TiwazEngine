@@ -81,12 +81,20 @@ void Tiwaz::Engine::Init()
 	}
 	*/
 
+	FileFormats::MeshData* temp_meshdata = new FileFormats::MeshData;
+	BinaryIO::ReadMesh("data/resources/meshes/cone.bin", temp_meshdata);
+	Global::MESHES_MANAGER->AddMesh(temp_meshdata->mesh_data);
+
 	for (size_t i = 0; i < 1; ++i)
 	{
 		Component::MeshComponent* temp_obj_1 = CreateObject<Component::MeshComponent>();
 		Global::MESHES_MANAGER->AddComponent(temp_obj_1);
+		Global::MESHES_MANAGER->SetMesh(1, 1);
 		Global::MESHES_MANAGER->RemoveComponent(temp_obj_1);
 	}
+
+	delete temp_meshdata;
+	temp_meshdata = nullptr;
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);

@@ -9,6 +9,11 @@
 #include "component.h"
 #include "render_scene.h"
 
+namespace Tiwaz::Graphic
+{
+	class MeshesManager;
+}
+
 namespace Tiwaz::Component
 {
 	class GraphicComponent : public ComponentBase
@@ -27,6 +32,7 @@ namespace Tiwaz::Component
 
 	class MeshComponent : public GraphicComponent
 	{
+		friend Graphic::MeshesManager;
 	public:
 		~MeshComponent()
 		{

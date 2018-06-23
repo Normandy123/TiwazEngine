@@ -17,13 +17,13 @@ namespace Tiwaz::FileFormats
 		{
 			mesh_name.clear();
 
-			delete vertices;
-			vertices = nullptr;
+			delete mesh_data;
+			mesh_data = nullptr;
 		}
 
 		std::string mesh_name = "UNDEFINED";
 
-		Graphic::DataFormats::VerticesData* vertices = new Graphic::DataFormats::VerticesData;
+		Graphic::DataFormats::MeshData* mesh_data = new Graphic::DataFormats::MeshData;
 	};
 
 	struct ModelData

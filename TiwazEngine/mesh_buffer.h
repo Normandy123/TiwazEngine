@@ -19,34 +19,12 @@
 
 namespace Tiwaz::Graphic
 {
-	class MeshesManager;
-
-	class MeshData
-	{
-		friend MeshesManager;
-	public:
-		~MeshData()
-		{
-			m_mesh_ID = 0;
-
-			delete m_vertices;
-			m_vertices = nullptr;
-		}
-		
-	private:
-		uint64_t m_mesh_ID = 0;
-
-		DataFormats::VerticesData* m_vertices = new DataFormats::VerticesData;
-	};
-
 	template<typename TComponent> class ComponentsManager
 	{
 	public:
-		~ComponentsManager()
+		virtual ~ComponentsManager()
 		{
 			m_components_map.clear();
-
-			m_ID_counter.~IDCounter();
 		}
 
 		const uint64_t AddComponent(TComponent* component)
@@ -92,9 +70,20 @@ namespace Tiwaz::Graphic
 			return false;
 		}
 
-	private:
+	protected:
+		TComponent * AccessComponent(const uint64_t & ID)
+		{
+			if (ID != 0 && m_components_map.find(ID) != m_components_map.cend())
+			{
+				return m_components_map[ID];
+			}
+
+			return nullptr;
+		}
+
 		std::map<uint64_t, TComponent*> m_components_map;
 
+	private:
 		Counter::IDCounter m_ID_counter;
 	};
 
@@ -105,10 +94,50 @@ namespace Tiwaz::Graphic
 
 	};
 
+	//TODO implement MeshesManager
 	class MeshesManager : public ComponentsManager<Component::MeshComponent>
 	{
 	public:
+		~MeshesManager()
+		{
+			for (std::pair<uint64_t, DataFormats::MeshData*> pair : m_meshdata_map)
+			{
+				delete pair.second;
+			}
 
+			m_meshdata_map.clear();
+			m_mesh_components_map.clear();
+		}
+
+		const uint64_t AddMesh(DataFormats::MeshData* mesh)
+		{
+			if (mesh != nullptr)
+			{
+				DataFormats::MeshData* temp_mesh = new DataFormats::MeshData;
+				(*temp_mesh) = (*mesh); //TODO: real deep copying
+
+				const uint64_t new_ID = m_ID_counter.NewID();
+
+				m_meshdata_map.insert(std::make_pair(new_ID, temp_mesh));
+
+				temp_mesh = nullptr;
+
+				return new_ID;
+			}
+
+			return 0;
+		}
+
+		void SetMesh(const uint64_t & component_ID, const uint64_t & mesh_ID)
+		{
+			std::cout << AccessComponent(component_ID)->MeshID();
+		}
+
+	private:
+		std::map<uint64_t, DataFormats::MeshData*> m_meshdata_map;
+		std::map<uint64_t, std::vector<Component::MeshComponent*>> m_mesh_components_map;
+
+		Counter::IDCounter m_ID_counter;
 	};
 
 	class MeshesBuffer

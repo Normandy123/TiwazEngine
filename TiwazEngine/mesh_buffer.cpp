@@ -46,11 +46,13 @@ namespace Tiwaz::Graphic
 					temp_instance->mesh_ID = mesh_ID;
 					temp_instance->transformation_IDs.push_back(transformation_ID);
 
-					//TODO: Load vertices and transformation by IDs
+					//TODO: load vertices and transformation by IDs
 					//const DataFormats::VerticesData temp_vertices = Global::MESHES_MANAGER->Vertices(mesh_ID);
 					//const glm::mat4 temp_transformation = Global::TRANSFORMATION_MANAGER->Transformation(transformation_ID);
 
 					m_instances_map.insert(std::make_pair(new_ID, temp_instance));
+
+					temp_instance = nullptr;
 				}
 			}
 		}

@@ -185,10 +185,10 @@ namespace Tiwaz::BinaryIO
 			{
 				WriteValueToStream(stream, mesh_input->mesh_name);
 
-				WriteVectorToStream(stream, mesh_input->vertices->positions);
-				WriteVectorToStream(stream, mesh_input->vertices->normals);
-				WriteVectorToStream(stream, mesh_input->vertices->uvs);
-				WriteVectorToStream(stream, mesh_input->vertices->indices);
+				WriteVectorToStream(stream, mesh_input->mesh_data->vertices->positions);
+				WriteVectorToStream(stream, mesh_input->mesh_data->vertices->normals);
+				WriteVectorToStream(stream, mesh_input->mesh_data->vertices->uvs);
+				WriteVectorToStream(stream, mesh_input->mesh_data->vertices->indices);
 			}
 
 			stream.close();
@@ -207,10 +207,10 @@ namespace Tiwaz::BinaryIO
 			{
 				ReadValueFromStream(stream, mesh_output->mesh_name);
 
-				ReadVectorFromStream(stream, mesh_output->vertices->positions);
-				ReadVectorFromStream(stream, mesh_output->vertices->normals);
-				ReadVectorFromStream(stream, mesh_output->vertices->uvs);
-				ReadVectorFromStream(stream, mesh_output->vertices->indices);
+				ReadVectorFromStream(stream, mesh_output->mesh_data->vertices->positions);
+				ReadVectorFromStream(stream, mesh_output->mesh_data->vertices->normals);
+				ReadVectorFromStream(stream, mesh_output->mesh_data->vertices->uvs);
+				ReadVectorFromStream(stream, mesh_output->mesh_data->vertices->indices);
 			}
 
 			stream.close();

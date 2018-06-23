@@ -13,14 +13,14 @@ namespace Tiwaz::ModelImporter
 			position.y = ai_mesh->mVertices[i].y;
 			position.z = ai_mesh->mVertices[i].z;
 
-			mesh->vertices->positions.push_back(position);
+			mesh->mesh_data->vertices->positions.push_back(position);
 
 			glm::vec3 normal;
 			normal.x = ai_mesh->mNormals[i].x;
 			normal.y = ai_mesh->mNormals[i].y;
 			normal.z = ai_mesh->mNormals[i].z;
 
-			mesh->vertices->normals.push_back(normal);
+			mesh->mesh_data->vertices->normals.push_back(normal);
 
 			glm::vec2 uv;
 
@@ -34,7 +34,7 @@ namespace Tiwaz::ModelImporter
 				uv = glm::vec2(0.0f, 0.0f);
 			}
 
-			mesh->vertices->uvs.push_back(uv);
+			mesh->mesh_data->vertices->uvs.push_back(uv);
 		}
 
 		for (size_t i = 0; i < ai_mesh->mNumFaces; ++i)
@@ -43,7 +43,7 @@ namespace Tiwaz::ModelImporter
 
 			for (size_t j = 0; j < ai_face.mNumIndices; ++j)
 			{
-				mesh->vertices->indices.push_back(ai_face.mIndices[j]);
+				mesh->mesh_data->vertices->indices.push_back(ai_face.mIndices[j]);
 			}
 		}
 	}

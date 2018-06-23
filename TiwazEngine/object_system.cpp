@@ -30,7 +30,6 @@ namespace Tiwaz::ObjectSystem
 		}
 
 		m_objects.clear();
-		m_ID_counter.~IDCounter();
 	}
 
 	const uint64_t ObjectsManager::AddObject(EngineObject* object)
