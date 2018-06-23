@@ -83,7 +83,7 @@ void Tiwaz::Engine::Init()
 
 	FileFormats::MeshData* temp_meshdata = new FileFormats::MeshData;
 	BinaryIO::ReadMesh("data/resources/meshes/cone.bin", temp_meshdata);
-	Global::MESHES_MANAGER->AddMesh(temp_meshdata->mesh_data);
+	Global::MESHES_MANAGER->AddMesh(temp_meshdata->graphic_data);
 
 	for (size_t i = 0; i < 1; ++i)
 	{

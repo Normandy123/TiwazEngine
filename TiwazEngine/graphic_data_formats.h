@@ -28,12 +28,6 @@ namespace Tiwaz::Graphic::DataFormats
 
 	struct MeshData
 	{
-		~MeshData()
-		{
-			delete vertices;
-			vertices = nullptr;
-		}
-
-		VerticesData* vertices = new VerticesData;
+		VerticesData vertices;
 	};
 }

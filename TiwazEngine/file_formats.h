@@ -16,14 +16,11 @@ namespace Tiwaz::FileFormats
 		~MeshData()
 		{
 			mesh_name.clear();
-
-			delete mesh_data;
-			mesh_data = nullptr;
 		}
 
 		std::string mesh_name = "UNDEFINED";
 
-		Graphic::DataFormats::MeshData* mesh_data = new Graphic::DataFormats::MeshData;
+		Graphic::DataFormats::MeshData graphic_data;
 	};
 
 	struct ModelData
@@ -36,7 +33,6 @@ namespace Tiwaz::FileFormats
 			for (FileFormats::MeshData* mesh : meshes)
 			{
 				delete mesh;
-				mesh = nullptr;
 			}
 
 			meshes.clear();

@@ -109,12 +109,12 @@ namespace Tiwaz::Graphic
 			m_mesh_components_map.clear();
 		}
 
-		const uint64_t AddMesh(DataFormats::MeshData* mesh)
+		const uint64_t AddMesh(const DataFormats::MeshData & mesh)
 		{
-			if (mesh != nullptr)
+			if (true)
 			{
 				DataFormats::MeshData* temp_mesh = new DataFormats::MeshData;
-				//(*temp_mesh) = (*mesh); //TODO: real deep copying
+				(*temp_mesh) = mesh;
 
 				const uint64_t new_ID = m_ID_counter.NewID();
 
