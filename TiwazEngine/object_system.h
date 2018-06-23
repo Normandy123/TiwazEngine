@@ -58,8 +58,8 @@ namespace Tiwaz::ObjectSystem
 
 		EngineObject* AccessObjectByID(const uint64_t & ID);
 
-		const bool HasObject(const uint64_t & ID);
-		const bool HasObject(const EngineObject * object);
+		const bool ObjectManaged(const uint64_t & ID);
+		const bool ObjectManaged(const EngineObject * object);
 
 	private:
 		std::map<uint64_t, EngineObject*> m_objects;

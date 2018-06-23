@@ -53,7 +53,7 @@ namespace Tiwaz::ObjectSystem
 
 	void ObjectsManager::RemoveObject(const uint64_t & ID)
 	{
-		if (m_objects.find(ID) != m_objects.cend())
+		if (ObjectManaged(ID))
 		{
 			m_objects.erase(ID);
 
@@ -67,7 +67,7 @@ namespace Tiwaz::ObjectSystem
 
 	EngineObject* ObjectsManager::AccessObjectByID(const uint64_t & ID)
 	{
-		if (m_objects.find(ID) != m_objects.cend())
+		if (ObjectManaged(ID))
 		{
 			return m_objects[ID];
 		}
@@ -79,26 +79,32 @@ namespace Tiwaz::ObjectSystem
 		return nullptr;
 	}
 
-	const bool ObjectsManager::HasObject(const uint64_t & ID)
+	const bool ObjectsManager::ObjectManaged(const uint64_t & ID)
 	{
-		if (m_objects.find(ID) != m_objects.cend())
+		if (ID != 0)
 		{
-			return true;
-		}
-
-		return false;
-	}
-	const bool ObjectsManager::HasObject(const EngineObject *object)
-	{
-		for (std::pair<uint64_t, EngineObject*> object_pair : m_objects)
-		{
-			if (object_pair.second == object)
+			if (m_objects.find(ID) != m_objects.cend())
 			{
 				return true;
 			}
 		}
 
 		return false;
+	}
+	const bool ObjectsManager::ObjectManaged(const EngineObject * object)
+	{
+		if (object != nullptr)
+		{
+			for (std::pair<uint64_t, EngineObject*> object_pair : m_objects)
+			{
+				if (object_pair.second == object)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 }
 

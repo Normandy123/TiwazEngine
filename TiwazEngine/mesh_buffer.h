@@ -29,7 +29,7 @@ namespace Tiwaz::Graphic
 
 		const uint64_t AddComponent(TComponent* component)
 		{
-			if (component != nullptr && !ComponentManaged(component))
+			if (!ComponentManaged(component))
 			{
 				const uint64_t new_ID = m_ID_counter.NewID();
 			
@@ -43,7 +43,7 @@ namespace Tiwaz::Graphic
 
 		void RemoveComponent(TComponent* component)
 		{
-			if (component != nullptr && ComponentManaged(component))
+			if (ComponentManaged(component))
 			{
 				for (std::pair<uint64_t, TComponent*> component_pair : m_components_map)
 				{
@@ -57,13 +57,29 @@ namespace Tiwaz::Graphic
 			}
 		}
 
-		const bool ComponentManaged(TComponent* component)
+		const bool ComponentManaged(const uint64_t & ID)
 		{
-			for (std::pair<uint64_t, TComponent*> component_pair : m_components_map)
+			if (ID != 0)
 			{
-				if (component_pair.second == component)
+				if (m_components_map.find(ID) != m_components_map.cend())
 				{
 					return true;
+				}
+			}
+
+			return false;
+		}
+
+		const bool ComponentManaged(TComponent* component)
+		{
+			if (component != nullptr)
+			{
+				for (std::pair<uint64_t, TComponent*> component_pair : m_components_map)
+				{
+					if (component_pair.second == component)
+					{
+						return true;
+					}
 				}
 			}
 
