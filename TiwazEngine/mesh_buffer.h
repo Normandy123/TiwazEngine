@@ -114,7 +114,7 @@ namespace Tiwaz::Graphic
 			if (mesh != nullptr)
 			{
 				DataFormats::MeshData* temp_mesh = new DataFormats::MeshData;
-				(*temp_mesh) = (*mesh); //TODO: real deep copying
+				//(*temp_mesh) = (*mesh); //TODO: real deep copying
 
 				const uint64_t new_ID = m_ID_counter.NewID();
 
