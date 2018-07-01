@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <GLM/glm.hpp>
 
@@ -20,7 +21,7 @@ namespace Tiwaz::FileFormats
 
 		std::string mesh_name = "UNDEFINED";
 
-		Graphic::DataFormats::MeshData graphic_data;
+		std::shared_ptr<Graphic::DataFormats::MeshData> graphic_data = std::make_shared<Graphic::DataFormats::MeshData>();
 	};
 
 	struct ModelData
