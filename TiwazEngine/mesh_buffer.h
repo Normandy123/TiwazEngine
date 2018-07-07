@@ -33,7 +33,7 @@ namespace Tiwaz::Graphic
 			if (!ComponentManaged(component))
 			{
 				const uint64_t new_ID = m_ID_counter.NewID();
-			
+
 				m_components_map.insert(std::make_pair(new_ID, component));
 
 				return new_ID;
@@ -103,111 +103,10 @@ namespace Tiwaz::Graphic
 	private:
 		Counter::IDCounter m_ID_counter;
 	};
-
-	//TODO implement TransformationManager
-	class TransformationsManager : public ComponentsManager<Component::TransformationComponent>
-	{
-	public:
-
-	};
-
-	//TODO implement MeshesManager
-	class MeshesManager : public ComponentsManager<Component::MeshComponent>
-	{
-	public:
-		~MeshesManager()
-		{
-			for (std::pair<uint64_t, DataFormats::MeshData*> pair : m_meshdata_map)
-			{
-				delete pair.second;
-			}
-
-			m_meshdata_map.clear();
-			m_mesh_components_map.clear();
-		}
-
-		const uint64_t AddMesh(const DataFormats::MeshData & mesh)
-		{
-			if (true)
-			{
-				DataFormats::MeshData* temp_mesh = new DataFormats::MeshData;
-				(*temp_mesh) = mesh;
-
-				const uint64_t new_ID = m_ID_counter.NewID();
-
-				m_meshdata_map.insert(std::make_pair(new_ID, temp_mesh));
-
-				temp_mesh = nullptr;
-
-				return new_ID;
-			}
-
-			return 0;
-		}
-
-		void SetMesh(const uint64_t & component_ID, const uint64_t & mesh_ID)
-		{
-			std::cout << AccessComponent(component_ID)->MeshID();
-		}
-
-	private:
-		std::map<uint64_t, DataFormats::MeshData*> m_meshdata_map;
-		std::map<uint64_t, std::vector<Component::MeshComponent*>> m_mesh_components_map;
-
-		Counter::IDCounter m_ID_counter;
-	};
-
-	class MeshesBuffer
-	{
-	protected:
-		struct InstancedMesh
-		{
-			InstancedMesh()
-			{
-				glCreateVertexArrays(1, &m_vao);
-				glCreateBuffers(7, m_vbos);
-				glCreateBuffers(1, &m_ibo);
-			}
-
-			~InstancedMesh()
-			{
-				transformation_IDs.clear();
-
-				glBindVertexArray(0);
-
-				glDeleteBuffers(7, m_vbos);
-				glDeleteBuffers(1, &m_ibo);
-				glDeleteVertexArrays(1, &m_vao);
-			}
-
-			uint64_t mesh_ID = 0;
-			std::vector<uint64_t> transformation_IDs;
-
-			GLuint m_vao = 0;
-			GLuint m_vbos[7] = {0};
-
-			GLuint m_ibo = 0;
-		};
-
-	public:
-		~MeshesBuffer();
-
-		void AddMesh(const uint64_t & mesh_ID, const uint64_t & transformation_ID);
-		void RemoveMesh(const uint64_t & mesh_ID, const uint64_t & transformation_ID);
-
-		void Init();
-		void Update();
-		void Exit();
-
-	private:
-		std::map<uint64_t, InstancedMesh*> m_instances_map;
-
-		Counter::IDCounter m_ID_counter;
-	};
 }
 
 namespace Tiwaz::Global
 {
-	extern Graphic::TransformationsManager* TRANSFORMATION_MANAGER;
-	extern Graphic::MeshesManager* MESHES_MANAGER;
+	//extern Graphic::TransformationsManager* TRANSFORMATION_MANAGER;
+	//extern Graphic::MeshesManager* MESHES_MANAGER;
 }

@@ -30,11 +30,16 @@ namespace Tiwaz::Component
 		}
 	};
 
-	class MeshComponent : public GraphicComponent
+	class MeshResourceComponent : public GraphicComponent
+	{
+		
+	};
+
+	class MeshInstanceComponent : public GraphicComponent
 	{
 		friend Graphic::MeshesManager;
 	public:
-		~MeshComponent()
+		~MeshInstanceComponent()
 		{
 			m_mesh_ID = 0;
 		}
