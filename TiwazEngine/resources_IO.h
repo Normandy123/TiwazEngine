@@ -34,14 +34,15 @@ namespace Tiwaz::ResourcesIO
 		};
 
 	public:
-		typedef void(*AccessFunctionPointer)(const std::string &, TResource*);
+		typedef void(*ReadFunctionPointer)(const std::string &, TResource*);
+		typedef void(*WriteFunctionPointer)(const std::string &, const TResource*);
 
-		explicit ResourcesManager(AccessFunctionPointer read_function)
+		explicit ResourcesManager(ReadFunctionPointer read_function)
 		{
 			m_read_function = read_function;
 		}
 
-		ResourcesManager(AccessFunctionPointer write_function, AccessFunctionPointer read_function)
+		ResourcesManager(ReadFunctionPointer read_function, WriteFunctionPointer write_function)
 		{
 			m_write_function = write_function;
 			m_read_function = read_function;
@@ -122,7 +123,7 @@ namespace Tiwaz::ResourcesIO
 
 		const uint64_t IDByFilePath(const std::string & file_path)
 		{
-			if (HasLoad)
+			if (HasLoad(file_path))
 			{
 				for (std::pair<uint64_t, MapValue*> pair : m_resources_map)
 				{
@@ -176,10 +177,21 @@ namespace Tiwaz::ResourcesIO
 		}
 
 	protected:
-		AccessFunctionPointer m_write_function = nullptr;
-		AccessFunctionPointer m_read_function = nullptr;
-
+		ReadFunctionPointer m_read_function = nullptr;
+		WriteFunctionPointer m_write_function = nullptr;
+		
 		std::map<uint64_t, MapValue*> m_resources_map;
 		Counter::IDCounter m_ID_counter;	
 	};
+
+	class MeshesResourcesManager : public ResourcesManager<FileFormats::MeshData>
+	{
+	public:
+		explicit MeshesResourcesManager() : ResourcesManager(&BinaryIO::ReadMesh, &BinaryIO::WriteMesh) {}
+	};
+}
+
+namespace Tiwaz::Global
+{
+	extern ResourcesIO::MeshesResourcesManager* MESHES_RESOURCES_MANAGER;
 }

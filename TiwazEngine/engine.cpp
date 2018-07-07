@@ -27,6 +27,7 @@ void Tiwaz::Engine::Init()
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
 	Global::MAIN_RENDERER = new Graphic::MainRenderer;
 	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
+	Global::MESHES_RESOURCES_MANAGER = new ResourcesIO::MeshesResourcesManager;
 	//Global::FACTORY = new Factory::Factory;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 
@@ -80,16 +81,11 @@ void Tiwaz::Engine::Init()
 	}
 	*/
 
-	FileFormats::MeshData* temp_meshdata = new FileFormats::MeshData;
-	BinaryIO::ReadMesh("data/resources/meshes/cone.bin", temp_meshdata);
-
 	for (size_t i = 0; i < 100; ++i)
 	{
 		Component::MeshInstanceComponent* temp_obj_1 = CreateObject<Component::MeshInstanceComponent>();
+		temp_obj_1->LoadMeshFromFile("data/resources/meshes/cone.bin");
 	}
-
-	delete temp_meshdata;
-	temp_meshdata = nullptr;
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);
@@ -141,6 +137,9 @@ void Tiwaz::Engine::Exit()
 
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
+
+	delete Global::MESHES_RESOURCES_MANAGER;
+	Global::MESHES_RESOURCES_MANAGER = nullptr;
 
 	delete Global::OBJECTS_MANAGER;
 	Global::OBJECTS_MANAGER = nullptr;
