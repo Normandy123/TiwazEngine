@@ -8,6 +8,8 @@
 
 #include "component.h"
 #include "render_scene.h"
+#include "file_formats.h"
+#include "binary_IO.h"
 
 namespace Tiwaz::Graphic
 {
@@ -30,14 +32,8 @@ namespace Tiwaz::Component
 		}
 	};
 
-	class MeshResourceComponent : public GraphicComponent
-	{
-		
-	};
-
 	class MeshInstanceComponent : public GraphicComponent
 	{
-		friend Graphic::MeshesManager;
 	public:
 		~MeshInstanceComponent()
 		{
