@@ -81,11 +81,13 @@ void Tiwaz::Engine::Init()
 	}
 	*/
 
-	for (size_t i = 0; i < 100; ++i)
+	/*
+	for (size_t i = 0; i < 1; ++i)
 	{
-		Component::MeshInstanceComponent* temp_obj_1 = CreateObject<Component::MeshInstanceComponent>();
+		Component::MeshResourceComponent* temp_obj_1 = CreateObject<Component::MeshResourceComponent>();
 		temp_obj_1->LoadMeshFromFile("data/resources/meshes/cone.bin");
 	}
+	*/
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);
