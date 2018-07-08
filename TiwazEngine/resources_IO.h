@@ -15,10 +15,12 @@ namespace Tiwaz::ResourcesIO
 	protected:
 		struct MapValue
 		{
-			explicit MapValue(const std::string & file_path, TResource* resource)
+			explicit MapValue(const std::string & file_path, const bool & from_file, const bool & was_written, TResource* resource)
 			{
 				m_resource = resource;
 				m_file_path = file_path;
+				m_from_file = from_file;
+				m_was_written = was_written;
 			}
 
 			~MapValue()
@@ -30,7 +32,9 @@ namespace Tiwaz::ResourcesIO
 			}
 
 			TResource* m_resource;
-			std::string m_file_path;
+			std::string m_file_path = "UNDEFINED";
+			bool m_from_file = false;
+			bool m_was_written = false;
 		};
 
 	public:
@@ -58,7 +62,7 @@ namespace Tiwaz::ResourcesIO
 			m_resources_map.clear();
 		}
 
-		const uint64_t ReadAndAddResource(const std::string & file_path)
+		const uint64_t AddResourceFromFile(const std::string & file_path)
 		{
 			if (!HasLoad(file_path))
 			{
@@ -67,7 +71,7 @@ namespace Tiwaz::ResourcesIO
 				TResource* temp_resource = new TResource;
 				(*m_read_function)(file_path, temp_resource);
 			
-				MapValue* temp_value = new MapValue(file_path, temp_resource);
+				MapValue* temp_value = new MapValue(file_path, true, false, temp_resource);
 			
 				m_resources_map.insert(std::make_pair(new_ID, temp_value));
 			

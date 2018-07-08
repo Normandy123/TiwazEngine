@@ -30,11 +30,8 @@ void Tiwaz::Graphic::MainRenderer::Update()
 
 void Tiwaz::Graphic::MainRenderer::Render()
 {
-	if (Global::RENDER_SCENE->HasComponents())
-	{
-		GeometryPass();
-		LightPass();
-	}
+	GeometryPass();
+	LightPass();
 }
 
 void Tiwaz::Graphic::MainRenderer::Exit()

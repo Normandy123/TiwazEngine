@@ -8,6 +8,7 @@
 
 #include "component.h"
 #include "render_scene.h"
+#include "graphic_data_formats.h"
 
 namespace Tiwaz::Component
 {

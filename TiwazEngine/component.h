@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 
@@ -7,6 +9,7 @@
 #include "constants.h"
 #include "event_system.h"
 #include "object_system.h"
+#include "resources_IO.h"
 
 namespace Tiwaz::Component
 {
@@ -133,5 +136,50 @@ namespace Tiwaz::Component
 		glm::vec3 current_scale = glm::vec3(1.0f);
 
 		glm::mat4 m_transformation = glm::mat4();
+	};
+
+
+	//TODO: Resources Management
+	class ResourceComponent : public ComponentBase
+	{
+	public:
+		~ResourceComponent()
+		{
+			m_resource_ID = 0;
+		}
+
+		const uint64_t ResourceID() { return m_resource_ID; }
+
+	protected:
+		uint64_t m_resource_ID = 0;
+	};
+
+	class MeshResourceComponent : public ResourceComponent
+	{
+	public:
+		void CreateNewMesh(const FileFormats::MeshData & mesh)
+		{
+			
+		}
+
+		void UseMeshFromResources(const std::string & file_path)
+		{
+			if (!Global::MESHES_RESOURCES_MANAGER->HasLoad(file_path))
+			{
+				m_resource_ID = Global::MESHES_RESOURCES_MANAGER->AddResourceFromFile(file_path);
+			}
+			else
+			{
+				m_resource_ID = Global::MESHES_RESOURCES_MANAGER->IDByFilePath(file_path);
+			}
+		}
+
+		void UseMeshFromResources(const uint64_t & ID)
+		{
+			if (Global::MESHES_RESOURCES_MANAGER->ValidID(ID))
+			{
+				m_resource_ID = ID;
+			}
+		}
 	};
 }
