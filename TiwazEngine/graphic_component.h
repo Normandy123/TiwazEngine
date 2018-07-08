@@ -9,11 +9,6 @@
 #include "component.h"
 #include "render_scene.h"
 
-namespace Tiwaz::Graphic
-{
-	class MeshesManager;
-}
-
 namespace Tiwaz::Component
 {
 	class GraphicComponent : public ComponentBase

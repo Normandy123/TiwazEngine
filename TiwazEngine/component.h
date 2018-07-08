@@ -7,7 +7,6 @@
 #include "constants.h"
 #include "event_system.h"
 #include "object_system.h"
-#include "resources_IO.h"
 
 namespace Tiwaz::Component
 {
@@ -134,37 +133,5 @@ namespace Tiwaz::Component
 		glm::vec3 current_scale = glm::vec3(1.0f);
 
 		glm::mat4 m_transformation = glm::mat4();
-	};
-
-	class MeshResourceComponent : public ComponentBase
-	{
-	public:
-		~MeshResourceComponent()
-		{
-			m_mesh_resource_ID = 0;
-		}
-
-		const uint64_t LoadMeshFromFile(const std::string & file_path)
-		{
-			if (!Global::MESHES_RESOURCES_MANAGER->HasLoad(file_path))
-			{
-				m_mesh_resource_ID = Global::MESHES_RESOURCES_MANAGER->ReadAndAddResource(file_path);
-
-				return m_mesh_resource_ID;
-			}
-			else
-			{
-				m_mesh_resource_ID = Global::MESHES_RESOURCES_MANAGER->IDByFilePath(file_path);
-
-				return m_mesh_resource_ID;
-			}
-
-			return 0;
-		}
-
-		const uint64_t MeshResourceID() { return m_mesh_resource_ID; }
-
-	private:
-		uint64_t m_mesh_resource_ID = 0;
 	};
 }

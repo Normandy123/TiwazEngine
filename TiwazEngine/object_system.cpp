@@ -91,6 +91,7 @@ namespace Tiwaz::ObjectSystem
 
 		return false;
 	}
+
 	const bool ObjectsManager::ObjectManaged(const EngineObject * object)
 	{
 		if (object != nullptr)
@@ -101,10 +102,10 @@ namespace Tiwaz::ObjectSystem
 				{
 					return true;
 				}
-			}
-
-			return false;
+			}			
 		}
+
+		return false;
 	}
 }
 

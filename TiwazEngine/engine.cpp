@@ -35,23 +35,6 @@ void Tiwaz::Engine::Init()
 	Global::RENDER_WINDOW->TiwazCreateWindow(1408, 792, "TIWAZ_ENGINE", false);
 
 	/*
-	FileFormats::ModelData* test_model = new FileFormats::ModelData;
-	ModelImporter::LoadModel("data/resources/models/cones2.dae", test_model);
-
-	std::cout << test_model->file_path << std::endl;
-	std::cout << test_model->model_name << std::endl;
-
-	for (FileFormats::MeshData* mesh : test_model->meshes)
-	{
-		BinaryIO::WriteMesh("data/resources/meshes/" + mesh->mesh_name + ".bin", mesh);
-		std::cout << mesh->mesh_name << std::endl;
-	}
-
-	delete test_model;
-	test_model = nullptr;
-	*/
-
-	/*
 	std::vector<glm::vec3> temp_vec1 = meshdata_read->positions;
 
 	for (size_t j = 0; j < temp_vec1.size(); ++j)
@@ -78,14 +61,6 @@ void Tiwaz::Engine::Init()
 	for (size_t j = 0; j < temp_vec4.size(); ++j)
 	{
 		std::cout << temp_vec4[j] << std::endl;
-	}
-	*/
-
-	/*
-	for (size_t i = 0; i < 1; ++i)
-	{
-		Component::MeshResourceComponent* temp_obj_1 = CreateObject<Component::MeshResourceComponent>();
-		temp_obj_1->LoadMeshFromFile("data/resources/meshes/cone.bin");
 	}
 	*/
 
