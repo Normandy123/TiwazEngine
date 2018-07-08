@@ -66,8 +66,7 @@ void Tiwaz::Engine::Init()
 
 	for (size_t i = 0; i < 100; ++i)
 	{
-		Component::MeshResourceComponent* temp_comp = CreateObject<Component::MeshResourceComponent>();
-		temp_comp->UseMeshFromResources("data/resources/meshes/cone.bin");
+
 	}
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);

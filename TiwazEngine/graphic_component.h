@@ -29,16 +29,6 @@ namespace Tiwaz::Component
 	class MeshInstanceComponent : public GraphicComponent
 	{
 	public:
-		~MeshInstanceComponent()
-		{
-			m_mesh_ID = 0;
-		}
 
-		//void SetMeshID(const uint64_t & ID) {}
-
-		const uint64_t MeshID() { return m_mesh_ID; }
-		
-	private:
-		uint64_t m_mesh_ID = 0;
 	};
 }
