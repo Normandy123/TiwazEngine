@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <GLM/glm.hpp>
 
@@ -30,17 +31,12 @@ namespace Tiwaz::FileFormats
 			file_path.clear();
 			model_name.clear();
 
-			for (FileFormats::MeshData* mesh : meshes)
-			{
-				delete mesh;
-			}
-
 			meshes.clear();
 		}
 
 		std::string file_path = "UNDEFINED";
 		std::string model_name = "UNDEFINED";
 
-		std::vector<FileFormats::MeshData*> meshes;
+		std::vector<std::unique_ptr<FileFormats::MeshData>> meshes;
 	};
 }

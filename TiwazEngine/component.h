@@ -126,6 +126,7 @@ namespace Tiwaz::Component
 		glm::mat4 m_transformation = glm::mat4();
 	};
 
+	//TODO: CameraComponent functions
 	class CameraComponent : public ComponentBase
 	{
 	private:

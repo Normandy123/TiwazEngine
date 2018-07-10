@@ -54,13 +54,12 @@ namespace Tiwaz::ModelImporter
 		{
 			aiMesh* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
 
-			FileFormats::MeshData* temp_mesh = new FileFormats::MeshData();
+			std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
 
-			ProcessMesh(temp_mesh, ai_mesh, ai_scene);
+			ProcessMesh(temp_mesh.get(), ai_mesh, ai_scene);
 
-			model->meshes.push_back(temp_mesh);
+			model->meshes.push_back(std::move(temp_mesh));
 
-			temp_mesh = nullptr;
 			ai_mesh = nullptr;
 		}
 
