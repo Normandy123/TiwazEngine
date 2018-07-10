@@ -27,7 +27,6 @@ void Tiwaz::Engine::Init()
 	Global::GRAPHIC_MANAGER = new Graphic::GraphicManager;
 	Global::MAIN_RENDERER = new Graphic::MainRenderer;
 	Global::OBJECTS_MANAGER = new ObjectSystem::ObjectsManager;
-	Global::MESHES_RESOURCES_MANAGER = new ResourcesIO::MeshesResourcesManager;
 	//Global::FACTORY = new Factory::Factory;
 	//Global::LUA_INTERFACE = new Lua::LuaInterface;
 
@@ -119,9 +118,6 @@ void Tiwaz::Engine::Exit()
 
 	//delete Global::FACTORY;
 	//Global::FACTORY = nullptr;
-
-	delete Global::MESHES_RESOURCES_MANAGER;
-	Global::MESHES_RESOURCES_MANAGER = nullptr;
 
 	delete Global::OBJECTS_MANAGER;
 	Global::OBJECTS_MANAGER = nullptr;

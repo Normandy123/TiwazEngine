@@ -192,8 +192,3 @@ namespace Tiwaz::ResourcesIO
 		explicit MeshesResourcesManager() : ResourcesManager(&BinaryIO::ReadMesh, &BinaryIO::WriteMesh) {}
 	};
 }
-
-namespace Tiwaz::Global
-{
-	extern ResourcesIO::MeshesResourcesManager* MESHES_RESOURCES_MANAGER;
-}

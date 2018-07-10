@@ -144,6 +144,9 @@
     <ClCompile Include="graphic_data_formats.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="resources_manager.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="graphic_data_formats.h">
       <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="resources_manager.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

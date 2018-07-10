@@ -26,7 +26,7 @@ namespace Tiwaz::Component
 		}
 	};
 
-	class MeshInstanceComponent : public GraphicComponent
+	class MeshComponent : public GraphicComponent
 	{
 	public:
 
