@@ -63,9 +63,12 @@ void Tiwaz::Engine::Init()
 	}
 	*/
 
+	Resources::MeshesIO test;
+	test.ReadMesh("cone1");
+
 	for (size_t i = 0; i < 100; ++i)
 	{
-
+		
 	}
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
