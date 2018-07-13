@@ -12,6 +12,16 @@ namespace Tiwaz::Resources
 {
 	const std::string meshes_path = "data/resources/meshes/";
 
+	enum ResourcesTypes : uint8_t
+	{
+		TEXTURE,
+		MESH,
+
+		AUDIOCLIP,
+
+		SIZE_RESOURCES_TYPES
+	};
+
 	class MeshesIO
 	{
 	public:
@@ -40,7 +50,9 @@ namespace Tiwaz::Resources
 
 			if (IsLoaded(mesh_name))
 			{
-				//TODO: Write mesh when already loaded
+				BinaryIO::WriteMesh(file_path, mesh_data);
+
+				BinaryIO::ReadMesh(file_path, m_loaded_meshes[mesh_name].get());
 			}
 			
 			BinaryIO::WriteMesh(file_path, mesh_data);

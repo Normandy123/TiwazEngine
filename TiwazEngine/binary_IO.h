@@ -16,12 +16,12 @@ namespace Tiwaz::BinaryIO
 	constexpr size_t BYTE_SIZE_FLOAT2 = BYTE_SIZE_FLOAT * 2;
 	constexpr size_t BYTE_SIZE_FLOAT3 = BYTE_SIZE_FLOAT * 3;
 
-	template<typename T> static void WriteValueToStream(std::ofstream & stream, T data)
+	template<typename T> static void WriteValueToStream(std::ofstream & stream, const T & data)
 	{
-		stream.write(reinterpret_cast<const char*>(&data), sizeof(T));
+		stream.write(reinterpret_cast<const char*>(data), sizeof(T));
 	}
 
-	template<> static void WriteValueToStream(std::ofstream & stream, std::string data)
+	template<> static void WriteValueToStream(std::ofstream & stream, const std::string & data)
 	{
 		const size_t string_size = data.size();
 
@@ -89,7 +89,7 @@ namespace Tiwaz::BinaryIO
 
 	template<typename T> static void ReadValueFromStream(std::ifstream & stream, T & data)
 	{
-		stream.read(reinterpret_cast<char*>(&data), sizeof(T));
+		stream.read(reinterpret_cast<char*>(data), sizeof(T));
 	}
 
 	template<> static void ReadValueFromStream(std::ifstream & stream, std::string & data)
