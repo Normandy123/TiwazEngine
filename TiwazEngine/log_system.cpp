@@ -32,14 +32,14 @@ void Tiwaz::Log(const LogSystem::LOGTYPE & type, const std::string & location, c
 		Global::LOGS_BUFFER->AddLog(std::move(temp_log));
 		break;
 	case LogSystem::TIWAZ_FATALERROR:
-		print_text += LogSystem::str_log_type[type] + ": " + location + ": " + text;
+		print_text += LogSystem::STRINGLOGTYPES[type] + ": " + location + ": " + text;
 		temp_log = new LogSystem::Log(type, location, text, print_text);
 		temp_log->PrintLog();
 		Global::LOGS_BUFFER->AddLog(std::move(temp_log));
 		Global::ENGINE_SHOULD_EXIT = true;
 		break;
 	default:
-		print_text += LogSystem::str_log_type[type] + ": " + location + ": " + text;
+		print_text += LogSystem::STRINGLOGTYPES[type] + ": " + location + ": " + text;
 		temp_log = new LogSystem::Log(type, location, text, print_text);
 		temp_log->PrintLog();
 		Global::LOGS_BUFFER->AddLog(std::move(temp_log));

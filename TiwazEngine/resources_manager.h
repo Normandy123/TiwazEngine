@@ -12,18 +12,18 @@
 
 namespace Tiwaz::Resources
 {
-	enum ResourcesTypes : uint8_t
+	enum RESOURCETYPE : uint8_t
 	{
 		MESH,
-		SIZE_RESOURCES_TYPES
+		SIZE_RESOURCE_TYPES
 	};
 
-	static const std::array<const std::string, SIZE_RESOURCES_TYPES> ResourcesPaths =
+	static const std::array<const std::string, SIZE_RESOURCE_TYPES> RESOURCEPATHS =
 	{
 		"data/resources/meshes/"
 	};
 
-	static const std::array<const std::string, SIZE_RESOURCES_TYPES> ResourcesExtensions =
+	static const std::array<const std::string, SIZE_RESOURCE_TYPES> RESOURCEEXTENSIONS =
 	{
 		".tbm"
 	};
@@ -31,11 +31,11 @@ namespace Tiwaz::Resources
 	class ResourcesManager
 	{
 	public:
-		template<ResourcesTypes TResourceEnum> void ReadResource(const std::string & file_name)
+		template<RESOURCETYPE TResourceEnum> void ReadResource(const std::string & file_name)
 		{
 			if (!IsLoaded<TResourceEnum>(file_name))
 			{
-				const std::string file_path = ResourcesPaths[TResourceEnum] + file_name + ResourcesExtensions[TResourceEnum];
+				const std::string file_path = RESOURCEPATHS[TResourceEnum] + file_name + RESOURCEEXTENSIONS[TResourceEnum];
 
 				auto & temp_map = std::get<TResourceEnum>(m_loaded_resources);
 
@@ -47,9 +47,9 @@ namespace Tiwaz::Resources
 			}
 		}
 
-		template<ResourcesTypes TResourceEnum, typename T> void WriteResources(const std::string & file_name, T * data)
+		template<RESOURCETYPE TResourceEnum, typename T> void WriteResources(const std::string & file_name, T * data)
 		{
-			const std::string file_path = ResourcesPaths[TResourceEnum] + file_name + ResourcesExtensions[TResourceEnum];
+			const std::string file_path = RESOURCEPATHS[TResourceEnum] + file_name + RESOURCEEXTENSIONS[TResourceEnum];
 
 			if (IsLoaded<TResourceEnum>(file_name))
 			{
@@ -63,7 +63,7 @@ namespace Tiwaz::Resources
 			}
 		}
 
-		template<ResourcesTypes TResourceEnum> const bool IsLoaded(const std::string & file_name)
+		template<RESOURCETYPE TResourceEnum> const bool IsLoaded(const std::string & file_name)
 		{
 			return FindFileName(file_name, std::get<TResourceEnum>(m_loaded_resources));
 		}

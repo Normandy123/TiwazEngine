@@ -26,7 +26,7 @@ namespace Tiwaz::LogSystem
 		TIWAZ_SIZE_LOG_TYPES
 	};
 
-	static const std::array<const std::string, TIWAZ_SIZE_LOG_TYPES> str_log_type =
+	static const std::array<const std::string, TIWAZ_SIZE_LOG_TYPES> STRINGLOGTYPES =
 	{
 		"UNDEFINED",
 		"TEXT",
@@ -45,7 +45,7 @@ namespace Tiwaz::LogSystem
 		explicit Log(const LOGTYPE & type, const std::string & location, const std::string & text, const std::string & print_text) :
 			m_type(type), m_location(location), m_text(text), m_print_text(print_text)
 		{
-			m_str_type = str_log_type[m_type];
+			m_str_type = STRINGLOGTYPES[m_type];
 		}
 
 		~Log()
