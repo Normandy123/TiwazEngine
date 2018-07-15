@@ -4,6 +4,7 @@
 
 #include <string>
 #include <array>
+#include <tuple>
 #include <map>
 #include <memory>
 #include <iostream>
@@ -14,26 +15,18 @@ namespace Tiwaz::Resources
 {
 	enum ResourcesTypes : uint8_t
 	{
-		TEXTURE,
 		MESH,
-
-		AUDIOCLIP,
-
 		SIZE_RESOURCES_TYPES
 	};
 
 	static const std::array<const std::string, SIZE_RESOURCES_TYPES> ResourcesPaths =
 	{
-		"",
-		"data/resources/meshes/",
-		""
+		"data/resources/meshes/"
 	};
 
 	static const std::array<const std::string, SIZE_RESOURCES_TYPES> ResourcesExtensions =
 	{
-		"",
-		".tbm",
-		""
+		".tbm"
 	};
 
 	class MeshesIO
@@ -101,7 +94,21 @@ namespace Tiwaz::Resources
 	class ResourcesManager
 	{
 	public:
-		template<ResourcesTypes TResourceEnum> void ReadFile(const std::string & file_name);
+		template<ResourcesTypes TResourceEnum> void ReadFile(const std::string & file_name)
+		{
+			if (!IsLoaded<TResourceEnum>(file_name))
+			{
+				const std::string file_path = ResourcesPaths[TResourceEnum] + file_name + ResourcesExtensions[TResourceEnum];
+
+				/*
+				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
+
+				FileIO::ReadMesh(file_name, temp_mesh.get());
+				*/
+
+				std::get<TResourceEnum>(m_loaded_resources).insert(std::make_pair(file_name, std::move(temp_mesh)));
+			}
+		}
 
 		template<> void ReadFile<MESH>(const std::string & file_name)
 		{
@@ -111,9 +118,9 @@ namespace Tiwaz::Resources
 
 				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
 
-				FileIO::ReadMesh(file_path, temp_mesh.get());
+				FileIO::ReadMesh(file_name, temp_mesh.get());
 
-				m_loaded_meshes.insert(std::make_pair(file_name, std::move(temp_mesh)));
+				std::get<MESH>(m_loaded_resources).insert(std::make_pair(file_name, std::move(temp_mesh)));
 			}
 		}
 
@@ -127,14 +134,14 @@ namespace Tiwaz::Resources
 			return false;
 		}
 
-		template<ResourcesTypes TResourceEnum> const bool IsLoaded(const std::string & file_name);
-
-		template<> const bool IsLoaded<MESH>(const std::string & file_name)
+		template<ResourcesTypes TResourceEnum> const bool IsLoaded(const std::string & file_name)
 		{
-			return FindFileName<FileFormats::MeshData>(file_name, m_loaded_meshes);
+			return FindFileName(file_name, std::get<TResourceEnum>(m_loaded_resources));
 		}
 
 	private:
-		std::map<std::string, std::shared_ptr<FileFormats::MeshData>> m_loaded_meshes;
+		std::tuple<
+			std::map<std::string, std::shared_ptr<FileFormats::MeshData>>
+		> m_loaded_resources;
 	};
 }
