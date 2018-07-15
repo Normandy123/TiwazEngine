@@ -64,12 +64,10 @@ void Tiwaz::Engine::Init()
 	*/
 
 	Resources::ResourcesManager test2;
-	test2.ReadFile<Resources::MESH>("cone1");
 
-	for (size_t i = 0; i < 100; ++i)
-	{
-		
-	}
+	test2.ReadResource<Resources::MESH>("cone");
+	test2.ReadResource<Resources::MESH>("cone.001");
+	test2.ReadResource<Resources::MESH>("cone.002");
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);

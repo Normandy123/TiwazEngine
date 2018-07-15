@@ -7,7 +7,6 @@
 #include <tuple>
 #include <map>
 #include <memory>
-#include <iostream>
 
 #include "file_IO.h"
 
@@ -29,99 +28,66 @@ namespace Tiwaz::Resources
 		".tbm"
 	};
 
-	class MeshesIO
-	{
-	public:
-		~MeshesIO()
-		{
-			m_loaded_meshes.clear();
-		}
-
-		/*
-		void ReadMesh(const std::string & mesh_name)
-		{
-			if (!IsLoaded(mesh_name))
-			{
-				const std::string file_path = meshes_path + mesh_name + ".tbm";
-
-				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
-
-				FileIO::ReadMesh(file_path, temp_mesh.get());
-
-				m_loaded_meshes.insert(std::make_pair(mesh_name, std::move(temp_mesh)));
-			}
-		}
-
-		void WriteMesh(const std::string & mesh_name, const FileFormats::MeshData * mesh_data)
-		{
-			const std::string file_path = meshes_path + mesh_name + ".tbm";
-
-			if (IsLoaded(mesh_name))
-			{
-				FileIO::WriteMesh(file_path, mesh_data);
-
-				FileIO::ReadMesh(file_path, m_loaded_meshes[mesh_name].get());
-			}
-			
-			FileIO::WriteMesh(file_path, mesh_data);
-		}
-		*/
-
-		const bool IsLoaded(const std::string & mesh_name)
-		{
-			if (m_loaded_meshes.find(mesh_name) != m_loaded_meshes.cend())
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		std::shared_ptr<FileFormats::MeshData> AccessMesh(const std::string & mesh_name)
-		{
-			if (IsLoaded(mesh_name))
-			{
-				return m_loaded_meshes[mesh_name];
-			}
-
-			return nullptr;
-		}
-	private:
-		std::map<std::string, std::shared_ptr<FileFormats::MeshData>> m_loaded_meshes;
-	};
-
-	//TODO: implement ResourcesManager
 	class ResourcesManager
 	{
 	public:
-		template<ResourcesTypes TResourceEnum> void ReadFile(const std::string & file_name)
+		template<ResourcesTypes TResourceEnum> void ReadResource(const std::string & file_name)
 		{
 			if (!IsLoaded<TResourceEnum>(file_name))
 			{
 				const std::string file_path = ResourcesPaths[TResourceEnum] + file_name + ResourcesExtensions[TResourceEnum];
 
-				/*
-				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
+				auto & temp_map = std::get<TResourceEnum>(m_loaded_resources);
 
-				FileIO::ReadMesh(file_name, temp_mesh.get());
-				*/
+				auto temp_pointer = CreateResource(temp_map);
+	
+				ReadFile(file_path, temp_pointer.get());
 
-				std::get<TResourceEnum>(m_loaded_resources).insert(std::make_pair(file_name, std::move(temp_mesh)));
+				temp_map.insert(std::make_pair(file_name, std::move(temp_pointer)));
 			}
 		}
 
-		template<> void ReadFile<MESH>(const std::string & file_name)
+		template<ResourcesTypes TResourceEnum, typename T> void WriteResources(const std::string & file_name, T * data)
 		{
-			if (!IsLoaded<MESH>(file_name))
+			const std::string file_path = ResourcesPaths[TResourceEnum] + file_name + ResourcesExtensions[TResourceEnum];
+
+			if (IsLoaded<TResourceEnum>(file_name))
 			{
-				const std::string file_path = ResourcesPaths[MESH] + file_name + ResourcesExtensions[MESH];
+				WriteFile(file_path, data);
 
-				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
-
-				FileIO::ReadMesh(file_name, temp_mesh.get());
-
-				std::get<MESH>(m_loaded_resources).insert(std::make_pair(file_name, std::move(temp_mesh)));
+				ReadFile(file_path, std::get<TResourceEnum>(m_loaded_resources)[file_name].get());
 			}
+			else
+			{
+				WriteFile(file_path, data);
+			}
+		}
+
+		template<ResourcesTypes TResourceEnum> const bool IsLoaded(const std::string & file_name)
+		{
+			return FindFileName(file_name, std::get<TResourceEnum>(m_loaded_resources));
+		}
+
+	private:
+		template<typename T> std::unique_ptr<T> CreateResource(const std::map<std::string, std::shared_ptr<T>> & map)
+		{
+			return std::make_unique<T>();
+		}
+
+		//Read specialization
+		template<typename T> void ReadFile(const std::string & file_path, T * data) = delete;
+
+		template<> void ReadFile(const std::string & file_path, FileFormats::MeshData * data)
+		{
+			FileIO::ReadMesh(file_path, data);
+		}
+
+		//Write specialization
+		template<typename T> void WriteFile(const std::string & file_path, T * data) = delete;
+
+		template<> void WriteFile(const std::string & file_path, FileFormats::MeshData * data)
+		{
+			FileIO::WriteMesh(file_path, data);
 		}
 
 		template<typename T> const bool FindFileName(const std::string & file_name, const std::map<std::string, std::shared_ptr<T>> & map)
@@ -134,12 +100,6 @@ namespace Tiwaz::Resources
 			return false;
 		}
 
-		template<ResourcesTypes TResourceEnum> const bool IsLoaded(const std::string & file_name)
-		{
-			return FindFileName(file_name, std::get<TResourceEnum>(m_loaded_resources));
-		}
-
-	private:
 		std::tuple<
 			std::map<std::string, std::shared_ptr<FileFormats::MeshData>>
 		> m_loaded_resources;
