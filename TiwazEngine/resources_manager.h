@@ -6,7 +6,7 @@
 #include <map>
 #include <memory>
 
-#include "binary_IO.h"
+#include "file_IO.h"
 
 namespace Tiwaz::Resources
 {
@@ -38,7 +38,7 @@ namespace Tiwaz::Resources
 
 				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
 
-				BinaryIO::ReadMesh(file_path, temp_mesh.get());
+				FileIO::ReadMesh(file_path, temp_mesh.get());
 
 				m_loaded_meshes.insert(std::make_pair(mesh_name, std::move(temp_mesh)));
 			}
@@ -50,12 +50,12 @@ namespace Tiwaz::Resources
 
 			if (IsLoaded(mesh_name))
 			{
-				BinaryIO::WriteMesh(file_path, mesh_data);
+				FileIO::WriteMesh(file_path, mesh_data);
 
-				BinaryIO::ReadMesh(file_path, m_loaded_meshes[mesh_name].get());
+				FileIO::ReadMesh(file_path, m_loaded_meshes[mesh_name].get());
 			}
 			
-			BinaryIO::WriteMesh(file_path, mesh_data);
+			FileIO::WriteMesh(file_path, mesh_data);
 		}
 
 		const bool IsLoaded(const std::string & mesh_name)

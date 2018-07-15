@@ -11,7 +11,7 @@
 #include <assimp/postprocess.h>
 
 #include "file_formats.h"
-#include "binary_IO.h"
+#include "file_IO.h"
 
 namespace Tiwaz::ModelImporter
 {

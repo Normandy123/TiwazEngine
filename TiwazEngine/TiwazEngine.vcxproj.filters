@@ -111,9 +111,6 @@
     <ClCompile Include="graphic_system.cpp">
       <Filter>Source Files\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="binary_IO.cpp">
-      <Filter>Source Files\IO</Filter>
-    </ClCompile>
     <ClCompile Include="log_system.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -146,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="resources_manager.cpp">
       <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="file_IO.cpp">
+      <Filter>Source Files\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +200,6 @@
     <ClInclude Include="graphic_system.h">
       <Filter>Header Files\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="binary_IO.h">
-      <Filter>Header Files\IO</Filter>
-    </ClInclude>
     <ClInclude Include="log_system.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
@@ -238,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="resources_manager.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="file_IO.h">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

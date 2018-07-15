@@ -6,7 +6,7 @@
 
 #include "counter.h"
 #include "file_formats.h"
-#include "binary_IO.h"
+#include "file_IO.h"
 
 namespace Tiwaz::ResourcesIO
 {
@@ -189,6 +189,6 @@ namespace Tiwaz::ResourcesIO
 	class MeshesResourcesManager : public ResourcesManager<FileFormats::MeshData>
 	{
 	public:
-		explicit MeshesResourcesManager() : ResourcesManager(&BinaryIO::ReadMesh, &BinaryIO::WriteMesh) {}
+		explicit MeshesResourcesManager() : ResourcesManager(&FileIO::ReadMesh, &FileIO::WriteMesh) {}
 	};
 }

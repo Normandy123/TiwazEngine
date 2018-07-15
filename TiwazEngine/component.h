@@ -9,7 +9,6 @@
 #include "constants.h"
 #include "event_system.h"
 #include "object_system.h"
-#include "resources_IO.h"
 
 namespace Tiwaz::Component
 {

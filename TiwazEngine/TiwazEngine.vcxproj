@@ -142,7 +142,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="binary_IO.cpp" />
+    <ClCompile Include="file_IO.cpp" />
     <ClCompile Include="commands.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="counter.cpp" />
@@ -172,7 +172,7 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="binary_IO.h" />
+    <ClInclude Include="file_IO.h" />
     <ClInclude Include="commands.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="constants.h" />

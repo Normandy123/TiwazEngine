@@ -9,7 +9,7 @@
 
 #include "file_formats.h"
 
-namespace Tiwaz::BinaryIO
+namespace Tiwaz::FileIO
 {
 	constexpr size_t BYTE_SIZE_SIZE_T = sizeof(size_t);
 	constexpr size_t BYTE_SIZE_FLOAT = sizeof(float);
@@ -29,7 +29,7 @@ namespace Tiwaz::BinaryIO
 		stream.write(data.c_str(), string_size);
 	}
 
-	template<typename T> static void WriteVectorToStream(std::ofstream & stream, std::vector<T> vector)
+	template<typename T> static void WriteVectorToStream(std::ofstream & stream, const std::vector<T> & vector)
 	{	
 		const size_t value_size = sizeof(T);
 		const size_t data_size = vector.size() * value_size;
@@ -42,7 +42,7 @@ namespace Tiwaz::BinaryIO
 		}
 	}
 
-	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec2> vector)
+	template<> static void WriteVectorToStream(std::ofstream & stream, const std::vector<glm::vec2> & vector)
 	{
 		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT2;
 
@@ -64,7 +64,7 @@ namespace Tiwaz::BinaryIO
 		float_buffer.clear();
 	}
 
-	template<> static void WriteVectorToStream(std::ofstream & stream, std::vector<glm::vec3> vector)
+	template<> static void WriteVectorToStream(std::ofstream & stream, const std::vector<glm::vec3> & vector)
 	{
 		const size_t data_size = vector.size() * BYTE_SIZE_FLOAT3;
 
