@@ -1,15 +1,5 @@
 #include "log_system.h"
 
-const std::string Tiwaz::LogSystem::str_log_type[Tiwaz::LogSystem::TIWAZ_SIZE_LOG_TYPES] =
-{
-	"UNDEFINED",
-	"TEXT",
-	"INFORMATION",
-	"WARNING",
-	"ERROR",
-	"FATALERROR"
-};
-
 Tiwaz::LogSystem::LogsBuffer* Tiwaz::Global::LOGS_BUFFER;
 
 void Tiwaz::Log(const LogSystem::LOGTYPE & type, const std::string & location, const std::string & text)

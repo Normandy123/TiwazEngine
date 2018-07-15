@@ -63,8 +63,8 @@ void Tiwaz::Engine::Init()
 	}
 	*/
 
-	Resources::MeshesIO test;
-	test.ReadMesh("cone1");
+	Resources::ResourcesManager test2;
+	test2.ReadFile<Resources::MESH>("cone1");
 
 	for (size_t i = 0; i < 100; ++i)
 	{

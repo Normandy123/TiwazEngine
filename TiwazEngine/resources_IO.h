@@ -10,12 +10,12 @@
 
 namespace Tiwaz::ResourcesIO
 {
-	template<typename TResource> class ResourcesManager
+	template<typename TData> class ResourcesManager
 	{
 	protected:
 		struct MapValue
 		{
-			explicit MapValue(const std::string & file_path, const bool & was_written, TResource* resource)
+			explicit MapValue(const std::string & file_path, const bool & was_written, TData* resource)
 			{
 				m_resource = resource;
 				m_file_path = file_path;
@@ -30,14 +30,14 @@ namespace Tiwaz::ResourcesIO
 				m_resource = nullptr;
 			}
 
-			TResource* m_resource;
+			TData* m_resource;
 			std::string m_file_path = "UNDEFINED";
 			bool m_was_written = false;
 		};
 
 	public:
-		typedef void(*ReadFunctionPointer)(const std::string &, TResource*);
-		typedef void(*WriteFunctionPointer)(const std::string &, const TResource*);
+		typedef void(*ReadFunctionPointer)(const std::string &, TData*);
+		typedef void(*WriteFunctionPointer)(const std::string &, const TData*);
 
 		explicit ResourcesManager(ReadFunctionPointer read_function)
 		{
@@ -66,7 +66,7 @@ namespace Tiwaz::ResourcesIO
 			{
 				uint64_t new_ID = m_ID_counter.NewID();
 			
-				TResource* temp_resource = new TResource;
+				TData* temp_resource = new TData;
 				(*m_read_function)(file_path, temp_resource);
 			
 				MapValue* temp_value = new MapValue(file_path, false, temp_resource);
@@ -149,7 +149,7 @@ namespace Tiwaz::ResourcesIO
 			return "UNDEFINED";
 		}
 
-		TResource* AccessResource(const uint64_t & ID)
+		TData* AccessResource(const uint64_t & ID)
 		{
 			if (ID != 0)
 			{
@@ -162,7 +162,7 @@ namespace Tiwaz::ResourcesIO
 			return nullptr;
 		}
 
-		TResource* AccessResource(const std::string & file_path)
+		TData* AccessResource(const std::string & file_path)
 		{
 			if (file_path != "" && file_path != "UNDEFINED")
 			{

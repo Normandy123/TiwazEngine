@@ -2,6 +2,7 @@
 
 #include <string>
 #include <sstream>
+#include <array>
 #include <vector>
 #include <ctime>
 #include <chrono>
@@ -25,7 +26,15 @@ namespace Tiwaz::LogSystem
 		TIWAZ_SIZE_LOG_TYPES
 	};
 
-	extern const std::string str_log_type[TIWAZ_SIZE_LOG_TYPES];
+	static const std::array<const std::string, TIWAZ_SIZE_LOG_TYPES> str_log_type =
+	{
+		"UNDEFINED",
+		"TEXT",
+		"INFORMATION",
+		"WARNING",
+		"ERROR",
+		"FATALERROR"
+	};
 
 	class LogsBuffer;
 

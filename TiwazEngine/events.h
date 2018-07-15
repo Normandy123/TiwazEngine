@@ -60,12 +60,6 @@ namespace Tiwaz::EventSystem
 	public:
 	};
 
-	class ModelComponentInitEvent : public ComponentInitEvent
-	{
-	public:
-		uint64_t model_ID = 0;
-	};
-
 	//Entity Events
 	class EntityInitEvent : public InitEvent
 	{
