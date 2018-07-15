@@ -29,6 +29,13 @@ namespace Tiwaz::Resources
 		""
 	};
 
+	static const std::array<const std::string, SIZE_RESOURCES_TYPES> ResourcesExtensions =
+	{
+		"",
+		".tbm",
+		""
+	};
+
 	class MeshesIO
 	{
 	public:
@@ -100,7 +107,7 @@ namespace Tiwaz::Resources
 		{
 			if (!IsLoaded<MESH>(file_name))
 			{
-				const std::string file_path = ResourcesPaths[MESH] + file_name + ".tbm";
+				const std::string file_path = ResourcesPaths[MESH] + file_name + ResourcesExtensions[MESH];
 
 				std::unique_ptr<FileFormats::MeshData> temp_mesh = std::unique_ptr<FileFormats::MeshData>();
 

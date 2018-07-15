@@ -124,7 +124,7 @@ namespace Tiwaz::Graphic::Shader
 	{
 		std::string temp_string;
 
-		for (size_t i = 0; i < file_paths.size(); ++i)
+		for (size_t i = 0; i < 6; ++i)
 		{
 			temp_string = file_paths[i];
 
