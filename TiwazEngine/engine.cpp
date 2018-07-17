@@ -65,9 +65,9 @@ void Tiwaz::Engine::Init()
 
 	Resources::ResourcesManager test2;
 
-	test2.ReadResource<Resources::MESH>("cone");
-	test2.ReadResource<Resources::MESH>("cone.001");
-	test2.ReadResource<Resources::MESH>("cone.002");
+	std::unique_ptr<FileFormats::MeshData> test3 = std::make_unique<FileFormats::MeshData>();
+
+	FileIO::ReadMesh("data/resources/meshes/cone.tbm", test3.get());
 
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&entinit);
 	Global::ENGINE_EVENT_HANDLER->HandleEvent(&compinit);

@@ -12,7 +12,12 @@
 
 namespace Tiwaz::FileFormats
 {
-	struct MeshData
+	struct DataBase
+	{
+
+	};
+
+	struct MeshData : public DataBase
 	{
 		~MeshData()
 		{
@@ -24,7 +29,7 @@ namespace Tiwaz::FileFormats
 		Graphic::DataFormats::MeshData graphic_data;
 	};
 
-	struct ModelData
+	struct ModelData : public DataBase
 	{
 		~ModelData()
 		{
